@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import {
   Inter,
   Roboto,
@@ -9,6 +8,8 @@ import {
   Montserrat,
 } from "next/font/google";
 import "./globals.css";
+import Header from "./components/Header";
+import TabNav from "./components/TabNav";
 import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -39,11 +40,9 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Tweet Image Generator - Create Instagram-Friendly Tweet Images",
+  title: "SnapSuite - Turn Content into Visuals",
   description:
-    "Generate beautiful, customizable tweet images perfect for Instagram posts. Add your content, customize colors and fonts, and download high-quality images instantly.",
-  keywords:
-    "tweet generator, Instagram, social media, image creator, tweet image",
+    "Create beautiful visuals from your tweets, code snippets, and quotes instantly.",
 };
 
 export default function RootLayout({
@@ -56,6 +55,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${roboto.variable} ${openSans.variable} ${lato.variable} ${poppins.variable} ${montserrat.variable} min-h-screen flex flex-col`}
       >
+        <Header />
+        <TabNav />
         <main className="flex-grow">{children}</main>
         <Footer />
       </body>

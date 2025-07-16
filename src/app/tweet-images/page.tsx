@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import Themes from "../components/Themes";
 import Templates from "../components/Templates";
-import Header from "../components/Header";
 import { TweetTemplate } from "../utils/storage";
 
 interface TweetData {
@@ -141,7 +140,6 @@ export default function TweetImages() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <Header />
       <div className="max-w-6xl mx-auto p-6">
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="grid lg:grid-cols-2 min-h-[calc(100vh-12rem)]">
