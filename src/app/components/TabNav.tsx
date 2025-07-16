@@ -27,8 +27,8 @@ export default function TabNav() {
 
   return (
     <div className="bg-white border-b">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center gap-1">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex items-center justify-center">
           {tabs.map((tab) => {
             const isActive = pathname === tab.href;
             return (

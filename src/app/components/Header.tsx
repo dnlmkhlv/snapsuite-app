@@ -6,8 +6,8 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="bg-white">
-      <div className="container mx-auto px-4 py-4">
-        <Link href="/" className="flex items-center gap-4">
+      <div className="max-w-6xl mx-auto px-4 py-4">
+        <Link href="/" className="flex items-center justify-center gap-4">
           <Image
             src="/snapsuite-logo.png"
             alt="SnapSuite Logo"
