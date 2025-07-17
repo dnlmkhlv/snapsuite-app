@@ -12,6 +12,8 @@ import {
   AlignLeft,
   AlignCenter,
   Layers,
+  Settings,
+  Image as ImageIcon,
 } from "lucide-react";
 import Themes from "../components/Themes";
 import Templates from "../components/Templates";
@@ -67,6 +69,9 @@ export default function TweetImages() {
     gradientEnd: "#ffffff",
   });
 
+  const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
+    "text"
+  );
   const previewRef = useRef<HTMLDivElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,25 +145,251 @@ export default function TweetImages() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-          <div className="grid lg:grid-cols-2 min-h-[calc(100vh-12rem)]">
-            {/* Controls Panel - Scrollable */}
-            <div className="relative flex flex-col border-r border-gray-100">
-              {/* Sticky Header */}
-              <div className="sticky top-0 z-10 bg-white p-8 pb-6 border-b border-gray-200">
-                <h2 className="text-2xl font-semibold text-gray-800 flex items-center gap-2">
-                  <Palette className="w-6 h-6 text-[#5170FF]" />
-                  Customize Your Tweet
-                </h2>
+      <div className="max-w-7xl mx-auto p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          {/* Tools Panel - Left Side */}
+          <div className="lg:col-span-5">
+            {/* Toolbar */}
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+              {/* Tab Navigation */}
+              <div className="flex border-b">
+                <button
+                  onClick={() => setActiveTab("text")}
+                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+                    activeTab === "text"
+                      ? "text-[#5170FF]"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  <Type className="w-4 h-4" />
+                  Text
+                  {activeTab === "text" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+                  )}
+                </button>
+                <button
+                  onClick={() => setActiveTab("style")}
+                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+                    activeTab === "style"
+                      ? "text-[#5170FF]"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  <Palette className="w-4 h-4" />
+                  Style
+                  {activeTab === "style" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+                  )}
+                </button>
+                <button
+                  onClick={() => setActiveTab("profile")}
+                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+                    activeTab === "profile"
+                      ? "text-[#5170FF]"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  <User className="w-4 h-4" />
+                  Profile
+                  {activeTab === "profile" && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+                  )}
+                </button>
               </div>
 
-              {/* Scrollable Content */}
-              <div className="flex-1 overflow-y-auto p-8 pt-6">
-                <div className="space-y-8">
-                  {/* Profile Information */}
+              {/* Tab Content */}
+              <div className="p-5">
+                {activeTab === "text" && (
+                  <div className="space-y-4">
+                    <textarea
+                      value={tweetData.content}
+                      onChange={(e) =>
+                        setTweetData((prev) => ({
+                          ...prev,
+                          content: e.target.value,
+                        }))
+                      }
+                      className="w-full h-48 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
+                      placeholder="Enter your tweet content..."
+                    />
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            alignment: "left",
+                          }))
+                        }
+                        className={`flex-1 p-3 rounded-xl border transition-all flex items-center justify-center gap-2 ${
+                          tweetData.alignment === "left"
+                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        <AlignLeft className="w-4 h-4" />
+                        Left
+                      </button>
+                      <button
+                        onClick={() =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            alignment: "center",
+                          }))
+                        }
+                        className={`flex-1 p-3 rounded-xl border transition-all flex items-center justify-center gap-2 ${
+                          tweetData.alignment === "center"
+                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        <AlignCenter className="w-4 h-4" />
+                        Center
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "style" && (
                   <div className="space-y-6">
-                    {/* Full Name */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Start Color
+                        </label>
+                        <div className="flex gap-3">
+                          <input
+                            type="text"
+                            value={tweetData.gradientStart}
+                            onChange={(e) =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                gradientStart: e.target.value,
+                              }))
+                            }
+                            className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                          />
+                          <div className="w-12 h-12 relative">
+                            <input
+                              type="color"
+                              value={tweetData.gradientStart}
+                              onChange={(e) =>
+                                setTweetData((prev) => ({
+                                  ...prev,
+                                  gradientStart: e.target.value,
+                                }))
+                              }
+                              className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                            />
+                            <div
+                              className="w-full h-full rounded-lg border border-gray-200"
+                              style={{
+                                backgroundColor: tweetData.gradientStart,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          End Color
+                        </label>
+                        <div className="flex gap-3">
+                          <input
+                            type="text"
+                            value={tweetData.gradientEnd}
+                            onChange={(e) =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                gradientEnd: e.target.value,
+                              }))
+                            }
+                            className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                          />
+                          <div className="w-12 h-12 relative">
+                            <input
+                              type="color"
+                              value={tweetData.gradientEnd}
+                              onChange={(e) =>
+                                setTweetData((prev) => ({
+                                  ...prev,
+                                  gradientEnd: e.target.value,
+                                }))
+                              }
+                              className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                            />
+                            <div
+                              className="w-full h-full rounded-lg border border-gray-200"
+                              style={{ backgroundColor: tweetData.gradientEnd }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Text Color
+                      </label>
+                      <div className="flex gap-3">
+                        <input
+                          type="text"
+                          value={tweetData.textColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              textColor: e.target.value,
+                            }))
+                          }
+                          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                        />
+                        <div className="w-12 h-12 relative">
+                          <input
+                            type="color"
+                            value={tweetData.textColor}
+                            onChange={(e) =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                textColor: e.target.value,
+                              }))
+                            }
+                            className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                          />
+                          <div
+                            className="w-full h-full rounded-lg border border-gray-200"
+                            style={{ backgroundColor: tweetData.textColor }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Font Style
+                      </label>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {fontOptions.map((font) => (
+                          <button
+                            key={font.value}
+                            onClick={() =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                fontFamily: font.value,
+                              }))
+                            }
+                            className={`p-3 rounded-lg border transition-all ${
+                              tweetData.fontFamily === font.value
+                                ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                                : "border-gray-200 hover:border-gray-300 text-gray-600"
+                            } ${font.className}`}
+                          >
+                            {font.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "profile" && (
+                  <div className="space-y-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Full Name
@@ -172,15 +403,11 @@ export default function TweetImages() {
                             fullName: e.target.value,
                           }))
                         }
-                        className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
-                        placeholder="Enter your full name"
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
                       />
                     </div>
-
-                    {/* Username */}
-                    <div className="group">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                        <User className="w-4 h-4 text-[#5170FF]" />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
                         Username
                       </label>
                       <input
@@ -192,12 +419,9 @@ export default function TweetImages() {
                             username: e.target.value.replace("@", ""),
                           }))
                         }
-                        className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
-                        placeholder="Enter username without @"
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
                       />
                     </div>
-
-                    {/* Verified Badge */}
                     <div className="flex items-center gap-2">
                       <input
                         type="checkbox"
@@ -219,8 +443,6 @@ export default function TweetImages() {
                         <CheckCircle className="w-4 h-4 text-[#5170FF]" />
                       </label>
                     </div>
-
-                    {/* Profile Photo */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Profile Photo
@@ -229,366 +451,42 @@ export default function TweetImages() {
                         type="file"
                         accept="image/*"
                         onChange={handleFileUpload}
-                        className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900 transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5170FF] file:text-white hover:file:bg-[#4060EE]"
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5170FF] file:text-white hover:file:bg-[#4060EE]"
                       />
-                    </div>
-
-                    {/* Tweet Content */}
-                    <div className="group">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Tweet Content
-                      </label>
-                      <textarea
-                        value={tweetData.content}
-                        onChange={(e) =>
-                          setTweetData((prev) => ({
-                            ...prev,
-                            content: e.target.value,
-                          }))
-                        }
-                        className="w-full h-32 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
-                        placeholder="Enter your tweet content..."
-                      />
-                    </div>
-
-                    {/* Additional Settings */}
-                    <div className="space-y-6">
-                      {/* Font Family */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                          <Type className="w-4 h-4 text-[#5170FF]" />
-                          Font Style
-                        </label>
-                        <div className="grid grid-cols-2 gap-3">
-                          {fontOptions.map((font) => (
-                            <button
-                              key={font.value}
-                              onClick={() =>
-                                setTweetData((prev) => ({
-                                  ...prev,
-                                  fontFamily: font.value,
-                                }))
-                              }
-                              className={`p-3 rounded-lg border transition-all ${
-                                tweetData.fontFamily === font.value
-                                  ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                                  : "border-gray-200 hover:border-gray-300 text-gray-600 hover:bg-gray-50"
-                              } ${font.className}`}
-                            >
-                              {font.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Text Color */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                          <Palette className="w-4 h-4 text-[#5170FF]" />
-                          Text Color
-                        </label>
-                        <div className="flex gap-3">
-                          <div className="flex-1">
-                            <input
-                              type="text"
-                              value={tweetData.textColor}
-                              onChange={(e) =>
-                                setTweetData((prev) => ({
-                                  ...prev,
-                                  textColor: e.target.value,
-                                }))
-                              }
-                              className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
-                              placeholder="#000000"
-                            />
-                          </div>
-                          <div className="w-16 h-16 relative">
-                            <input
-                              type="color"
-                              value={tweetData.textColor}
-                              onChange={(e) =>
-                                setTweetData((prev) => ({
-                                  ...prev,
-                                  textColor: e.target.value,
-                                }))
-                              }
-                              className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                            />
-                            <div
-                              className="w-full h-full rounded-lg border border-gray-200"
-                              style={{ backgroundColor: tweetData.textColor }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Background Gradient */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                          <Layers className="w-4 h-4 text-[#5170FF]" />
-                          Background Gradient
-                        </label>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-xs text-gray-500 mb-2">
-                              Start Color
-                            </label>
-                            <div className="flex gap-3">
-                              <div className="flex-1">
-                                <input
-                                  type="text"
-                                  value={tweetData.gradientStart}
-                                  onChange={(e) =>
-                                    setTweetData((prev) => ({
-                                      ...prev,
-                                      gradientStart: e.target.value,
-                                    }))
-                                  }
-                                  className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
-                                  placeholder="#ffffff"
-                                />
-                              </div>
-                              <div className="w-16 h-16 relative">
-                                <input
-                                  type="color"
-                                  value={tweetData.gradientStart}
-                                  onChange={(e) =>
-                                    setTweetData((prev) => ({
-                                      ...prev,
-                                      gradientStart: e.target.value,
-                                    }))
-                                  }
-                                  className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                                />
-                                <div
-                                  className="w-full h-full rounded-lg border border-gray-200"
-                                  style={{
-                                    backgroundColor: tweetData.gradientStart,
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-                            <label className="block text-xs text-gray-500 mb-2">
-                              End Color
-                            </label>
-                            <div className="flex gap-3">
-                              <div className="flex-1">
-                                <input
-                                  type="text"
-                                  value={tweetData.gradientEnd}
-                                  onChange={(e) =>
-                                    setTweetData((prev) => ({
-                                      ...prev,
-                                      gradientEnd: e.target.value,
-                                    }))
-                                  }
-                                  className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
-                                  placeholder="#ffffff"
-                                />
-                              </div>
-                              <div className="w-16 h-16 relative">
-                                <input
-                                  type="color"
-                                  value={tweetData.gradientEnd}
-                                  onChange={(e) =>
-                                    setTweetData((prev) => ({
-                                      ...prev,
-                                      gradientEnd: e.target.value,
-                                    }))
-                                  }
-                                  className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                                />
-                                <div
-                                  className="w-full h-full rounded-lg border border-gray-200"
-                                  style={{
-                                    backgroundColor: tweetData.gradientEnd,
-                                  }}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Alignment */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                          <AlignLeft className="w-4 h-4 text-[#5170FF]" />
-                          Content Alignment
-                        </label>
-                        <div className="flex gap-3">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setTweetData((prev) => ({
-                                ...prev,
-                                alignment: "left",
-                              }))
-                            }
-                            className={`flex-1 p-4 rounded-xl border transition-all flex items-center justify-center gap-2 ${
-                              tweetData.alignment === "left"
-                                ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                                : "border-gray-200 hover:border-gray-300 text-gray-600"
-                            }`}
-                          >
-                            <AlignLeft className="w-4 h-4" />
-                            Left
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setTweetData((prev) => ({
-                                ...prev,
-                                alignment: "center",
-                              }))
-                            }
-                            className={`flex-1 p-4 rounded-xl border transition-all flex items-center justify-center gap-2 ${
-                              tweetData.alignment === "center"
-                                ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                                : "border-gray-200 hover:border-gray-300 text-gray-600"
-                            }`}
-                          >
-                            <AlignCenter className="w-4 h-4" />
-                            Center
-                          </button>
-                        </div>
-                      </div>
                     </div>
                   </div>
-                </div>
+                )}
+              </div>
 
-                {/* Theme Selection */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                    Choose Theme
-                  </h3>
-                  <Themes onThemeSelect={handleThemeSelect} />
-                </div>
-
-                {/* Template Selection */}
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                    Templates
-                  </h3>
-                  <Templates
-                    currentData={tweetData}
-                    onLoadTemplate={handleLoadTemplate}
-                  />
-                </div>
+              {/* Download Button */}
+              <div className="p-5 border-t">
+                <button
+                  onClick={downloadImage}
+                  className="w-full flex items-center justify-center gap-2 bg-[#5170FF] text-white px-6 py-2.5 rounded-xl font-medium hover:bg-[#4060EE] transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Image
+                </button>
               </div>
             </div>
+          </div>
 
-            {/* Preview Panel - Fixed */}
-            <div className="bg-gray-50">
-              <div className="lg:sticky lg:top-0 p-8">
-                <h2 className="text-lg font-semibold text-gray-800 mb-4">
-                  Preview
-                </h2>
-                <div className="relative">
-                  {/* Visual Preview (scaled for UI) */}
-                  <div className="w-full aspect-[4/5] bg-white rounded-2xl shadow-lg overflow-hidden">
-                    <div
-                      className="w-full h-full"
-                      style={{ aspectRatio: "1080/1350" }}
-                    >
-                      <div
-                        className="w-full h-full"
-                        style={{
-                          background: `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`,
-                        }}
-                      >
-                        <div className="flex items-center justify-center w-full h-full">
-                          <div className="w-full max-w-lg p-8">
-                            {/* Preview Content */}
-                            <div
-                              className={`flex flex-col ${
-                                tweetData.alignment === "center"
-                                  ? "items-center text-center"
-                                  : "items-start text-left"
-                              }`}
-                            >
-                              <div className="flex gap-3 mb-4">
-                                {tweetData.profilePhoto ? (
-                                  <img
-                                    src={tweetData.profilePhoto}
-                                    alt="Profile"
-                                    className="w-12 h-12 rounded-full object-cover"
-                                  />
-                                ) : (
-                                  <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-                                    <User className="w-6 h-6 text-gray-400" />
-                                  </div>
-                                )}
-                                <div className="flex flex-col">
-                                  <div className="flex items-center gap-1">
-                                    <span
-                                      className={`font-bold ${
-                                        fontOptions.find(
-                                          (f) =>
-                                            f.value === tweetData.fontFamily
-                                        )?.className || "font-inter"
-                                      }`}
-                                      style={{ color: tweetData.textColor }}
-                                    >
-                                      {tweetData.fullName}
-                                    </span>
-                                    {tweetData.verified && (
-                                      <div className="w-5 h-5 flex-shrink-0">
-                                        <img
-                                          src="/verified-check.png"
-                                          alt="Verified account"
-                                          className="w-full h-full object-contain"
-                                        />
-                                      </div>
-                                    )}
-                                  </div>
-                                  <span
-                                    className={`text-gray-500 ${
-                                      fontOptions.find(
-                                        (f) => f.value === tweetData.fontFamily
-                                      )?.className || "font-inter"
-                                    }`}
-                                  >
-                                    @{tweetData.username}
-                                  </span>
-                                </div>
-                              </div>
-                              <div
-                                className={`whitespace-pre-wrap ${
-                                  fontOptions.find(
-                                    (f) => f.value === tweetData.fontFamily
-                                  )?.className || "font-inter"
-                                }`}
-                                style={{ color: tweetData.textColor }}
-                              >
-                                {tweetData.content}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Hidden Export Element */}
+          {/* Preview Area - Right Side */}
+          <div className="lg:col-span-7 sticky top-4" ref={previewRef}>
+            <div className="bg-white rounded-2xl shadow-xl p-6">
+              <div className="max-w-md mx-auto aspect-[4/5] bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div
+                  className="w-full h-full"
+                  style={{ aspectRatio: "1080/1350" }}
+                >
                   <div
-                    ref={previewRef}
-                    data-preview="true"
+                    className="w-full h-full"
                     style={{
-                      position: "fixed",
-                      top: "-9999px",
-                      left: "-9999px",
-                      width: "1080px",
-                      height: "1350px",
-                      padding: "0",
-                      margin: "0",
                       background: `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`,
                     }}
                   >
                     <div className="flex items-center justify-center w-full h-full">
-                      <div className="w-full max-w-[960px] p-28">
+                      <div className="w-full max-w-md p-6">
                         <div
                           className={`flex flex-col ${
                             tweetData.alignment === "center"
@@ -596,22 +494,22 @@ export default function TweetImages() {
                               : "items-start text-left"
                           }`}
                         >
-                          <div className="flex items-center gap-7 mb-10">
+                          <div className="flex gap-3 mb-4">
                             {tweetData.profilePhoto ? (
                               <img
                                 src={tweetData.profilePhoto}
                                 alt="Profile"
-                                className="w-24 h-24 rounded-full object-cover"
+                                className="w-12 h-12 rounded-full object-cover"
                               />
                             ) : (
-                              <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-                                <User className="w-12 h-12 text-gray-400" />
+                              <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+                                <User className="w-6 h-6 text-gray-400" />
                               </div>
                             )}
-                            <div className="flex flex-col gap-2">
-                              <div className="flex items-center">
+                            <div className="flex flex-col">
+                              <div className="flex items-center gap-1">
                                 <span
-                                  className={`text-[48px] font-bold ${
+                                  className={`font-bold ${
                                     fontOptions.find(
                                       (f) => f.value === tweetData.fontFamily
                                     )?.className || "font-inter"
@@ -621,7 +519,7 @@ export default function TweetImages() {
                                   {tweetData.fullName}
                                 </span>
                                 {tweetData.verified && (
-                                  <div className="w-5 h-5 flex-shrink-0 ml-1">
+                                  <div className="w-5 h-5 flex-shrink-0">
                                     <img
                                       src="/verified-check.png"
                                       alt="Verified account"
@@ -631,7 +529,7 @@ export default function TweetImages() {
                                 )}
                               </div>
                               <span
-                                className={`text-[32px] text-gray-500 ${
+                                className={`text-gray-500 ${
                                   fontOptions.find(
                                     (f) => f.value === tweetData.fontFamily
                                   )?.className || "font-inter"
@@ -642,7 +540,7 @@ export default function TweetImages() {
                             </div>
                           </div>
                           <div
-                            className={`whitespace-pre-wrap text-[36px] leading-[1.5] ${
+                            className={`whitespace-pre-wrap ${
                               fontOptions.find(
                                 (f) => f.value === tweetData.fontFamily
                               )?.className || "font-inter"
@@ -656,15 +554,6 @@ export default function TweetImages() {
                     </div>
                   </div>
                 </div>
-
-                {/* Download Button */}
-                <button
-                  onClick={downloadImage}
-                  className="mt-6 w-full flex items-center justify-center gap-2 bg-[#5170FF] text-white py-3 px-6 rounded-xl font-medium hover:bg-[#5170FF]/90 transition-colors"
-                >
-                  <Download className="w-5 h-5" />
-                  Download Image
-                </button>
               </div>
             </div>
           </div>
