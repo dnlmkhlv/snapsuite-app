@@ -1,18 +1,423 @@
 "use client";
 
+import { useState, useRef } from "react";
+import html2canvas from "html2canvas";
+import {
+  Palette,
+  Type,
+  User,
+  AlignLeft,
+  AlignCenter,
+  Quote,
+} from "lucide-react";
+import EditorLayout from "../components/EditorLayout";
+
+interface QuoteData {
+  content: string;
+  author: string;
+  role: string;
+  alignment: "left" | "center";
+  gradientStart: string;
+  gradientEnd: string;
+  textColor: string;
+  fontFamily: string;
+}
+
+const fontOptions = [
+  { value: "Inter", label: "Inter", className: "font-inter" },
+  { value: "Roboto", label: "Roboto", className: "font-roboto" },
+  { value: "Open Sans", label: "Open Sans", className: "font-open-sans" },
+  { value: "Lato", label: "Lato", className: "font-lato" },
+  { value: "Poppins", label: "Poppins", className: "font-poppins" },
+  { value: "Montserrat", label: "Montserrat", className: "font-montserrat" },
+];
+
 export default function Quotes() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-            Quote Cards
-          </h1>
-          <p className="text-gray-600">
-            Coming soon! Create beautiful quote card images.
-          </p>
+  const [activeTab, setActiveTab] = useState<"content" | "style" | "author">(
+    "content"
+  );
+  const [quoteData, setQuoteData] = useState<QuoteData>({
+    content: "The only way to do great work is to love what you do.",
+    author: "Steve Jobs",
+    role: "Co-founder of Apple Inc.",
+    alignment: "center",
+    gradientStart: "#4F46E5",
+    gradientEnd: "#9333EA",
+    textColor: "#ffffff",
+    fontFamily: "Inter",
+  });
+
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  const downloadImage = async () => {
+    if (!previewRef.current) return;
+
+    try {
+      const canvas = await html2canvas(previewRef.current, {
+        backgroundColor: null,
+        useCORS: true,
+        scale: 2,
+        logging: false,
+      });
+
+      const link = document.createElement("a");
+      link.download = `quote-${Date.now()}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch (error) {
+      console.error("Error generating image:", error);
+    }
+  };
+
+  const toolsPanel = (
+    <>
+      {/* Tab Navigation */}
+      <div className="flex border-b">
+        <button
+          onClick={() => setActiveTab("content")}
+          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+            activeTab === "content"
+              ? "text-[#5170FF]"
+              : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          <Quote className="w-4 h-4" />
+          Content
+          {activeTab === "content" && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab("style")}
+          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+            activeTab === "style"
+              ? "text-[#5170FF]"
+              : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          <Palette className="w-4 h-4" />
+          Style
+          {activeTab === "style" && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab("author")}
+          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+            activeTab === "author"
+              ? "text-[#5170FF]"
+              : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          <User className="w-4 h-4" />
+          Author
+          {activeTab === "author" && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+          )}
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      <div className="p-5">
+        {activeTab === "content" && (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Quote
+              </label>
+              <textarea
+                value={quoteData.content}
+                onChange={(e) =>
+                  setQuoteData((prev) => ({
+                    ...prev,
+                    content: e.target.value,
+                  }))
+                }
+                className="w-full h-48 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
+                placeholder="Enter your quote..."
+              />
+            </div>
+            <div className="flex gap-4">
+              <button
+                onClick={() =>
+                  setQuoteData((prev) => ({
+                    ...prev,
+                    alignment: "left",
+                  }))
+                }
+                className={`flex-1 p-3 rounded-xl border transition-all flex items-center justify-center gap-2 ${
+                  quoteData.alignment === "left"
+                    ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                    : "border-gray-200 hover:border-gray-300 text-gray-600"
+                }`}
+              >
+                <AlignLeft className="w-4 h-4" />
+                Left
+              </button>
+              <button
+                onClick={() =>
+                  setQuoteData((prev) => ({
+                    ...prev,
+                    alignment: "center",
+                  }))
+                }
+                className={`flex-1 p-3 rounded-xl border transition-all flex items-center justify-center gap-2 ${
+                  quoteData.alignment === "center"
+                    ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                    : "border-gray-200 hover:border-gray-300 text-gray-600"
+                }`}
+              >
+                <AlignCenter className="w-4 h-4" />
+                Center
+              </button>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "style" && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Start Color
+                </label>
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    value={quoteData.gradientStart}
+                    onChange={(e) =>
+                      setQuoteData((prev) => ({
+                        ...prev,
+                        gradientStart: e.target.value,
+                      }))
+                    }
+                    className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                  />
+                  <div className="w-12 h-12 relative">
+                    <input
+                      type="color"
+                      value={quoteData.gradientStart}
+                      onChange={(e) =>
+                        setQuoteData((prev) => ({
+                          ...prev,
+                          gradientStart: e.target.value,
+                        }))
+                      }
+                      className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                    />
+                    <div
+                      className="w-full h-full rounded-lg border border-gray-200"
+                      style={{ backgroundColor: quoteData.gradientStart }}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  End Color
+                </label>
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    value={quoteData.gradientEnd}
+                    onChange={(e) =>
+                      setQuoteData((prev) => ({
+                        ...prev,
+                        gradientEnd: e.target.value,
+                      }))
+                    }
+                    className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                  />
+                  <div className="w-12 h-12 relative">
+                    <input
+                      type="color"
+                      value={quoteData.gradientEnd}
+                      onChange={(e) =>
+                        setQuoteData((prev) => ({
+                          ...prev,
+                          gradientEnd: e.target.value,
+                        }))
+                      }
+                      className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                    />
+                    <div
+                      className="w-full h-full rounded-lg border border-gray-200"
+                      style={{ backgroundColor: quoteData.gradientEnd }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Text Color
+              </label>
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  value={quoteData.textColor}
+                  onChange={(e) =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      textColor: e.target.value,
+                    }))
+                  }
+                  className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                />
+                <div className="w-12 h-12 relative">
+                  <input
+                    type="color"
+                    value={quoteData.textColor}
+                    onChange={(e) =>
+                      setQuoteData((prev) => ({
+                        ...prev,
+                        textColor: e.target.value,
+                      }))
+                    }
+                    className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                  />
+                  <div
+                    className="w-full h-full rounded-lg border border-gray-200"
+                    style={{ backgroundColor: quoteData.textColor }}
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Font Style
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {fontOptions.map((font) => (
+                  <button
+                    key={font.value}
+                    onClick={() =>
+                      setQuoteData((prev) => ({
+                        ...prev,
+                        fontFamily: font.value,
+                      }))
+                    }
+                    className={`p-3 rounded-lg border transition-all ${
+                      quoteData.fontFamily === font.value
+                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                        : "border-gray-200 hover:border-gray-300 text-gray-600"
+                    } ${font.className}`}
+                  >
+                    {font.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "author" && (
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Author Name
+              </label>
+              <input
+                type="text"
+                value={quoteData.author}
+                onChange={(e) =>
+                  setQuoteData((prev) => ({
+                    ...prev,
+                    author: e.target.value,
+                  }))
+                }
+                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                placeholder="Enter author's name..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Role/Title
+              </label>
+              <input
+                type="text"
+                value={quoteData.role}
+                onChange={(e) =>
+                  setQuoteData((prev) => ({
+                    ...prev,
+                    role: e.target.value,
+                  }))
+                }
+                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                placeholder="Enter author's role or title..."
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+
+  const preview = (
+    <div
+      ref={previewRef}
+      className="max-w-2xl mx-auto aspect-[4/3] bg-white rounded-2xl shadow-lg overflow-hidden"
+    >
+      <div
+        className="w-full h-full flex items-center justify-center p-12"
+        style={{
+          background: `linear-gradient(to bottom right, ${quoteData.gradientStart}, ${quoteData.gradientEnd})`,
+        }}
+      >
+        <div
+          className={`w-full flex flex-col ${
+            quoteData.alignment === "center"
+              ? "items-center text-center"
+              : "items-start text-left"
+          }`}
+        >
+          <div
+            className="text-6xl mb-8 opacity-20"
+            style={{ color: quoteData.textColor }}
+          >
+            "
+          </div>
+          <div
+            className={`text-2xl mb-8 ${
+              fontOptions.find((f) => f.value === quoteData.fontFamily)
+                ?.className || "font-inter"
+            }`}
+            style={{ color: quoteData.textColor }}
+          >
+            {quoteData.content}
+          </div>
+          <div className="space-y-1">
+            <div
+              className={`font-bold ${
+                fontOptions.find((f) => f.value === quoteData.fontFamily)
+                  ?.className || "font-inter"
+              }`}
+              style={{ color: quoteData.textColor }}
+            >
+              {quoteData.author}
+            </div>
+            {quoteData.role && (
+              <div
+                className={`text-sm opacity-80 ${
+                  fontOptions.find((f) => f.value === quoteData.fontFamily)
+                    ?.className || "font-inter"
+                }`}
+                style={{ color: quoteData.textColor }}
+              >
+                {quoteData.role}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
+  );
+
+  return (
+    <EditorLayout
+      toolsPanel={toolsPanel}
+      preview={preview}
+      onDownload={downloadImage}
+    />
   );
 }

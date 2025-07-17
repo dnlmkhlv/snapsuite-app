@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import "./globals.css";
 import {
   Inter,
   Roboto,
@@ -7,7 +7,6 @@ import {
   Poppins,
   Montserrat,
 } from "next/font/google";
-import "./globals.css";
 import Header from "./components/Header";
 import TabNav from "./components/TabNav";
 import Footer from "./components/Footer";
@@ -39,7 +38,7 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "SnapSuite - Turn Content into Visuals",
   description:
     "Create beautiful visuals from your tweets, code snippets, and quotes instantly.",
@@ -47,9 +46,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body

@@ -2,35 +2,37 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Twitter, Code, Quote } from "lucide-react";
-
-const tabs = [
-  {
-    name: "Tweets",
-    href: "/tweet-images",
-    icon: Twitter,
-  },
-  {
-    name: "Code",
-    href: "/code-snippets",
-    icon: Code,
-  },
-  {
-    name: "Quotes",
-    href: "/quotes",
-    icon: Quote,
-  },
-];
+import { MessageSquare, Code, Quote } from "lucide-react";
 
 export default function TabNav() {
   const pathname = usePathname();
 
+  const tabs = [
+    {
+      name: "Tweets",
+      href: "/tweet-images",
+      icon: MessageSquare,
+    },
+    {
+      name: "Code",
+      href: "/code-snippets",
+      icon: Code,
+    },
+    {
+      name: "Quotes",
+      href: "/quotes",
+      icon: Quote,
+    },
+  ];
+
   return (
-    <div className="bg-white border-b">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-center">
+    <div className="bg-white border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex">
           {tabs.map((tab) => {
+            const Icon = tab.icon;
             const isActive = pathname === tab.href;
+
             return (
               <Link
                 key={tab.name}
@@ -41,7 +43,7 @@ export default function TabNav() {
                     : "text-gray-600 hover:text-gray-900"
                 }`}
               >
-                <tab.icon className="w-4 h-4" />
+                <Icon className="w-4 h-4" />
                 {tab.name}
                 {isActive && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
