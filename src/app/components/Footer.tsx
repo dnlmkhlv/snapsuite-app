@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -5,9 +6,15 @@ export default function Footer() {
     <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col items-center text-center">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="text-[#5170FF] text-2xl font-bold">S</div>
-            <span className="text-xl font-semibold text-gray-900">
+          <div className="flex items-center gap-1 mb-6">
+            <Image
+              src="/snapsuite-logo.png"
+              alt="SnapSuite"
+              width={32}
+              height={32}
+              className="w-16 h-16 -rotate-12"
+            />
+            <span className="text-xl font-semibold text-gray-800">
               SnapSuite
             </span>
           </div>
