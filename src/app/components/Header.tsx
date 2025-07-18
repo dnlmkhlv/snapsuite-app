@@ -7,32 +7,24 @@ export default function Header() {
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <Image
-              src="/snapsuite-logo.png"
-              alt="SnapSuite"
-              width={32}
-              height={32}
-              className="w-8 h-8"
-            />
-            <span className="text-gray-900 font-medium">SnapSuite</span>
+        <div className="flex items-center justify-center py-6">
+          <Link href="/" className="flex flex-col items-center">
+            <div className="flex items-center gap-3 mb-1">
+              <Image
+                src="/snapsuite-logo.png"
+                alt="SnapSuite"
+                width={40}
+                height={40}
+                className="w-10 h-10"
+              />
+              <span className="text-2xl font-semibold text-gray-900">
+                SnapSuite
+              </span>
+            </div>
+            <p className="text-sm text-gray-600">
+              Turning content into beautiful visuals, instantly.
+            </p>
           </Link>
-
-          <nav className="flex items-center gap-6">
-            <Link
-              href="/about"
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Contact
-            </Link>
-          </nav>
         </div>
       </div>
     </header>
