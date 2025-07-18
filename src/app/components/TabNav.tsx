@@ -42,14 +42,15 @@ export default function TabNav() {
               <Link
                 key={tab.name}
                 href={tab.href}
-                className={`flex items-center gap-2 px-8 py-4 font-medium transition-colors relative ${
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-8 py-3 sm:py-4 font-medium transition-colors relative text-sm sm:text-base ${
                   isActive
                     ? "text-[#5170FF]"
                     : "text-gray-600 hover:text-gray-900"
                 }`}
               >
                 <Icon className="w-4 h-4" />
-                {tab.name}
+                <span className="hidden sm:inline">{tab.name}</span>
+                <span className="sm:hidden">{tab.name.slice(0, 1)}</span>
                 {isActive && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
                 )}

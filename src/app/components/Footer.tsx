@@ -4,29 +4,29 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-white border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
         <div className="flex flex-col items-center text-center">
-          <div className="flex items-center gap-1 mb-6">
+          <div className="flex items-center gap-1 mb-4 sm:mb-6">
             <Image
               src="/snapsuite-logo.png"
               alt="SnapSuite"
               width={32}
               height={32}
-              className="w-16 h-16 -rotate-12"
+              className="w-12 h-12 sm:w-16 sm:h-16 -rotate-12"
             />
-            <span className="text-xl font-semibold text-gray-800">
+            <span className="text-lg sm:text-xl font-semibold text-gray-800">
               SnapSuite
             </span>
           </div>
-          <p className="text-sm text-gray-600 mb-6 max-w-md">
+          <p className="text-sm text-gray-600 mb-4 sm:mb-6 max-w-md px-4">
             Create beautiful visuals from your content instantly. Transform
             tweets, code snippets, quotes, and images into shareable graphics.
           </p>
           <div className="space-y-1">
-            <p className="text-sm text-gray-600">
+            <p className="text-xs sm:text-sm text-gray-600">
               © {new Date().getFullYear()} SnapSuite. All rights reserved.
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-xs sm:text-sm text-gray-600">
               Created by{" "}
               <a
                 href="https://www.daniilmikhailov.com"
