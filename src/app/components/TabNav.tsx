@@ -28,7 +28,7 @@ export default function TabNav() {
   return (
     <div className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex">
+        <div className="flex justify-center">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = pathname === tab.href;
@@ -37,7 +37,7 @@ export default function TabNav() {
               <Link
                 key={tab.name}
                 href={tab.href}
-                className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+                className={`flex items-center gap-2 px-8 py-4 font-medium transition-colors relative ${
                   isActive
                     ? "text-[#5170FF]"
                     : "text-gray-600 hover:text-gray-900"
