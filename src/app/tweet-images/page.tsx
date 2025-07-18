@@ -56,9 +56,9 @@ const VerifiedBadge = () => (
 export default function TweetImages() {
   const [tweetData, setTweetData] = useState<TweetData>({
     content:
-      "Just launched my new app! 🚀\n\nExcited to share this with everyone. The journey has been incredible and I can't wait to see where it goes next.\n\n#Tech #Innovation #Startup",
-    username: "@username",
-    fullName: "Alex Hormozi",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    username: "johndoe",
+    fullName: "John Doe",
     verified: false,
     profilePhoto: null,
     textColor: "#000000",
