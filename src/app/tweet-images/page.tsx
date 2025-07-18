@@ -33,6 +33,8 @@ interface TweetData {
   gradientEnd: string;
 }
 
+const MAX_TWEET_LENGTH = 280;
+
 const fontOptions = [
   { value: "Inter", label: "Inter", className: "font-inter" },
   { value: "Roboto", label: "Roboto", className: "font-roboto" },
@@ -143,6 +145,16 @@ export default function TweetImages() {
     });
   };
 
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = e.target.value;
+    if (newContent.length <= MAX_TWEET_LENGTH) {
+      setTweetData((prev) => ({
+        ...prev,
+        content: newContent,
+      }));
+    }
+  };
+
   const toolsPanel = (
     <>
       {/* Tab Navigation */}
@@ -195,17 +207,29 @@ export default function TweetImages() {
       <div className="p-5">
         {activeTab === "text" && (
           <div className="space-y-4">
-            <textarea
-              value={tweetData.content}
-              onChange={(e) =>
-                setTweetData((prev) => ({
-                  ...prev,
-                  content: e.target.value,
-                }))
-              }
-              className="w-full h-48 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
-              placeholder="Enter your tweet content..."
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Tweet Content
+              </label>
+              <textarea
+                value={tweetData.content}
+                onChange={handleContentChange}
+                className="w-full h-48 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300"
+                placeholder="Enter your tweet content..."
+                maxLength={MAX_TWEET_LENGTH}
+              />
+              <div className="mt-2 flex justify-end">
+                <span
+                  className={`text-sm ${
+                    tweetData.content.length === MAX_TWEET_LENGTH
+                      ? "text-red-500"
+                      : "text-gray-500"
+                  }`}
+                >
+                  {tweetData.content.length} / {MAX_TWEET_LENGTH}
+                </span>
+              </div>
+            </div>
             <div className="flex gap-4">
               <button
                 onClick={() =>
