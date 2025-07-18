@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MessageSquare, Code, Quote } from "lucide-react";
+import { MessageSquare, Code, Quote, Image } from "lucide-react";
 
 export default function TabNav() {
   const pathname = usePathname();
@@ -22,6 +22,11 @@ export default function TabNav() {
       name: "Quotes",
       href: "/quotes",
       icon: Quote,
+    },
+    {
+      name: "Images",
+      href: "/images",
+      icon: Image,
     },
   ];
 
