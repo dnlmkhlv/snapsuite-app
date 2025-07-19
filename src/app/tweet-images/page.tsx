@@ -13,6 +13,8 @@ import {
   Layers,
   Settings,
   Image as ImageIcon,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import Themes from "../components/Themes";
 import Templates from "../components/Templates";
@@ -129,6 +131,7 @@ export default function TweetImages() {
     "text"
   );
   const previewRef = useRef<HTMLDivElement>(null);
+  const [isTextColorsOpen, setIsTextColorsOpen] = useState(false);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -378,31 +381,29 @@ export default function TweetImages() {
               </div>
             </div>
 
-            {/* Text Colors */}
-            <div className="space-y-6">
-              <label className="block text-sm font-medium text-gray-700">
-                Text Colors
-              </label>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Name Color
-                  </label>
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      value={tweetData.nameColor}
-                      onChange={(e) =>
-                        setTweetData((prev) => ({
-                          ...prev,
-                          nameColor: e.target.value,
-                        }))
-                      }
-                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                    />
-                    <div className="w-12 h-12 relative">
+            {/* Text Colors Dropdown */}
+            <div className="space-y-2">
+              <button
+                onClick={() => setIsTextColorsOpen(!isTextColorsOpen)}
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Text Colors</span>
+                {isTextColorsOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+
+              {isTextColorsOpen && (
+                <div className="p-4 border border-gray-200 rounded-xl bg-white space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Name Color
+                    </label>
+                    <div className="flex gap-3">
                       <input
-                        type="color"
+                        type="text"
                         value={tweetData.nameColor}
                         onChange={(e) =>
                           setTweetData((prev) => ({
@@ -410,35 +411,35 @@ export default function TweetImages() {
                             nameColor: e.target.value,
                           }))
                         }
-                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                       />
-                      <div
-                        className="w-full h-full rounded-xl border border-gray-200"
-                        style={{ backgroundColor: tweetData.nameColor }}
-                      />
+                      <div className="w-12 h-12 relative">
+                        <input
+                          type="color"
+                          value={tweetData.nameColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              nameColor: e.target.value,
+                            }))
+                          }
+                          className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                        />
+                        <div
+                          className="w-full h-full rounded-xl border border-gray-200"
+                          style={{ backgroundColor: tweetData.nameColor }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Username Color
-                  </label>
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      value={tweetData.usernameColor}
-                      onChange={(e) =>
-                        setTweetData((prev) => ({
-                          ...prev,
-                          usernameColor: e.target.value,
-                        }))
-                      }
-                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                    />
-                    <div className="w-12 h-12 relative">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Username Color
+                    </label>
+                    <div className="flex gap-3">
                       <input
-                        type="color"
+                        type="text"
                         value={tweetData.usernameColor}
                         onChange={(e) =>
                           setTweetData((prev) => ({
@@ -446,35 +447,35 @@ export default function TweetImages() {
                             usernameColor: e.target.value,
                           }))
                         }
-                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                       />
-                      <div
-                        className="w-full h-full rounded-xl border border-gray-200"
-                        style={{ backgroundColor: tweetData.usernameColor }}
-                      />
+                      <div className="w-12 h-12 relative">
+                        <input
+                          type="color"
+                          value={tweetData.usernameColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              usernameColor: e.target.value,
+                            }))
+                          }
+                          className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                        />
+                        <div
+                          className="w-full h-full rounded-xl border border-gray-200"
+                          style={{ backgroundColor: tweetData.usernameColor }}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Content Color
-                  </label>
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      value={tweetData.contentColor}
-                      onChange={(e) =>
-                        setTweetData((prev) => ({
-                          ...prev,
-                          contentColor: e.target.value,
-                        }))
-                      }
-                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                    />
-                    <div className="w-12 h-12 relative">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Content Color
+                    </label>
+                    <div className="flex gap-3">
                       <input
-                        type="color"
+                        type="text"
                         value={tweetData.contentColor}
                         onChange={(e) =>
                           setTweetData((prev) => ({
@@ -482,16 +483,29 @@ export default function TweetImages() {
                             contentColor: e.target.value,
                           }))
                         }
-                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                       />
-                      <div
-                        className="w-full h-full rounded-xl border border-gray-200"
-                        style={{ backgroundColor: tweetData.contentColor }}
-                      />
+                      <div className="w-12 h-12 relative">
+                        <input
+                          type="color"
+                          value={tweetData.contentColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              contentColor: e.target.value,
+                            }))
+                          }
+                          className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                        />
+                        <div
+                          className="w-full h-full rounded-xl border border-gray-200"
+                          style={{ backgroundColor: tweetData.contentColor }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Border Controls */}
