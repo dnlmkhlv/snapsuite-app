@@ -349,16 +349,17 @@ export default function TweetImages() {
                     setTweetData((prev) => ({
                       ...prev,
                       cardTheme: "light",
-                      textColor: "#000000",
+                      nameColor: "#000000",
+                      usernameColor: "#536471",
+                      contentColor: "#000000",
                     }))
                   }
-                  className={`p-3 rounded-xl border transition-all flex items-center justify-center gap-2 ${
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
                     tweetData.cardTheme === "light"
-                      ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                      : "border-gray-200 hover:border-gray-300 text-gray-600"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
                   }`}
                 >
-                  <div className="w-5 h-5 rounded bg-white border border-gray-200" />
                   Light
                 </button>
                 <button
@@ -366,16 +367,17 @@ export default function TweetImages() {
                     setTweetData((prev) => ({
                       ...prev,
                       cardTheme: "dark",
-                      textColor: "#ffffff",
+                      nameColor: "#ffffff",
+                      usernameColor: "#8B98A5",
+                      contentColor: "#ffffff",
                     }))
                   }
-                  className={`p-3 rounded-xl border transition-all flex items-center justify-center gap-2 ${
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
                     tweetData.cardTheme === "dark"
-                      ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                      : "border-gray-200 hover:border-gray-300 text-gray-600"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
                   }`}
                 >
-                  <div className="w-5 h-5 rounded bg-gray-900" />
                   Dark
                 </button>
               </div>
