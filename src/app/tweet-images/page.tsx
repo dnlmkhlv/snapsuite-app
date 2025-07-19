@@ -33,6 +33,9 @@ interface TweetData {
   gradientStart: string;
   gradientEnd: string;
   showBorder: boolean;
+  borderStyle: "solid" | "dashed" | "dotted" | "double";
+  borderWidth: number;
+  borderColor: string;
 }
 
 const MAX_TWEET_LENGTH = 280;
@@ -79,6 +82,13 @@ const themes = [
   },
 ];
 
+const borderStyles = [
+  { value: "solid", label: "Solid" },
+  { value: "dashed", label: "Dashed" },
+  { value: "dotted", label: "Dotted" },
+  { value: "double", label: "Double" },
+] as const;
+
 const VerifiedBadge = () => (
   <svg
     viewBox="0 0 22 22"
@@ -106,6 +116,9 @@ export default function TweetImages() {
     gradientStart: "#ffffff",
     gradientEnd: "#ffffff",
     showBorder: true,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "#e5e7eb", // gray-200
   });
 
   const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
@@ -331,24 +344,120 @@ export default function TweetImages() {
               </div>
             </div>
 
-            {/* Card Border */}
-            <div>
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={tweetData.showBorder}
-                  onChange={(e) =>
-                    setTweetData((prev) => ({
-                      ...prev,
-                      showBorder: e.target.checked,
-                    }))
-                  }
-                  className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
-                />
-                <span className="text-sm font-medium text-gray-700">
-                  Show card border
-                </span>
-              </label>
+            {/* Border Controls */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-gray-700">
+                  Card Border
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={tweetData.showBorder}
+                    onChange={(e) =>
+                      setTweetData((prev) => ({
+                        ...prev,
+                        showBorder: e.target.checked,
+                      }))
+                    }
+                    className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
+                  />
+                  <span className="text-sm text-gray-600">Show border</span>
+                </div>
+              </div>
+
+              {tweetData.showBorder && (
+                <div className="space-y-4 pt-2">
+                  {/* Border Style */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Style
+                    </label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {borderStyles.map((style) => (
+                        <button
+                          key={style.value}
+                          onClick={() =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              borderStyle: style.value,
+                            }))
+                          }
+                          className={`p-2 rounded-lg border text-sm transition-all ${
+                            tweetData.borderStyle === style.value
+                              ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                              : "border-gray-200 hover:border-gray-300 text-gray-600"
+                          }`}
+                        >
+                          {style.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Border Width */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Thickness
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <input
+                        type="range"
+                        min="1"
+                        max="5"
+                        value={tweetData.borderWidth}
+                        onChange={(e) =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            borderWidth: parseInt(e.target.value),
+                          }))
+                        }
+                        className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
+                      />
+                      <span className="text-sm text-gray-600 min-w-[2.5rem]">
+                        {tweetData.borderWidth}px
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Border Color */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Color
+                    </label>
+                    <div className="flex gap-3">
+                      <input
+                        type="text"
+                        value={tweetData.borderColor}
+                        onChange={(e) =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            borderColor: e.target.value,
+                          }))
+                        }
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                      />
+                      <div className="w-12 h-12 relative">
+                        <input
+                          type="color"
+                          value={tweetData.borderColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              borderColor: e.target.value,
+                            }))
+                          }
+                          className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                        />
+                        <div
+                          className="w-full h-full rounded-lg border border-gray-200"
+                          style={{ backgroundColor: tweetData.borderColor }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Background Theme */}
@@ -621,6 +730,15 @@ export default function TweetImages() {
                   ? `bg-white ${tweetData.showBorder ? "border border-gray-200" : ""}`
                   : `bg-gray-900 ${tweetData.showBorder ? "border border-gray-800" : ""}`
               }`}
+              style={
+                tweetData.showBorder
+                  ? {
+                      borderStyle: tweetData.borderStyle,
+                      borderWidth: `${tweetData.borderWidth}px`,
+                      borderColor: tweetData.borderColor,
+                    }
+                  : {}
+              }
             >
               <div className="p-6">
                 <div
