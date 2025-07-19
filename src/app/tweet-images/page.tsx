@@ -581,105 +581,112 @@ export default function TweetImages() {
   );
 
   const preview = (
-    <div
-      ref={previewRef}
-      className="max-w-md mx-auto aspect-[4/5] bg-white rounded-2xl shadow-lg overflow-hidden"
-    >
+    <div className="p-4">
       <div
-        className="w-full h-full"
-        style={{
-          background: `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`,
-        }}
+        ref={previewRef}
+        className="max-w-md mx-auto aspect-[4/5] bg-white rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden"
       >
-        <div className="flex items-center justify-center w-full h-full p-6">
-          <div
-            className={`w-full max-w-md rounded-xl p-6 ${
-              tweetData.cardTheme === "light" ? "bg-white" : "bg-gray-900"
-            }`}
-          >
+        <div
+          className="w-full h-full"
+          style={{
+            background: `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`,
+          }}
+        >
+          <div className="flex items-center justify-center w-full h-full p-8">
             <div
-              className={`flex flex-col ${
-                tweetData.alignment === "center"
-                  ? "items-center text-center"
-                  : "items-start text-left"
+              className={`w-full rounded-2xl shadow-xl ${
+                tweetData.cardTheme === "light"
+                  ? "bg-white border border-gray-200"
+                  : "bg-gray-900 border border-gray-800"
               }`}
             >
-              <div className="flex gap-3 mb-4">
-                {tweetData.profilePhoto ? (
-                  <img
-                    src={tweetData.profilePhoto}
-                    alt="Profile"
-                    className="w-12 h-12 rounded-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className={`w-12 h-12 rounded-full ${
-                      tweetData.cardTheme === "light"
-                        ? "bg-gray-200"
-                        : "bg-gray-700"
-                    } flex items-center justify-center`}
-                  >
-                    <User
-                      className={`w-6 h-6 ${
-                        tweetData.cardTheme === "light"
-                          ? "text-gray-400"
-                          : "text-gray-500"
-                      }`}
-                    />
-                  </div>
-                )}
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-1">
-                    <span
-                      className={`font-bold ${
-                        fontOptions.find(
-                          (f) => f.value === tweetData.fontFamily
-                        )?.className || "font-inter"
-                      }`}
-                      style={{
-                        color:
+              <div className="p-6">
+                <div
+                  className={`flex flex-col ${
+                    tweetData.alignment === "center"
+                      ? "items-center text-center"
+                      : "items-start text-left"
+                  }`}
+                >
+                  <div className="flex gap-3 mb-4">
+                    {tweetData.profilePhoto ? (
+                      <img
+                        src={tweetData.profilePhoto}
+                        alt="Profile"
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        className={`w-12 h-12 rounded-full ${
                           tweetData.cardTheme === "light"
-                            ? "#000000"
-                            : "#ffffff",
-                      }}
-                    >
-                      {tweetData.fullName}
-                    </span>
-                    {tweetData.verified && (
-                      <div className="w-5 h-5 flex-shrink-0">
-                        <img
-                          src="/verified-check.png"
-                          alt="Verified account"
-                          className="w-full h-full object-contain"
+                            ? "bg-gray-200"
+                            : "bg-gray-700"
+                        } flex items-center justify-center`}
+                      >
+                        <User
+                          className={`w-6 h-6 ${
+                            tweetData.cardTheme === "light"
+                              ? "text-gray-400"
+                              : "text-gray-500"
+                          }`}
                         />
                       </div>
                     )}
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-1">
+                        <span
+                          className={`font-bold ${
+                            fontOptions.find(
+                              (f) => f.value === tweetData.fontFamily
+                            )?.className || "font-inter"
+                          }`}
+                          style={{
+                            color:
+                              tweetData.cardTheme === "light"
+                                ? "#000000"
+                                : "#ffffff",
+                          }}
+                        >
+                          {tweetData.fullName}
+                        </span>
+                        {tweetData.verified && (
+                          <div className="w-5 h-5 flex-shrink-0">
+                            <img
+                              src="/verified-check.png"
+                              alt="Verified account"
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        )}
+                      </div>
+                      <span
+                        className={`${
+                          tweetData.cardTheme === "light"
+                            ? "text-gray-500"
+                            : "text-gray-400"
+                        } ${
+                          fontOptions.find(
+                            (f) => f.value === tweetData.fontFamily
+                          )?.className || "font-inter"
+                        }`}
+                      >
+                        @{tweetData.username}
+                      </span>
+                    </div>
                   </div>
-                  <span
-                    className={`${
-                      tweetData.cardTheme === "light"
-                        ? "text-gray-500"
-                        : "text-gray-400"
-                    } ${
+                  <div
+                    className={`whitespace-pre-wrap ${
                       fontOptions.find((f) => f.value === tweetData.fontFamily)
                         ?.className || "font-inter"
                     }`}
+                    style={{
+                      color:
+                        tweetData.cardTheme === "light" ? "#000000" : "#ffffff",
+                    }}
                   >
-                    @{tweetData.username}
-                  </span>
+                    {tweetData.content}
+                  </div>
                 </div>
-              </div>
-              <div
-                className={`whitespace-pre-wrap ${
-                  fontOptions.find((f) => f.value === tweetData.fontFamily)
-                    ?.className || "font-inter"
-                }`}
-                style={{
-                  color:
-                    tweetData.cardTheme === "light" ? "#000000" : "#ffffff",
-                }}
-              >
-                {tweetData.content}
               </div>
             </div>
           </div>
