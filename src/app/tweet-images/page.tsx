@@ -426,18 +426,24 @@ export default function TweetImages() {
                       Color
                     </label>
                     <div className="flex gap-3">
-                      <input
-                        type="text"
-                        value={tweetData.borderColor}
-                        onChange={(e) =>
-                          setTweetData((prev) => ({
-                            ...prev,
-                            borderColor: e.target.value,
-                          }))
-                        }
-                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                      />
-                      <div className="w-12 h-12 relative">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={tweetData.borderColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              borderColor: e.target.value,
+                            }))
+                          }
+                          className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                        />
+                      </div>
+                      <div className="relative w-12 h-12">
+                        <div
+                          className="absolute inset-0 rounded-lg border border-gray-200"
+                          style={{ backgroundColor: tweetData.borderColor }}
+                        />
                         <input
                           type="color"
                           value={tweetData.borderColor}
@@ -447,11 +453,7 @@ export default function TweetImages() {
                               borderColor: e.target.value,
                             }))
                           }
-                          className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                        />
-                        <div
-                          className="w-full h-full rounded-lg border border-gray-200"
-                          style={{ backgroundColor: tweetData.borderColor }}
+                          className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
                         />
                       </div>
                     </div>
@@ -506,18 +508,24 @@ export default function TweetImages() {
                       Start Color
                     </label>
                     <div className="flex gap-3">
-                      <input
-                        type="text"
-                        value={tweetData.gradientStart}
-                        onChange={(e) =>
-                          setTweetData((prev) => ({
-                            ...prev,
-                            gradientStart: e.target.value,
-                          }))
-                        }
-                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                      />
-                      <div className="w-12 h-12 relative">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={tweetData.gradientStart}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              gradientStart: e.target.value,
+                            }))
+                          }
+                          className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                        />
+                      </div>
+                      <div className="relative w-12 h-12">
+                        <div
+                          className="absolute inset-0 rounded-lg border border-gray-200"
+                          style={{ backgroundColor: tweetData.gradientStart }}
+                        />
                         <input
                           type="color"
                           value={tweetData.gradientStart}
@@ -527,11 +535,7 @@ export default function TweetImages() {
                               gradientStart: e.target.value,
                             }))
                           }
-                          className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                        />
-                        <div
-                          className="w-full h-full rounded-lg border border-gray-200"
-                          style={{ backgroundColor: tweetData.gradientStart }}
+                          className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
                         />
                       </div>
                     </div>
@@ -541,18 +545,24 @@ export default function TweetImages() {
                       End Color
                     </label>
                     <div className="flex gap-3">
-                      <input
-                        type="text"
-                        value={tweetData.gradientEnd}
-                        onChange={(e) =>
-                          setTweetData((prev) => ({
-                            ...prev,
-                            gradientEnd: e.target.value,
-                          }))
-                        }
-                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                      />
-                      <div className="w-12 h-12 relative">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={tweetData.gradientEnd}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              gradientEnd: e.target.value,
+                            }))
+                          }
+                          className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                        />
+                      </div>
+                      <div className="relative w-12 h-12">
+                        <div
+                          className="absolute inset-0 rounded-lg border border-gray-200"
+                          style={{ backgroundColor: tweetData.gradientEnd }}
+                        />
                         <input
                           type="color"
                           value={tweetData.gradientEnd}
@@ -562,50 +572,50 @@ export default function TweetImages() {
                               gradientEnd: e.target.value,
                             }))
                           }
-                          className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                        />
-                        <div
-                          className="w-full h-full rounded-lg border border-gray-200"
-                          style={{ backgroundColor: tweetData.gradientEnd }}
+                          className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Text Color
-                  </label>
-                  <div className="flex gap-3">
-                    <input
-                      type="text"
-                      value={tweetData.textColor}
-                      onChange={(e) =>
-                        setTweetData((prev) => ({
-                          ...prev,
-                          textColor: e.target.value,
-                        }))
-                      }
-                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                    />
-                    <div className="w-12 h-12 relative">
-                      <input
-                        type="color"
-                        value={tweetData.textColor}
-                        onChange={(e) =>
-                          setTweetData((prev) => ({
-                            ...prev,
-                            textColor: e.target.value,
-                          }))
-                        }
-                        className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                      />
-                      <div
-                        className="w-full h-full rounded-lg border border-gray-200"
-                        style={{ backgroundColor: tweetData.textColor }}
-                      />
-                    </div>
-                  </div>
+              </div>
+            </div>
+
+            {/* Text Color */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Text Color
+              </label>
+              <div className="flex gap-3">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    value={tweetData.textColor}
+                    onChange={(e) =>
+                      setTweetData((prev) => ({
+                        ...prev,
+                        textColor: e.target.value,
+                      }))
+                    }
+                    className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                  />
+                </div>
+                <div className="relative w-12 h-12">
+                  <div
+                    className="absolute inset-0 rounded-lg border border-gray-200"
+                    style={{ backgroundColor: tweetData.textColor }}
+                  />
+                  <input
+                    type="color"
+                    value={tweetData.textColor}
+                    onChange={(e) =>
+                      setTweetData((prev) => ({
+                        ...prev,
+                        textColor: e.target.value,
+                      }))
+                    }
+                    className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                  />
                 </div>
               </div>
             </div>
