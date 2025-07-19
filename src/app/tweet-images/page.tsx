@@ -435,7 +435,7 @@ export default function TweetImages() {
                             borderColor: e.target.value,
                           }))
                         }
-                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                       />
                       <div className="w-12 h-12 relative">
                         <input
@@ -515,7 +515,7 @@ export default function TweetImages() {
                             gradientStart: e.target.value,
                           }))
                         }
-                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                       />
                       <div className="w-12 h-12 relative">
                         <input
@@ -550,7 +550,7 @@ export default function TweetImages() {
                             gradientEnd: e.target.value,
                           }))
                         }
-                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                       />
                       <div className="w-12 h-12 relative">
                         <input
@@ -586,7 +586,7 @@ export default function TweetImages() {
                           textColor: e.target.value,
                         }))
                       }
-                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                     />
                     <div className="w-12 h-12 relative">
                       <input
