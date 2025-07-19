@@ -32,6 +32,7 @@ interface TweetData {
   alignment: "left" | "center";
   gradientStart: string;
   gradientEnd: string;
+  showBorder: boolean;
 }
 
 const MAX_TWEET_LENGTH = 280;
@@ -104,6 +105,7 @@ export default function TweetImages() {
     alignment: "center",
     gradientStart: "#ffffff",
     gradientEnd: "#ffffff",
+    showBorder: true,
   });
 
   const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
@@ -138,14 +140,14 @@ export default function TweetImages() {
 
     try {
       const canvas = await html2canvas(previewRef.current, {
-        backgroundColor: null,
+        backgroundColor: "#ffffff",
         useCORS: true,
-        scale: 1,
+        scale: 2,
         logging: false,
       });
 
       const link = document.createElement("a");
-      link.download = `snap-${Date.now()}.png`;
+      link.download = `tweet-${Date.now()}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     } catch (error) {
@@ -327,6 +329,26 @@ export default function TweetImages() {
                   Dark
                 </button>
               </div>
+            </div>
+
+            {/* Card Border */}
+            <div>
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={tweetData.showBorder}
+                  onChange={(e) =>
+                    setTweetData((prev) => ({
+                      ...prev,
+                      showBorder: e.target.checked,
+                    }))
+                  }
+                  className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
+                />
+                <span className="text-sm font-medium text-gray-700">
+                  Show card border
+                </span>
+              </label>
             </div>
 
             {/* Background Theme */}
@@ -584,7 +606,7 @@ export default function TweetImages() {
     <div className="p-4">
       <div
         ref={previewRef}
-        className="max-w-md mx-auto aspect-[4/5] bg-white rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden"
+        className="max-w-md mx-auto aspect-[4/5] bg-white rounded-2xl border-2 border-gray-200 overflow-hidden"
       >
         <div
           className="w-full h-full"
@@ -594,10 +616,10 @@ export default function TweetImages() {
         >
           <div className="flex items-center justify-center w-full h-full p-8">
             <div
-              className={`w-full rounded-2xl shadow-xl ${
+              className={`w-full rounded-2xl ${
                 tweetData.cardTheme === "light"
-                  ? "bg-white border border-gray-200"
-                  : "bg-gray-900 border border-gray-800"
+                  ? `bg-white ${tweetData.showBorder ? "border border-gray-200" : ""}`
+                  : `bg-gray-900 ${tweetData.showBorder ? "border border-gray-800" : ""}`
               }`}
             >
               <div className="p-6">
