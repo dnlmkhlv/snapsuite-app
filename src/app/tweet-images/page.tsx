@@ -25,7 +25,9 @@ interface TweetData {
   fullName: string;
   verified: boolean;
   profilePhoto: string | null;
-  textColor: string;
+  nameColor: string;
+  usernameColor: string;
+  contentColor: string;
   fontFamily: string;
   cardTheme: "light" | "dark";
   backgroundColor: string;
@@ -108,7 +110,9 @@ export default function TweetImages() {
     fullName: "John Doe",
     verified: false,
     profilePhoto: null,
-    textColor: "#000000",
+    nameColor: "#000000",
+    usernameColor: "#4B5563", // gray-600
+    contentColor: "#000000",
     fontFamily: "Inter",
     cardTheme: "light",
     backgroundColor: "#ffffff",
@@ -186,6 +190,36 @@ export default function TweetImages() {
       }));
     }
   };
+
+  const ColorPicker = ({
+    label,
+    value,
+    onChange,
+  }: {
+    label: string;
+    value: string;
+    onChange: (color: string) => void;
+  }) => (
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-2">
+        {label}
+      </label>
+      <div className="flex items-center gap-3">
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+        />
+        <input
+          type="color"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-12 h-12 rounded-lg cursor-pointer"
+        />
+      </div>
+    </div>
+  );
 
   const toolsPanel = (
     <>
@@ -341,6 +375,122 @@ export default function TweetImages() {
                   <div className="w-5 h-5 rounded bg-gray-900" />
                   Dark
                 </button>
+              </div>
+            </div>
+
+            {/* Text Colors */}
+            <div className="space-y-6">
+              <label className="block text-sm font-medium text-gray-700">
+                Text Colors
+              </label>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Name Color
+                  </label>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      value={tweetData.nameColor}
+                      onChange={(e) =>
+                        setTweetData((prev) => ({
+                          ...prev,
+                          nameColor: e.target.value,
+                        }))
+                      }
+                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                    />
+                    <div className="w-12 h-12 relative">
+                      <input
+                        type="color"
+                        value={tweetData.nameColor}
+                        onChange={(e) =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            nameColor: e.target.value,
+                          }))
+                        }
+                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                      />
+                      <div
+                        className="w-full h-full rounded-xl border border-gray-200"
+                        style={{ backgroundColor: tweetData.nameColor }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Username Color
+                  </label>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      value={tweetData.usernameColor}
+                      onChange={(e) =>
+                        setTweetData((prev) => ({
+                          ...prev,
+                          usernameColor: e.target.value,
+                        }))
+                      }
+                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                    />
+                    <div className="w-12 h-12 relative">
+                      <input
+                        type="color"
+                        value={tweetData.usernameColor}
+                        onChange={(e) =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            usernameColor: e.target.value,
+                          }))
+                        }
+                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                      />
+                      <div
+                        className="w-full h-full rounded-xl border border-gray-200"
+                        style={{ backgroundColor: tweetData.usernameColor }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Content Color
+                  </label>
+                  <div className="flex gap-3">
+                    <input
+                      type="text"
+                      value={tweetData.contentColor}
+                      onChange={(e) =>
+                        setTweetData((prev) => ({
+                          ...prev,
+                          contentColor: e.target.value,
+                        }))
+                      }
+                      className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                    />
+                    <div className="w-12 h-12 relative">
+                      <input
+                        type="color"
+                        value={tweetData.contentColor}
+                        onChange={(e) =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            contentColor: e.target.value,
+                          }))
+                        }
+                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                      />
+                      <div
+                        className="w-full h-full rounded-xl border border-gray-200"
+                        style={{ backgroundColor: tweetData.contentColor }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -580,72 +730,6 @@ export default function TweetImages() {
                 </div>
               </div>
             </div>
-
-            {/* Text Color */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Text Color
-              </label>
-              <div className="flex gap-3">
-                <div className="relative flex-1">
-                  <input
-                    type="text"
-                    value={tweetData.textColor}
-                    onChange={(e) =>
-                      setTweetData((prev) => ({
-                        ...prev,
-                        textColor: e.target.value,
-                      }))
-                    }
-                    className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                  />
-                </div>
-                <div className="relative w-12 h-12">
-                  <div
-                    className="absolute inset-0 rounded-lg border border-gray-200"
-                    style={{ backgroundColor: tweetData.textColor }}
-                  />
-                  <input
-                    type="color"
-                    value={tweetData.textColor}
-                    onChange={(e) =>
-                      setTweetData((prev) => ({
-                        ...prev,
-                        textColor: e.target.value,
-                      }))
-                    }
-                    className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Font Style */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Font Style
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {fontOptions.map((font) => (
-                  <button
-                    key={font.value}
-                    onClick={() =>
-                      setTweetData((prev) => ({
-                        ...prev,
-                        fontFamily: font.value,
-                      }))
-                    }
-                    className={`p-3 rounded-lg border transition-all ${
-                      tweetData.fontFamily === font.value
-                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                        : "border-gray-200 hover:border-gray-300 text-gray-600"
-                    } ${font.className}`}
-                  >
-                    {font.label}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         )}
 
@@ -790,12 +874,7 @@ export default function TweetImages() {
                               (f) => f.value === tweetData.fontFamily
                             )?.className || "font-inter"
                           }`}
-                          style={{
-                            color:
-                              tweetData.cardTheme === "light"
-                                ? "#000000"
-                                : "#ffffff",
-                          }}
+                          style={{ color: tweetData.nameColor }}
                         >
                           {tweetData.fullName}
                         </span>
@@ -811,14 +890,11 @@ export default function TweetImages() {
                       </div>
                       <span
                         className={`${
-                          tweetData.cardTheme === "light"
-                            ? "text-gray-500"
-                            : "text-gray-400"
-                        } ${
                           fontOptions.find(
                             (f) => f.value === tweetData.fontFamily
                           )?.className || "font-inter"
                         }`}
+                        style={{ color: tweetData.usernameColor }}
                       >
                         @{tweetData.username}
                       </span>
@@ -829,10 +905,7 @@ export default function TweetImages() {
                       fontOptions.find((f) => f.value === tweetData.fontFamily)
                         ?.className || "font-inter"
                     }`}
-                    style={{
-                      color:
-                        tweetData.cardTheme === "light" ? "#000000" : "#ffffff",
-                    }}
+                    style={{ color: tweetData.contentColor }}
                   >
                     {tweetData.content}
                   </div>
