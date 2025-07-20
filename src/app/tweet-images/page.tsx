@@ -85,6 +85,36 @@ const themes = [
     gradientStart: "#A855F7",
     gradientEnd: "#6366F1",
   },
+  {
+    name: "Northern Lights",
+    gradientStart: "#4C1D95",
+    gradientEnd: "#10B981",
+  },
+  {
+    name: "Cotton Candy",
+    gradientStart: "#EC4899",
+    gradientEnd: "#8B5CF6",
+  },
+  {
+    name: "Deep Ocean",
+    gradientStart: "#1E40AF",
+    gradientEnd: "#0F766E",
+  },
+  {
+    name: "Golden Hour",
+    gradientStart: "#D97706",
+    gradientEnd: "#7C2D12",
+  },
+  {
+    name: "Midnight",
+    gradientStart: "#312E81",
+    gradientEnd: "#831843",
+  },
+  {
+    name: "Emerald Dream",
+    gradientStart: "#065F46",
+    gradientEnd: "#0D9488",
+  },
 ];
 
 const borderStyles = [
@@ -182,7 +212,8 @@ export default function TweetImages() {
       ...prev,
       gradientStart: theme.gradientStart,
       gradientEnd: theme.gradientEnd,
-      cardTheme: prev.cardTheme,
+      backgroundType: "gradient", // Always switch to gradient mode when selecting a theme
+      cardTheme: prev.cardTheme, // Preserve the current card theme
     }));
   };
 
