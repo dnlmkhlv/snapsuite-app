@@ -119,10 +119,10 @@ export default function TweetImages() {
     fontFamily: "Inter",
     cardTheme: "light",
     backgroundColor: "#ffffff",
-    alignment: "center",
+    alignment: "left",
     gradientStart: "#ffffff",
     gradientEnd: "#ffffff",
-    showBorder: true,
+    showBorder: false,
     borderStyle: "solid",
     borderWidth: 1,
     borderColor: "#e5e7eb", // gray-200
