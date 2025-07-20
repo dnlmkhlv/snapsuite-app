@@ -40,6 +40,7 @@ interface TweetData {
   borderStyle: "solid" | "dashed" | "dotted" | "double";
   borderWidth: number;
   borderColor: string;
+  backgroundType: "solid" | "gradient";
 }
 
 const MAX_TWEET_LENGTH = 280;
@@ -54,6 +55,16 @@ const fontOptions = [
 ];
 
 const themes = [
+  {
+    name: "Minimal",
+    gradientStart: "#ffffff",
+    gradientEnd: "#ffffff",
+  },
+  {
+    name: "Dark",
+    gradientStart: "#1E293B",
+    gradientEnd: "#0F172A",
+  },
   {
     name: "Ocean",
     gradientStart: "#0EA5E9",
@@ -70,19 +81,9 @@ const themes = [
     gradientEnd: "#15803D",
   },
   {
-    name: "Midnight",
-    gradientStart: "#1E293B",
-    gradientEnd: "#0F172A",
-  },
-  {
     name: "Purple Haze",
     gradientStart: "#A855F7",
     gradientEnd: "#6366F1",
-  },
-  {
-    name: "Minimal",
-    gradientStart: "#ffffff",
-    gradientEnd: "#ffffff",
   },
 ];
 
@@ -125,6 +126,7 @@ export default function TweetImages() {
     borderStyle: "solid",
     borderWidth: 1,
     borderColor: "#e5e7eb", // gray-200
+    backgroundType: "gradient",
   });
 
   const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
@@ -370,6 +372,10 @@ export default function TweetImages() {
                       nameColor: "#ffffff",
                       usernameColor: "#8B98A5",
                       contentColor: "#ffffff",
+                      backgroundType: "solid",
+                      backgroundColor: "#111827",
+                      gradientStart: "#111827",
+                      gradientEnd: "#111827",
                     }))
                   }
                   className={`flex items-center justify-center p-3 border rounded-xl ${
@@ -668,82 +674,164 @@ export default function TweetImages() {
                 Custom Background Colors
               </label>
               <div className="space-y-6">
+                {/* Background Type Selection */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Start Color
-                    </label>
-                    <div className="flex gap-3">
-                      <div className="relative flex-1">
-                        <input
-                          type="text"
-                          value={tweetData.gradientStart}
-                          onChange={(e) =>
-                            setTweetData((prev) => ({
-                              ...prev,
-                              gradientStart: e.target.value,
-                            }))
-                          }
-                          className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                        />
-                      </div>
-                      <div className="relative w-12 h-12">
-                        <div
-                          className="absolute inset-0 rounded-lg border border-gray-200"
-                          style={{ backgroundColor: tweetData.gradientStart }}
-                        />
-                        <input
-                          type="color"
-                          value={tweetData.gradientStart}
-                          onChange={(e) =>
-                            setTweetData((prev) => ({
-                              ...prev,
-                              gradientStart: e.target.value,
-                            }))
-                          }
-                          className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      End Color
-                    </label>
-                    <div className="flex gap-3">
-                      <div className="relative flex-1">
-                        <input
-                          type="text"
-                          value={tweetData.gradientEnd}
-                          onChange={(e) =>
-                            setTweetData((prev) => ({
-                              ...prev,
-                              gradientEnd: e.target.value,
-                            }))
-                          }
-                          className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-                        />
-                      </div>
-                      <div className="relative w-12 h-12">
-                        <div
-                          className="absolute inset-0 rounded-lg border border-gray-200"
-                          style={{ backgroundColor: tweetData.gradientEnd }}
-                        />
-                        <input
-                          type="color"
-                          value={tweetData.gradientEnd}
-                          onChange={(e) =>
-                            setTweetData((prev) => ({
-                              ...prev,
-                              gradientEnd: e.target.value,
-                            }))
-                          }
-                          className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  <button
+                    onClick={() =>
+                      setTweetData((prev) => ({
+                        ...prev,
+                        backgroundType: "solid",
+                      }))
+                    }
+                    className={`p-3 rounded-xl border transition-all ${
+                      tweetData.backgroundType === "solid"
+                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                        : "border-gray-200 hover:border-gray-300 text-gray-600"
+                    }`}
+                  >
+                    Solid Color
+                  </button>
+                  <button
+                    onClick={() =>
+                      setTweetData((prev) => ({
+                        ...prev,
+                        backgroundType: "gradient",
+                      }))
+                    }
+                    className={`p-3 rounded-xl border transition-all ${
+                      tweetData.backgroundType === "gradient"
+                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                        : "border-gray-200 hover:border-gray-300 text-gray-600"
+                    }`}
+                  >
+                    Gradient
+                  </button>
                 </div>
+
+                {/* Solid Color Picker */}
+                {tweetData.backgroundType === "solid" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Background Color
+                    </label>
+                    <div className="flex gap-3">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={tweetData.backgroundColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              backgroundColor: e.target.value,
+                              gradientStart: e.target.value,
+                              gradientEnd: e.target.value,
+                            }))
+                          }
+                          className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                        />
+                      </div>
+                      <div className="relative w-12 h-12">
+                        <div
+                          className="absolute inset-0 rounded-lg border border-gray-200"
+                          style={{ backgroundColor: tweetData.backgroundColor }}
+                        />
+                        <input
+                          type="color"
+                          value={tweetData.backgroundColor}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              backgroundColor: e.target.value,
+                              gradientStart: e.target.value,
+                              gradientEnd: e.target.value,
+                            }))
+                          }
+                          className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Gradient Color Pickers */}
+                {tweetData.backgroundType === "gradient" && (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Start Color
+                      </label>
+                      <div className="flex gap-3">
+                        <div className="relative flex-1">
+                          <input
+                            type="text"
+                            value={tweetData.gradientStart}
+                            onChange={(e) =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                gradientStart: e.target.value,
+                              }))
+                            }
+                            className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                          />
+                        </div>
+                        <div className="relative w-12 h-12">
+                          <div
+                            className="absolute inset-0 rounded-lg border border-gray-200"
+                            style={{ backgroundColor: tweetData.gradientStart }}
+                          />
+                          <input
+                            type="color"
+                            value={tweetData.gradientStart}
+                            onChange={(e) =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                gradientStart: e.target.value,
+                              }))
+                            }
+                            className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        End Color
+                      </label>
+                      <div className="flex gap-3">
+                        <div className="relative flex-1">
+                          <input
+                            type="text"
+                            value={tweetData.gradientEnd}
+                            onChange={(e) =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                gradientEnd: e.target.value,
+                              }))
+                            }
+                            className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                          />
+                        </div>
+                        <div className="relative w-12 h-12">
+                          <div
+                            className="absolute inset-0 rounded-lg border border-gray-200"
+                            style={{ backgroundColor: tweetData.gradientEnd }}
+                          />
+                          <input
+                            type="color"
+                            value={tweetData.gradientEnd}
+                            onChange={(e) =>
+                              setTweetData((prev) => ({
+                                ...prev,
+                                gradientEnd: e.target.value,
+                              }))
+                            }
+                            className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -830,7 +918,10 @@ export default function TweetImages() {
         <div
           className="w-full h-full"
           style={{
-            background: `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`,
+            background:
+              tweetData.backgroundType === "gradient"
+                ? `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`
+                : tweetData.backgroundColor,
           }}
         >
           <div className="flex items-center justify-center w-full h-full p-8">
