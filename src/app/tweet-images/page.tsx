@@ -1031,7 +1031,7 @@ export default function TweetImages() {
     <div className="p-4">
       <div
         ref={previewRef}
-        className="max-w-md mx-auto bg-white rounded-2xl border-2 border-gray-200 overflow-hidden"
+        className="max-w-md mx-auto bg-white border-2 border-gray-200 overflow-hidden"
         style={{ aspectRatio: tweetData.aspectRatio }}
       >
         <div
@@ -1045,7 +1045,7 @@ export default function TweetImages() {
         >
           <div className="flex items-center justify-center w-full h-full p-8">
             <div
-              className={`w-full rounded-2xl ${
+              className={`w-full ${
                 tweetData.cardTheme === "light"
                   ? `bg-white ${tweetData.showBorder ? "border border-gray-200" : ""}`
                   : `bg-gray-900 ${tweetData.showBorder ? "border border-gray-800" : ""}`
