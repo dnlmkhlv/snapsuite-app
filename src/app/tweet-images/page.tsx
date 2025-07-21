@@ -41,6 +41,7 @@ interface TweetData {
   borderWidth: number;
   borderColor: string;
   backgroundType: "solid" | "gradient";
+  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
 }
 
 const MAX_TWEET_LENGTH = 280;
@@ -157,6 +158,7 @@ export default function TweetImages() {
     borderWidth: 1,
     borderColor: "#e5e7eb", // gray-200
     backgroundType: "gradient",
+    aspectRatio: "4/5",
   });
 
   const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
@@ -164,6 +166,7 @@ export default function TweetImages() {
   );
   const previewRef = useRef<HTMLDivElement>(null);
   const [isTextColorsOpen, setIsTextColorsOpen] = useState(false);
+  const [isBackgroundThemesOpen, setIsBackgroundThemesOpen] = useState(false);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -420,6 +423,75 @@ export default function TweetImages() {
               </div>
             </div>
 
+            {/* Image Ratio */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Image Ratio
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <button
+                  onClick={() =>
+                    setTweetData((prev) => ({
+                      ...prev,
+                      aspectRatio: "4/5",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    tweetData.aspectRatio === "4/5"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  4:5
+                </button>
+                <button
+                  onClick={() =>
+                    setTweetData((prev) => ({
+                      ...prev,
+                      aspectRatio: "1/1",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    tweetData.aspectRatio === "1/1"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  1:1
+                </button>
+                <button
+                  onClick={() =>
+                    setTweetData((prev) => ({
+                      ...prev,
+                      aspectRatio: "16/9",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    tweetData.aspectRatio === "16/9"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  16:9
+                </button>
+                <button
+                  onClick={() =>
+                    setTweetData((prev) => ({
+                      ...prev,
+                      aspectRatio: "3/2",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    tweetData.aspectRatio === "3/2"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  3:2
+                </button>
+              </div>
+            </div>
+
             {/* Text Colors Dropdown */}
             <div className="space-y-2">
               <button
@@ -666,37 +738,52 @@ export default function TweetImages() {
             </div>
 
             {/* Background Theme */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Background Theme
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {themes.map((theme) => (
-                  <button
-                    key={theme.name}
-                    onClick={() => handleThemeSelect(theme)}
-                    className="relative p-3 rounded-xl border transition-all hover:border-[#5170FF] group overflow-hidden"
-                  >
-                    <div
-                      className="absolute inset-0 opacity-90 group-hover:opacity-100 transition-opacity"
-                      style={{
-                        background: `linear-gradient(to bottom right, ${theme.gradientStart}, ${theme.gradientEnd})`,
-                      }}
-                    />
-                    <span
-                      className="relative font-medium text-sm"
-                      style={{
-                        color:
-                          theme.gradientStart === "#ffffff"
-                            ? "#000000"
-                            : "#ffffff",
-                      }}
-                    >
-                      {theme.name}
-                    </span>
-                  </button>
-                ))}
-              </div>
+            <div className="space-y-2">
+              <button
+                onClick={() =>
+                  setIsBackgroundThemesOpen(!isBackgroundThemesOpen)
+                }
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Background Theme</span>
+                {isBackgroundThemesOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+
+              {isBackgroundThemesOpen && (
+                <div className="mt-3 p-4 border border-gray-200 rounded-xl bg-white space-y-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {themes.map((theme) => (
+                      <button
+                        key={theme.name}
+                        onClick={() => handleThemeSelect(theme)}
+                        className="relative p-3 rounded-xl border transition-all hover:border-[#5170FF] group overflow-hidden"
+                      >
+                        <div
+                          className="absolute inset-0 opacity-90 group-hover:opacity-100 transition-opacity"
+                          style={{
+                            background: `linear-gradient(to bottom right, ${theme.gradientStart}, ${theme.gradientEnd})`,
+                          }}
+                        />
+                        <span
+                          className="relative font-medium text-sm"
+                          style={{
+                            color:
+                              theme.gradientStart === "#ffffff"
+                                ? "#000000"
+                                : "#ffffff",
+                          }}
+                        >
+                          {theme.name}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Custom Background Colors */}
@@ -944,7 +1031,8 @@ export default function TweetImages() {
     <div className="p-4">
       <div
         ref={previewRef}
-        className="max-w-md mx-auto aspect-[4/5] bg-white rounded-2xl border-2 border-gray-200 overflow-hidden"
+        className="max-w-md mx-auto bg-white rounded-2xl border-2 border-gray-200 overflow-hidden"
+        style={{ aspectRatio: tweetData.aspectRatio }}
       >
         <div
           className="w-full h-full"
