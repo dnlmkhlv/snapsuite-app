@@ -174,6 +174,7 @@ export default function TweetImages() {
   const previewRef = useRef<HTMLDivElement>(null);
   const [isTextColorsOpen, setIsTextColorsOpen] = useState(false);
   const [isBackgroundThemesOpen, setIsBackgroundThemesOpen] = useState(false);
+  const [isFontFamilyOpen, setIsFontFamilyOpen] = useState(false);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -331,33 +332,44 @@ export default function TweetImages() {
           <div className="space-y-4">
             {/* Font Controls */}
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Font Family
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {fontOptions.map((font) => (
-                    <button
-                      key={font.value}
-                      onClick={() =>
-                        setTweetData((prev) => ({
-                          ...prev,
-                          fontFamily: font.value,
-                        }))
-                      }
-                      className={`p-2 rounded-xl border transition-all ${
-                        font.className
-                      } ${
-                        tweetData.fontFamily === font.value
-                          ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                          : "border-gray-200 hover:border-gray-300 text-gray-600"
-                      }`}
-                    >
-                      {font.label}
-                    </button>
-                  ))}
+              <button
+                onClick={() => setIsFontFamilyOpen(!isFontFamilyOpen)}
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Font Family</span>
+                {isFontFamilyOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+
+              {isFontFamilyOpen && (
+                <div className="p-4 border border-gray-200 rounded-xl bg-white space-y-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {fontOptions.map((font) => (
+                      <button
+                        key={font.value}
+                        onClick={() =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            fontFamily: font.value,
+                          }))
+                        }
+                        className={`p-2 rounded-xl border transition-all ${
+                          font.className
+                        } ${
+                          tweetData.fontFamily === font.value
+                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        {font.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
