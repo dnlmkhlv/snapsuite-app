@@ -10,9 +10,10 @@ export default function Footer() {
             <Image
               src="/snapsuite-logo.png"
               alt="SnapSuite"
-              width={32}
-              height={32}
-              className="w-12 h-12 sm:w-16 sm:h-16 -rotate-12"
+              width={64}
+              height={64}
+              quality={100}
+              className="-rotate-12"
             />
             <span className="text-lg sm:text-xl font-semibold text-gray-800">
               SnapSuite

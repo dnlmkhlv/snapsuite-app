@@ -13,9 +13,10 @@ export default function Header() {
               <Image
                 src="/snapsuite-logo.png"
                 alt="SnapSuite"
-                width={40}
-                height={40}
-                className="w-16 h-16 -rotate-12"
+                width={64}
+                height={64}
+                quality={100}
+                className="-rotate-12"
               />
               <span className="text-lg sm:text-2xl font-semibold text-gray-800">
                 SnapSuite
