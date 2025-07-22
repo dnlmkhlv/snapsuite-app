@@ -201,6 +201,13 @@ export default function TweetImages() {
     if (!previewRef.current) return;
 
     try {
+      // Add style rule for proper image rendering
+      const style = document.createElement("style");
+      document.head.appendChild(style);
+      style.sheet?.insertRule(
+        "body > div:last-child img { display: inline-block; }"
+      );
+
       const canvas = await html2canvas(previewRef.current, {
         backgroundColor: "#ffffff",
         useCORS: true,
@@ -212,6 +219,9 @@ export default function TweetImages() {
       link.download = `tweet-${Date.now()}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
+
+      // Clean up the added style
+      document.head.removeChild(style);
     } catch (error) {
       console.error("Error generating image:", error);
     }
@@ -1262,25 +1272,27 @@ export default function TweetImages() {
                       </div>
                     )}
                     <div className="flex flex-col">
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center">
                         <span
                           className={`font-bold ${
                             fontOptions.find(
                               (f) => f.value === tweetData.fontFamily
                             )?.className || "font-inter"
                           }`}
-                          style={{ color: tweetData.nameColor }}
+                          style={{
+                            color: tweetData.nameColor,
+                            lineHeight: "1.2em",
+                          }}
                         >
                           {tweetData.fullName}
                         </span>
                         {tweetData.verified && (
-                          <div className="w-5 h-5 flex-shrink-0">
-                            <img
-                              src="/verified-check.png"
-                              alt="Verified account"
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
+                          <img
+                            src="/verified-check.png"
+                            alt="Verified account"
+                            className="w-5 h-5 ml-1"
+                            style={{ marginTop: "1px" }}
+                          />
                         )}
                       </div>
                       <span
@@ -1289,7 +1301,10 @@ export default function TweetImages() {
                             (f) => f.value === tweetData.fontFamily
                           )?.className || "font-inter"
                         }`}
-                        style={{ color: tweetData.usernameColor }}
+                        style={{
+                          color: tweetData.usernameColor,
+                          lineHeight: "1.2em",
+                        }}
                       >
                         @{tweetData.username}
                       </span>
