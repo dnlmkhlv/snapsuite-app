@@ -14,6 +14,7 @@ import {
   Image as ImageIcon,
   ChevronDown,
   ChevronUp,
+  RotateCcw,
 } from "lucide-react";
 import Themes from "../components/Themes";
 import Templates from "../components/Templates";
@@ -128,6 +129,34 @@ const borderStyles = [
   { value: "double", label: "Double" },
 ] as const;
 
+const DEFAULT_TWEET_DATA: TweetData = {
+  content:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  username: "johndoe",
+  fullName: "John Doe",
+  verified: false,
+  profilePhoto: null,
+  nameColor: "#000000",
+  usernameColor: "#4B5563", // gray-600
+  contentColor: "#000000",
+  fontFamily: "Inter",
+  cardTheme: "light",
+  backgroundColor: "#ffffff",
+  alignment: "left",
+  gradientStart: "#ffffff",
+  gradientEnd: "#ffffff",
+  showBorder: false,
+  borderStyle: "solid",
+  borderWidth: 1,
+  borderColor: "#e5e7eb", // gray-200
+  backgroundType: "gradient",
+  aspectRatio: "4/5",
+  borderRadius: 12,
+  fontSize: 16,
+  backgroundImage: null,
+  backgroundOpacity: 1,
+};
+
 const VerifiedBadge = () => (
   <svg
     viewBox="0 0 22 22"
@@ -140,33 +169,7 @@ const VerifiedBadge = () => (
 );
 
 export default function TweetImages() {
-  const [tweetData, setTweetData] = useState<TweetData>({
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    username: "johndoe",
-    fullName: "John Doe",
-    verified: false,
-    profilePhoto: null,
-    nameColor: "#000000",
-    usernameColor: "#4B5563", // gray-600
-    contentColor: "#000000",
-    fontFamily: "Inter",
-    cardTheme: "light",
-    backgroundColor: "#ffffff",
-    alignment: "left",
-    gradientStart: "#ffffff",
-    gradientEnd: "#ffffff",
-    showBorder: false,
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderColor: "#e5e7eb", // gray-200
-    backgroundType: "gradient",
-    aspectRatio: "4/5",
-    borderRadius: 12,
-    fontSize: 16,
-    backgroundImage: null,
-    backgroundOpacity: 1,
-  });
+  const [tweetData, setTweetData] = useState<TweetData>(DEFAULT_TWEET_DATA);
 
   const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
     "text"
@@ -280,6 +283,17 @@ export default function TweetImages() {
 
   const toolsPanel = (
     <>
+      {/* Reset Button */}
+      <div className="absolute right-4 h-[57px] flex items-center">
+        <button
+          onClick={() => setTweetData(DEFAULT_TWEET_DATA)}
+          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-colors"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset
+        </button>
+      </div>
+
       {/* Tab Navigation */}
       <div className="flex border-b">
         <button
