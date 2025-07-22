@@ -1,8 +1,18 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import html2canvas from "html2canvas";
-import { Palette, Type, Settings, Code, Monitor } from "lucide-react";
+import {
+  Palette,
+  Type,
+  Settings,
+  Code,
+  Monitor,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import hljs from "highlight.js";
+import "highlight.js/styles/github-dark.css";
 import EditorLayout from "../components/EditorLayout";
 
 interface CodeData {
@@ -41,6 +51,7 @@ export default function CodeSnippets() {
   const [activeTab, setActiveTab] = useState<"code" | "style" | "window">(
     "code"
   );
+  const [isLanguagesOpen, setIsLanguagesOpen] = useState(false);
   const [codeData, setCodeData] = useState<CodeData>({
     content: 'function hello() {\n  console.log("Hello, World!");\n}',
     language: "javascript",
@@ -141,30 +152,43 @@ export default function CodeSnippets() {
                 placeholder="Enter your code..."
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Language
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {languageOptions.map((lang) => (
-                  <button
-                    key={lang.value}
-                    onClick={() =>
-                      setCodeData((prev) => ({
-                        ...prev,
-                        language: lang.value,
-                      }))
-                    }
-                    className={`p-3 rounded-lg border transition-all ${
-                      codeData.language === lang.value
-                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                        : "border-gray-200 hover:border-gray-300 text-gray-600"
-                    }`}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
+            <div className="space-y-2">
+              <button
+                onClick={() => setIsLanguagesOpen(!isLanguagesOpen)}
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Language</span>
+                {isLanguagesOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+
+              {isLanguagesOpen && (
+                <div className="p-4 border border-gray-200 rounded-xl bg-white">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {languageOptions.map((lang) => (
+                      <button
+                        key={lang.value}
+                        onClick={() =>
+                          setCodeData((prev) => ({
+                            ...prev,
+                            language: lang.value,
+                          }))
+                        }
+                        className={`p-3 rounded-lg border transition-all ${
+                          codeData.language === lang.value
+                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        {lang.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -349,6 +373,24 @@ export default function CodeSnippets() {
     </>
   );
 
+  // Function to highlight code
+  const getHighlightedCode = () => {
+    if (!codeData.content) return "";
+    try {
+      const highlighted = hljs.highlight(codeData.content, {
+        language: codeData.language,
+      }).value;
+      return highlighted;
+    } catch (error) {
+      return codeData.content;
+    }
+  };
+
+  // Update highlighting when content or language changes
+  useEffect(() => {
+    hljs.highlightAll();
+  }, [codeData.content, codeData.language]);
+
   const preview = (
     <div
       ref={previewRef}
@@ -376,21 +418,29 @@ export default function CodeSnippets() {
           </div>
         )}
         <div className="p-6">
-          <pre
-            className="whitespace-pre-wrap font-mono text-sm"
-            style={{ color: codeData.textColor }}
-          >
-            {codeData.showLineNumbers
-              ? codeData.content.split("\n").map((line, i) => (
-                  <div key={i} className="flex">
-                    <span className="w-8 text-gray-500 select-none">
-                      {i + 1}
-                    </span>
-                    <span>{line}</span>
-                  </div>
-                ))
-              : codeData.content}
-          </pre>
+          {codeData.showLineNumbers ? (
+            <pre className="whitespace-pre font-mono text-sm">
+              {codeData.content.split("\n").map((line, i) => (
+                <div key={i} className="flex">
+                  <span className="w-8 text-gray-500 select-none">{i + 1}</span>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: hljs.highlight(line, {
+                        language: codeData.language,
+                      }).value,
+                    }}
+                  />
+                </div>
+              ))}
+            </pre>
+          ) : (
+            <pre
+              className="whitespace-pre font-mono text-sm"
+              dangerouslySetInnerHTML={{
+                __html: getHighlightedCode(),
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
