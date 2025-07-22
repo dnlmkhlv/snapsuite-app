@@ -52,6 +52,7 @@ export default function CodeSnippets() {
     "code"
   );
   const [isLanguagesOpen, setIsLanguagesOpen] = useState(false);
+  const lineNumbersRef = useRef<HTMLDivElement>(null);
   const [codeData, setCodeData] = useState<CodeData>({
     content: 'function hello() {\n  console.log("Hello, World!");\n}',
     language: "javascript",
@@ -140,17 +141,44 @@ export default function CodeSnippets() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Code
               </label>
-              <textarea
-                value={codeData.content}
-                onChange={(e) =>
-                  setCodeData((prev) => ({
-                    ...prev,
-                    content: e.target.value,
-                  }))
-                }
-                className="w-full h-48 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50 text-gray-900 transition-all placeholder:text-gray-400 hover:border-gray-300 font-mono"
-                placeholder="Enter your code..."
-              />
+              <div className="relative border border-gray-200 rounded-xl focus-within:ring-2 focus-within:ring-[#5170FF] focus-within:border-transparent hover:border-gray-300 transition-all bg-gray-50">
+                <div
+                  ref={lineNumbersRef}
+                  className="absolute top-0 left-0 p-4 select-none text-right border-r border-gray-200 overflow-hidden"
+                  style={{
+                    height: "100%",
+                    backgroundColor: "rgba(0, 0, 0, 0.02)",
+                    width: "3rem",
+                  }}
+                >
+                  {codeData.content.split("\n").map((_, i) => (
+                    <div
+                      key={i}
+                      className="text-gray-400 font-mono text-sm leading-6"
+                    >
+                      {i + 1}
+                    </div>
+                  ))}
+                </div>
+                <textarea
+                  value={codeData.content}
+                  onChange={(e) =>
+                    setCodeData((prev) => ({
+                      ...prev,
+                      content: e.target.value,
+                    }))
+                  }
+                  onScroll={(e) => {
+                    if (lineNumbersRef.current) {
+                      lineNumbersRef.current.scrollTop =
+                        e.currentTarget.scrollTop;
+                    }
+                  }}
+                  className="w-full h-48 p-4 pl-12 border-none focus:ring-0 resize-none bg-transparent text-gray-900 placeholder:text-gray-400 font-mono text-sm leading-6"
+                  placeholder="Enter your code..."
+                  spellCheck={false}
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <button
