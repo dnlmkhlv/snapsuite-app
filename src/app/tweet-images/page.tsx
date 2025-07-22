@@ -30,6 +30,7 @@ interface TweetData {
   usernameColor: string;
   contentColor: string;
   fontFamily: string;
+  fontSize: number;
   cardTheme: "light" | "dark";
   backgroundColor: string;
   alignment: "left" | "center";
@@ -39,7 +40,9 @@ interface TweetData {
   borderStyle: "solid" | "dashed" | "dotted" | "double";
   borderWidth: number;
   borderColor: string;
-  backgroundType: "solid" | "gradient";
+  backgroundType: "solid" | "gradient" | "image";
+  backgroundImage: string | null;
+  backgroundOpacity: number;
   aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
   borderRadius: number;
 }
@@ -160,6 +163,9 @@ export default function TweetImages() {
     backgroundType: "gradient",
     aspectRatio: "4/5",
     borderRadius: 12,
+    fontSize: 16,
+    backgroundImage: null,
+    backgroundOpacity: 1,
   });
 
   const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
@@ -313,6 +319,61 @@ export default function TweetImages() {
       <div className="p-5">
         {activeTab === "text" && (
           <div className="space-y-4">
+            {/* Font Controls */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Font Family
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  {fontOptions.map((font) => (
+                    <button
+                      key={font.value}
+                      onClick={() =>
+                        setTweetData((prev) => ({
+                          ...prev,
+                          fontFamily: font.value,
+                        }))
+                      }
+                      className={`p-2 rounded-xl border transition-all ${
+                        font.className
+                      } ${
+                        tweetData.fontFamily === font.value
+                          ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                          : "border-gray-200 hover:border-gray-300 text-gray-600"
+                      }`}
+                    >
+                      {font.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Font Size
+                </label>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min="12"
+                    max="32"
+                    value={tweetData.fontSize}
+                    onChange={(e) =>
+                      setTweetData((prev) => ({
+                        ...prev,
+                        fontSize: parseInt(e.target.value),
+                      }))
+                    }
+                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
+                  />
+                  <span className="text-sm text-gray-600 min-w-[2.5rem]">
+                    {tweetData.fontSize}px
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Tweet Content
@@ -823,7 +884,7 @@ export default function TweetImages() {
               </label>
               <div className="space-y-6">
                 {/* Background Type Selection */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                   <button
                     onClick={() =>
                       setTweetData((prev) => ({
@@ -854,7 +915,74 @@ export default function TweetImages() {
                   >
                     Gradient
                   </button>
+                  <button
+                    onClick={() =>
+                      setTweetData((prev) => ({
+                        ...prev,
+                        backgroundType: "image",
+                      }))
+                    }
+                    className={`p-3 rounded-xl border transition-all ${
+                      tweetData.backgroundType === "image"
+                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                        : "border-gray-200 hover:border-gray-300 text-gray-600"
+                    }`}
+                  >
+                    Image
+                  </button>
                 </div>
+
+                {/* Background Image Controls */}
+                {tweetData.backgroundType === "image" && (
+                  <div className="space-y-4 mt-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Background Image
+                      </label>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                              setTweetData((prev) => ({
+                                ...prev,
+                                backgroundImage: e.target?.result as string,
+                              }));
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5170FF] file:text-white hover:file:bg-[#4060EE] text-gray-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Image Opacity
+                      </label>
+                      <div className="flex items-center gap-4">
+                        <input
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={tweetData.backgroundOpacity * 100}
+                          onChange={(e) =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              backgroundOpacity: parseInt(e.target.value) / 100,
+                            }))
+                          }
+                          className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
+                        />
+                        <span className="text-sm text-gray-600 min-w-[2.5rem]">
+                          {Math.round(tweetData.backgroundOpacity * 100)}%
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Solid Color Picker */}
                 {tweetData.backgroundType === "solid" && (
@@ -1066,10 +1194,21 @@ export default function TweetImages() {
         <div
           className="w-full h-full"
           style={{
-            background:
-              tweetData.backgroundType === "gradient"
-                ? `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`
-                : tweetData.backgroundColor,
+            ...(tweetData.backgroundType === "gradient"
+              ? {
+                  backgroundImage: `linear-gradient(to bottom right, ${tweetData.gradientStart}, ${tweetData.gradientEnd})`,
+                }
+              : tweetData.backgroundType === "image" &&
+                  tweetData.backgroundImage
+                ? {
+                    backgroundImage: `url(${tweetData.backgroundImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    opacity: tweetData.backgroundOpacity,
+                  }
+                : {
+                    backgroundColor: tweetData.backgroundColor,
+                  }),
           }}
         >
           <div className="flex items-center justify-center w-full h-full p-8">
@@ -1161,7 +1300,10 @@ export default function TweetImages() {
                       fontOptions.find((f) => f.value === tweetData.fontFamily)
                         ?.className || "font-inter"
                     }`}
-                    style={{ color: tweetData.contentColor }}
+                    style={{
+                      color: tweetData.contentColor,
+                      fontSize: `${tweetData.fontSize}px`,
+                    }}
                   >
                     {tweetData.content}
                   </div>
