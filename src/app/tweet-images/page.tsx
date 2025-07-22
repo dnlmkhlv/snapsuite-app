@@ -46,6 +46,7 @@ interface TweetData {
   backgroundOpacity: number;
   aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
   borderRadius: number;
+  showWatermark: boolean;
 }
 
 const MAX_TWEET_LENGTH = 280;
@@ -155,6 +156,7 @@ const DEFAULT_TWEET_DATA: TweetData = {
   fontSize: 16,
   backgroundImage: null,
   backgroundOpacity: 1,
+  showWatermark: true,
 };
 
 const VerifiedBadge = () => (
@@ -523,6 +525,28 @@ export default function TweetImages() {
                   Dark
                 </button>
               </div>
+            </div>
+
+            {/* Watermark Option */}
+            <div className="flex items-center justify-between">
+              <label
+                className="text-sm font-medium text-gray-700"
+                htmlFor="watermark"
+              >
+                Show Watermark
+              </label>
+              <input
+                type="checkbox"
+                id="watermark"
+                checked={tweetData.showWatermark || false}
+                onChange={(e) =>
+                  setTweetData((prev) => ({
+                    ...prev,
+                    showWatermark: e.target.checked,
+                  }))
+                }
+                className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
+              />
             </div>
 
             {/* Image Ratio */}
@@ -1224,7 +1248,7 @@ export default function TweetImages() {
     <div className="p-4">
       <div
         ref={previewRef}
-        className={`mx-auto bg-white border-2 border-gray-200 overflow-hidden ${
+        className={`mx-auto bg-white border-2 border-gray-200 overflow-hidden relative ${
           tweetData.aspectRatio === "16/9" || tweetData.aspectRatio === "3/2"
             ? "max-w-3xl"
             : "max-w-md"
@@ -1357,6 +1381,12 @@ export default function TweetImages() {
             </div>
           </div>
         </div>
+        {/* Watermark */}
+        {tweetData.showWatermark && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center pointer-events-none">
+            <span className="text-gray-400/70 text-sm">snapsuite.app</span>
+          </div>
+        )}
       </div>
     </div>
   );
