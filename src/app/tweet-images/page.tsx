@@ -42,6 +42,7 @@ interface TweetData {
   borderColor: string;
   backgroundType: "solid" | "gradient";
   aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
+  borderRadius: number;
 }
 
 const MAX_TWEET_LENGTH = 280;
@@ -159,6 +160,7 @@ export default function TweetImages() {
     borderColor: "#e5e7eb", // gray-200
     backgroundType: "gradient",
     aspectRatio: "4/5",
+    borderRadius: 12,
   });
 
   const [activeTab, setActiveTab] = useState<"text" | "style" | "profile">(
@@ -737,6 +739,31 @@ export default function TweetImages() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Border Radius */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Corner Radius
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <input
+                        type="range"
+                        min="0"
+                        max="32"
+                        value={tweetData.borderRadius}
+                        onChange={(e) =>
+                          setTweetData((prev) => ({
+                            ...prev,
+                            borderRadius: parseInt(e.target.value),
+                          }))
+                        }
+                        className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
+                      />
+                      <span className="text-sm text-gray-600 min-w-[2.5rem]">
+                        {tweetData.borderRadius}px
+                      </span>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -1051,8 +1078,8 @@ export default function TweetImages() {
             <div
               className={`w-full ${
                 tweetData.cardTheme === "light"
-                  ? `bg-white ${tweetData.showBorder ? "border border-gray-200" : ""}`
-                  : `bg-gray-900 ${tweetData.showBorder ? "border border-gray-800" : ""}`
+                  ? `bg-white ${tweetData.showBorder ? "border border-gray-200 rounded-xl" : ""}`
+                  : `bg-gray-900 ${tweetData.showBorder ? "border border-gray-800 rounded-xl" : ""}`
               }`}
               style={
                 tweetData.showBorder
@@ -1060,6 +1087,7 @@ export default function TweetImages() {
                       borderStyle: tweetData.borderStyle,
                       borderWidth: `${tweetData.borderWidth}px`,
                       borderColor: tweetData.borderColor,
+                      borderRadius: `${tweetData.borderRadius}px`,
                     }
                   : {}
               }
