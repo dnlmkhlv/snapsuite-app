@@ -3,7 +3,6 @@
 import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import {
-  CheckCircle,
   Upload,
   Palette,
   Type,
@@ -1038,7 +1037,6 @@ export default function TweetImages() {
                 className="text-sm font-medium text-gray-700 flex items-center gap-2"
               >
                 Show Verified Badge
-                <CheckCircle className="w-4 h-4 text-[#5170FF]" />
               </label>
             </div>
             <div>
