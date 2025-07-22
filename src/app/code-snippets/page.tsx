@@ -168,6 +168,33 @@ export default function CodeSnippets() {
                       content: e.target.value,
                     }))
                   }
+                  onKeyDown={(e) => {
+                    if (e.key === "Tab") {
+                      e.preventDefault();
+
+                      const textarea = e.currentTarget;
+                      const start = textarea.selectionStart;
+                      const end = textarea.selectionEnd;
+                      const spaces = "  "; // 2 spaces for indentation
+
+                      const newContent =
+                        codeData.content.substring(0, start) +
+                        spaces +
+                        codeData.content.substring(end);
+
+                      setCodeData((prev) => ({
+                        ...prev,
+                        content: newContent,
+                      }));
+
+                      // Keep reference to the textarea and set cursor position after state update
+                      setTimeout(() => {
+                        textarea.focus();
+                        textarea.selectionStart = start + spaces.length;
+                        textarea.selectionEnd = start + spaces.length;
+                      }, 0);
+                    }
+                  }}
                   onScroll={(e) => {
                     if (lineNumbersRef.current) {
                       lineNumbersRef.current.scrollTop =
