@@ -1224,7 +1224,11 @@ export default function TweetImages() {
     <div className="p-4">
       <div
         ref={previewRef}
-        className="max-w-md mx-auto bg-white border-2 border-gray-200 overflow-hidden"
+        className={`mx-auto bg-white border-2 border-gray-200 overflow-hidden ${
+          tweetData.aspectRatio === "16/9" || tweetData.aspectRatio === "3/2"
+            ? "max-w-3xl"
+            : "max-w-md"
+        }`}
         style={{ aspectRatio: tweetData.aspectRatio }}
       >
         <div
