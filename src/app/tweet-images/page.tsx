@@ -287,7 +287,7 @@ export default function TweetImages() {
       <div className="absolute right-4 h-[57px] flex items-center">
         <button
           onClick={() => setTweetData(DEFAULT_TWEET_DATA)}
-          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-colors"
+          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
         >
           <RotateCcw className="w-4 h-4" />
           Reset
