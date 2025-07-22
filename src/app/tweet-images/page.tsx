@@ -388,6 +388,10 @@ export default function TweetImages() {
                       nameColor: "#000000",
                       usernameColor: "#536471",
                       contentColor: "#000000",
+                      backgroundType: "gradient",
+                      backgroundColor: "#ffffff",
+                      gradientStart: "#ffffff",
+                      gradientEnd: "#ffffff",
                     }))
                   }
                   className={`flex items-center justify-center p-3 border rounded-xl ${
