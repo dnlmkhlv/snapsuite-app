@@ -22,12 +22,6 @@ import go from "highlight.js/lib/languages/go";
 import rust from "highlight.js/lib/languages/rust";
 import ruby from "highlight.js/lib/languages/ruby";
 import php from "highlight.js/lib/languages/php";
-import "highlight.js/styles/github-dark.css";
-import "highlight.js/styles/github.css";
-import "highlight.js/styles/monokai.css";
-import "highlight.js/styles/vs2015.css";
-import "highlight.js/styles/vs.css";
-import "highlight.js/styles/atom-one-dark.css";
 import EditorLayout from "../components/EditorLayout";
 
 // Register languages
@@ -42,19 +36,102 @@ hljs.registerLanguage("rust", rust);
 hljs.registerLanguage("ruby", ruby);
 hljs.registerLanguage("php", php);
 
-interface CodeData {
-  content: string;
-  language: string;
-  theme: string;
-  showLineNumbers: boolean;
-  windowStyle: "mac" | "windows" | "none";
-  backgroundColor: string;
-  textColor: string;
-  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
-  backgroundType: "solid" | "gradient";
-  gradientStart: string;
-  gradientEnd: string;
-}
+type ThemeColors = {
+  name: string;
+  background: string;
+  text: string;
+  comment: string;
+  keyword: string;
+  string: string;
+  number: string;
+  function: string;
+  operator: string;
+  variable: string;
+};
+
+type EditorThemes = {
+  [key: string]: ThemeColors;
+};
+
+const editorThemes: EditorThemes = {
+  "github-dark": {
+    name: "GitHub Dark",
+    background: "#0d1117",
+    text: "#c9d1d9",
+    comment: "#8b949e",
+    keyword: "#ff7b72",
+    string: "#a5d6ff",
+    number: "#79c0ff",
+    function: "#d2a8ff",
+    operator: "#ff7b72",
+    variable: "#ffa657",
+  },
+  "github-light": {
+    name: "GitHub Light",
+    background: "#ffffff",
+    text: "#24292f",
+    comment: "#6e7781",
+    keyword: "#cf222e",
+    string: "#0a3069",
+    number: "#0550ae",
+    function: "#8250df",
+    operator: "#cf222e",
+    variable: "#953800",
+  },
+  monokai: {
+    name: "Monokai",
+    background: "#272822",
+    text: "#f8f8f2",
+    comment: "#75715e",
+    keyword: "#f92672",
+    string: "#e6db74",
+    number: "#ae81ff",
+    function: "#66d9ef",
+    operator: "#f92672",
+    variable: "#fd971f",
+  },
+  dracula: {
+    name: "Dracula",
+    background: "#282a36",
+    text: "#f8f8f2",
+    comment: "#6272a4",
+    keyword: "#ff79c6",
+    string: "#f1fa8c",
+    number: "#bd93f9",
+    function: "#50fa7b",
+    operator: "#ff79c6",
+    variable: "#ffb86c",
+  },
+  nord: {
+    name: "Nord",
+    background: "#2e3440",
+    text: "#d8dee9",
+    comment: "#4c566a",
+    keyword: "#81a1c1",
+    string: "#a3be8c",
+    number: "#b48ead",
+    function: "#88c0d0",
+    operator: "#81a1c1",
+    variable: "#d8dee9",
+  },
+  "one-dark": {
+    name: "One Dark",
+    background: "#282c34",
+    text: "#abb2bf",
+    comment: "#5c6370",
+    keyword: "#c678dd",
+    string: "#98c379",
+    number: "#d19a66",
+    function: "#61afef",
+    operator: "#56b6c2",
+    variable: "#e06c75",
+  },
+};
+
+const themeOptions = Object.entries(editorThemes).map(([value, theme]) => ({
+  value,
+  label: theme.name,
+}));
 
 const languageOptions = [
   { value: "javascript", label: "JavaScript" },
@@ -67,15 +144,6 @@ const languageOptions = [
   { value: "rust", label: "Rust" },
   { value: "ruby", label: "Ruby" },
   { value: "php", label: "PHP" },
-];
-
-const themeOptions = [
-  { value: "github-dark", label: "GitHub Dark", style: "github-dark" },
-  { value: "github-light", label: "GitHub Light", style: "github" },
-  { value: "monokai", label: "Monokai", style: "monokai" },
-  { value: "vs2015", label: "VS Dark", style: "vs2015" },
-  { value: "vs", label: "VS Light", style: "vs" },
-  { value: "atom-one-dark", label: "Atom Dark", style: "atom-one-dark" },
 ];
 
 const themes = [
@@ -110,6 +178,20 @@ const themes = [
     gradientEnd: "#6366F1",
   },
 ];
+
+interface CodeData {
+  content: string;
+  language: string;
+  theme: string;
+  showLineNumbers: boolean;
+  windowStyle: "mac" | "windows" | "none";
+  backgroundColor: string;
+  textColor: string;
+  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
+  backgroundType: "solid" | "gradient";
+  gradientStart: string;
+  gradientEnd: string;
+}
 
 export default function CodeSnippets() {
   const [activeTab, setActiveTab] = useState<"code" | "style" | "window">(
@@ -680,28 +762,50 @@ export default function CodeSnippets() {
           <div className="flex items-center justify-center w-full h-full p-8">
             <div
               ref={codeBlockRef}
-              className={`w-full bg-white rounded-2xl shadow-lg overflow-auto`}
+              className={`w-full rounded-2xl shadow-lg overflow-auto`}
+              style={{
+                backgroundColor:
+                  editorThemes[codeData.theme as keyof EditorThemes]
+                    ?.background,
+              }}
             >
               {codeData.windowStyle !== "none" && (
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                <div
+                  className="flex items-center gap-2 px-4 py-3 border-b"
+                  style={{
+                    backgroundColor:
+                      editorThemes[codeData.theme as keyof EditorThemes]
+                        ?.background,
+                    borderColor:
+                      editorThemes[codeData.theme as keyof EditorThemes]
+                        ?.comment,
+                  }}
+                >
                   {codeData.windowStyle === "mac" ? (
                     <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                      <div className="w-3 h-3 rounded-full bg-green-500" />
+                      <div className="w-3 h-3 rounded-full bg-[#FF5F57] ring-1 ring-[#EC4C44]/20" />
+                      <div className="w-3 h-3 rounded-full bg-[#FEBC2E] ring-1 ring-[#D69E24]/20" />
+                      <div className="w-3 h-3 rounded-full bg-[#28C840] ring-1 ring-[#1DAD2B]/20" />
                     </div>
                   ) : (
                     <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-gray-500" />
-                      <div className="w-3 h-3 rounded-full bg-gray-500" />
-                      <div className="w-3 h-3 rounded-full bg-gray-500" />
+                      <div className="w-3 h-3 rounded-full bg-[#666666] ring-1 ring-white/20 hover:bg-[#888888] transition-colors" />
+                      <div className="w-3 h-3 rounded-full bg-[#666666] ring-1 ring-white/20 hover:bg-[#888888] transition-colors" />
+                      <div className="w-3 h-3 rounded-full bg-[#666666] ring-1 ring-white/20 hover:bg-[#888888] transition-colors" />
                     </div>
                   )}
                 </div>
               )}
               <div
-                className={`p-6 pb-8 hljs ${themeOptions.find((t) => t.value === codeData.theme)?.style || "github-dark"}`}
-                style={{ minHeight: "4rem" }}
+                className="p-6 pb-8"
+                style={{
+                  minHeight: "4rem",
+                  backgroundColor:
+                    editorThemes[codeData.theme as keyof EditorThemes]
+                      ?.background,
+                  color:
+                    editorThemes[codeData.theme as keyof EditorThemes]?.text,
+                }}
               >
                 {codeData.showLineNumbers ? (
                   <pre
@@ -715,9 +819,11 @@ export default function CodeSnippets() {
                         </span>
                         <span
                           dangerouslySetInnerHTML={{
-                            __html: hljs.highlight(line, {
-                              language: codeData.language,
-                            }).value,
+                            __html: highlightCode(
+                              line,
+                              codeData.language,
+                              codeData.theme
+                            ),
                           }}
                         />
                       </div>
@@ -730,8 +836,11 @@ export default function CodeSnippets() {
                     style={{ lineHeight: "1.75" }}
                     dangerouslySetInnerHTML={{
                       __html:
-                        getHighlightedCode() +
-                        "<div style='height:0.5em;opacity:0'>&nbsp;</div>",
+                        highlightCode(
+                          codeData.content,
+                          codeData.language,
+                          codeData.theme
+                        ) + "<div style='height:0.5em;opacity:0'>&nbsp;</div>",
                     }}
                   />
                 )}
@@ -750,4 +859,23 @@ export default function CodeSnippets() {
       onDownload={downloadImage}
     />
   );
+}
+
+function highlightCode(code: string, language: string, theme: string) {
+  try {
+    const highlighted = hljs.highlight(code, { language }).value;
+    const currentTheme = editorThemes[theme as keyof EditorThemes];
+    if (!currentTheme) return code;
+
+    const themed = highlighted.replace(
+      /<span class="hljs-([^"]+)">/g,
+      (match, type: string) => {
+        const color = (currentTheme as any)[type] || currentTheme.text;
+        return `<span style="color: ${color}">`;
+      }
+    );
+    return themed;
+  } catch (error) {
+    return code;
+  }
 }
