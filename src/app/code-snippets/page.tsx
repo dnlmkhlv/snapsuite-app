@@ -11,9 +11,36 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import hljs from "highlight.js";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import typescript from "highlight.js/lib/languages/typescript";
+import python from "highlight.js/lib/languages/python";
+import java from "highlight.js/lib/languages/java";
+import cpp from "highlight.js/lib/languages/cpp";
+import csharp from "highlight.js/lib/languages/csharp";
+import go from "highlight.js/lib/languages/go";
+import rust from "highlight.js/lib/languages/rust";
+import ruby from "highlight.js/lib/languages/ruby";
+import php from "highlight.js/lib/languages/php";
 import "highlight.js/styles/github-dark.css";
+import "highlight.js/styles/github.css";
+import "highlight.js/styles/monokai.css";
+import "highlight.js/styles/vs2015.css";
+import "highlight.js/styles/vs.css";
+import "highlight.js/styles/atom-one-dark.css";
 import EditorLayout from "../components/EditorLayout";
+
+// Register languages
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("typescript", typescript);
+hljs.registerLanguage("python", python);
+hljs.registerLanguage("java", java);
+hljs.registerLanguage("cpp", cpp);
+hljs.registerLanguage("csharp", csharp);
+hljs.registerLanguage("go", go);
+hljs.registerLanguage("rust", rust);
+hljs.registerLanguage("ruby", ruby);
+hljs.registerLanguage("php", php);
 
 interface CodeData {
   content: string;
@@ -23,6 +50,10 @@ interface CodeData {
   windowStyle: "mac" | "windows" | "none";
   backgroundColor: string;
   textColor: string;
+  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
+  backgroundType: "solid" | "gradient";
+  gradientStart: string;
+  gradientEnd: string;
 }
 
 const languageOptions = [
@@ -39,12 +70,45 @@ const languageOptions = [
 ];
 
 const themeOptions = [
-  { value: "github-dark", label: "GitHub Dark" },
-  { value: "github-light", label: "GitHub Light" },
-  { value: "monokai", label: "Monokai" },
-  { value: "dracula", label: "Dracula" },
-  { value: "solarized-dark", label: "Solarized Dark" },
-  { value: "solarized-light", label: "Solarized Light" },
+  { value: "github-dark", label: "GitHub Dark", style: "github-dark" },
+  { value: "github-light", label: "GitHub Light", style: "github" },
+  { value: "monokai", label: "Monokai", style: "monokai" },
+  { value: "vs2015", label: "VS Dark", style: "vs2015" },
+  { value: "vs", label: "VS Light", style: "vs" },
+  { value: "atom-one-dark", label: "Atom Dark", style: "atom-one-dark" },
+];
+
+const themes = [
+  {
+    name: "Minimal",
+    gradientStart: "#ffffff",
+    gradientEnd: "#ffffff",
+  },
+  {
+    name: "Dark",
+    gradientStart: "#1E293B",
+    gradientEnd: "#0F172A",
+  },
+  {
+    name: "Ocean",
+    gradientStart: "#0EA5E9",
+    gradientEnd: "#2563EB",
+  },
+  {
+    name: "Sunset",
+    gradientStart: "#F97316",
+    gradientEnd: "#DB2777",
+  },
+  {
+    name: "Forest",
+    gradientStart: "#22C55E",
+    gradientEnd: "#15803D",
+  },
+  {
+    name: "Purple Haze",
+    gradientStart: "#A855F7",
+    gradientEnd: "#6366F1",
+  },
 ];
 
 export default function CodeSnippets() {
@@ -52,6 +116,7 @@ export default function CodeSnippets() {
     "code"
   );
   const [isLanguagesOpen, setIsLanguagesOpen] = useState(false);
+  const [isBackgroundThemesOpen, setIsBackgroundThemesOpen] = useState(false);
   const lineNumbersRef = useRef<HTMLDivElement>(null);
   const [codeData, setCodeData] = useState<CodeData>({
     content: 'function hello() {\n  console.log("Hello, World!");\n}',
@@ -61,9 +126,15 @@ export default function CodeSnippets() {
     windowStyle: "mac",
     backgroundColor: "#0d1117",
     textColor: "#ffffff",
+    aspectRatio: "4/5",
+    backgroundType: "solid",
+    gradientStart: "#ffffff",
+    gradientEnd: "#ffffff",
   });
 
   const previewRef = useRef<HTMLDivElement>(null);
+  const [codeHeight, setCodeHeight] = useState<number | undefined>(undefined);
+  const codeBlockRef = useRef<HTMLDivElement>(null);
 
   const downloadImage = async () => {
     if (!previewRef.current) return;
@@ -250,6 +321,132 @@ export default function CodeSnippets() {
 
         {activeTab === "style" && (
           <div className="space-y-6">
+            {/* Image Ratio */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Image Ratio
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <button
+                  onClick={() =>
+                    setCodeData((prev) => ({
+                      ...prev,
+                      aspectRatio: "4/5",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    codeData.aspectRatio === "4/5"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  4:5
+                </button>
+                <button
+                  onClick={() =>
+                    setCodeData((prev) => ({
+                      ...prev,
+                      aspectRatio: "1/1",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    codeData.aspectRatio === "1/1"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  1:1
+                </button>
+                <button
+                  onClick={() =>
+                    setCodeData((prev) => ({
+                      ...prev,
+                      aspectRatio: "16/9",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    codeData.aspectRatio === "16/9"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  16:9
+                </button>
+                <button
+                  onClick={() =>
+                    setCodeData((prev) => ({
+                      ...prev,
+                      aspectRatio: "3/2",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    codeData.aspectRatio === "3/2"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  3:2
+                </button>
+              </div>
+            </div>
+
+            {/* Background Theme */}
+            <div className="space-y-2">
+              <button
+                onClick={() =>
+                  setIsBackgroundThemesOpen(!isBackgroundThemesOpen)
+                }
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Background Theme</span>
+                {isBackgroundThemesOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+
+              {isBackgroundThemesOpen && (
+                <div className="mt-3 p-4 border border-gray-200 rounded-xl bg-white space-y-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {themes.map((theme) => (
+                      <button
+                        key={theme.name}
+                        onClick={() =>
+                          setCodeData((prev) => ({
+                            ...prev,
+                            backgroundType: "gradient",
+                            gradientStart: theme.gradientStart,
+                            gradientEnd: theme.gradientEnd,
+                          }))
+                        }
+                        className="relative p-3 rounded-xl border transition-all hover:border-[#5170FF] group overflow-hidden"
+                      >
+                        <div
+                          className="absolute inset-0 opacity-90 group-hover:opacity-100 transition-opacity"
+                          style={{
+                            background: `linear-gradient(to bottom right, ${theme.gradientStart}, ${theme.gradientEnd})`,
+                          }}
+                        />
+                        <span
+                          className="relative font-medium text-sm"
+                          style={{
+                            color:
+                              theme.gradientStart === "#ffffff"
+                                ? "#000000"
+                                : "#ffffff",
+                          }}
+                        >
+                          {theme.name}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Existing theme and color options */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Theme
@@ -446,56 +643,96 @@ export default function CodeSnippets() {
     hljs.highlightAll();
   }, [codeData.content, codeData.language]);
 
+  useEffect(() => {
+    if (codeBlockRef.current) {
+      setCodeHeight(codeBlockRef.current.scrollHeight);
+    }
+  }, [codeData.content, codeData.showLineNumbers, codeData.language]);
+
   const preview = (
-    <div
-      ref={previewRef}
-      className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden"
-    >
+    <div className="p-4">
       <div
-        className="w-full"
-        style={{ backgroundColor: codeData.backgroundColor }}
+        ref={previewRef}
+        className={`mx-auto overflow-visible relative max-w-4xl`}
+        style={
+          codeHeight && codeHeight > 0
+            ? { height: codeHeight + 64 }
+            : { aspectRatio: codeData.aspectRatio }
+        }
       >
-        {codeData.windowStyle !== "none" && (
-          <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
-            {codeData.windowStyle === "mac" ? (
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                <div className="w-3 h-3 rounded-full bg-green-500" />
-              </div>
-            ) : (
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-gray-500" />
-                <div className="w-3 h-3 rounded-full bg-gray-500" />
-                <div className="w-3 h-3 rounded-full bg-gray-500" />
-              </div>
-            )}
-          </div>
-        )}
-        <div className="p-6">
-          {codeData.showLineNumbers ? (
-            <pre className="whitespace-pre font-mono text-sm">
-              {codeData.content.split("\n").map((line, i) => (
-                <div key={i} className="flex">
-                  <span className="w-8 text-gray-500 select-none">{i + 1}</span>
-                  <span
+        <div
+          className="w-full h-full"
+          style={{
+            ...(codeData.backgroundType === "gradient"
+              ? {
+                  backgroundImage: `linear-gradient(to bottom right, ${codeData.gradientStart}, ${codeData.gradientEnd})`,
+                }
+              : {
+                  backgroundColor: codeData.backgroundColor,
+                }),
+          }}
+        >
+          <div className="flex items-center justify-center w-full h-full p-8">
+            <div
+              ref={codeBlockRef}
+              className={`w-full bg-white rounded-2xl shadow-lg overflow-auto`}
+            >
+              {codeData.windowStyle !== "none" && (
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
+                  {codeData.windowStyle === "mac" ? (
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500" />
+                      <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                      <div className="w-3 h-3 rounded-full bg-green-500" />
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-gray-500" />
+                      <div className="w-3 h-3 rounded-full bg-gray-500" />
+                      <div className="w-3 h-3 rounded-full bg-gray-500" />
+                    </div>
+                  )}
+                </div>
+              )}
+              <div
+                className={`p-6 pb-8 hljs ${themeOptions.find((t) => t.value === codeData.theme)?.style || "github-dark"}`}
+                style={{ minHeight: "4rem" }}
+              >
+                {codeData.showLineNumbers ? (
+                  <pre
+                    className="whitespace-pre font-mono text-sm pb-2 overflow-x-auto"
+                    style={{ lineHeight: "1.75" }}
+                  >
+                    {codeData.content.split("\n").map((line, i) => (
+                      <div key={i} className="flex">
+                        <span className="w-8 text-gray-500 select-none">
+                          {i + 1}
+                        </span>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: hljs.highlight(line, {
+                              language: codeData.language,
+                            }).value,
+                          }}
+                        />
+                      </div>
+                    ))}
+                    <div style={{ height: "0.5em", opacity: 0 }}>&nbsp;</div>
+                  </pre>
+                ) : (
+                  <pre
+                    className="whitespace-pre font-mono text-sm pb-2 overflow-x-auto"
+                    style={{ lineHeight: "1.75" }}
                     dangerouslySetInnerHTML={{
-                      __html: hljs.highlight(line, {
-                        language: codeData.language,
-                      }).value,
+                      __html:
+                        getHighlightedCode() +
+                        "<div style='height:0.5em;opacity:0'>&nbsp;</div>",
                     }}
                   />
-                </div>
-              ))}
-            </pre>
-          ) : (
-            <pre
-              className="whitespace-pre font-mono text-sm"
-              dangerouslySetInnerHTML={{
-                __html: getHighlightedCode(),
-              }}
-            />
-          )}
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
