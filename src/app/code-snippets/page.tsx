@@ -215,17 +215,17 @@ export default function CodeSnippets() {
               <div className="relative border border-gray-200 rounded-xl focus-within:ring-2 focus-within:ring-[#5170FF] focus-within:border-transparent hover:border-gray-300 transition-all bg-gray-50">
                 <div
                   ref={lineNumbersRef}
-                  className="absolute top-0 left-0 p-4 select-none text-right border-r border-gray-200 overflow-hidden"
+                  className="absolute top-0 left-0 p-4 select-none text-right overflow-hidden border-r border-gray-200"
                   style={{
                     height: "100%",
+                    width: "3.5rem",
                     backgroundColor: "rgba(0, 0, 0, 0.02)",
-                    width: "3rem",
                   }}
                 >
                   {codeData.content.split("\n").map((_, i) => (
                     <div
                       key={i}
-                      className="text-gray-400 font-mono text-sm leading-6"
+                      className="text-gray-400 font-mono text-sm leading-6 pr-2"
                     >
                       {i + 1}
                     </div>
@@ -272,7 +272,12 @@ export default function CodeSnippets() {
                         e.currentTarget.scrollTop;
                     }
                   }}
-                  className="w-full h-48 p-4 pl-12 border-none focus:ring-0 resize-none bg-transparent text-gray-900 placeholder:text-gray-400 font-mono text-sm leading-6"
+                  className="w-full h-48 p-4 pl-14 border-none focus:ring-0 resize-none bg-transparent text-gray-900 placeholder:text-gray-400 font-mono text-sm leading-6 overflow-auto"
+                  style={{
+                    whiteSpace: "pre",
+                    scrollbarWidth: "thin",
+                    scrollbarColor: "#CBD5E1 transparent",
+                  }}
                   placeholder="Enter your code..."
                   spellCheck={false}
                 />
