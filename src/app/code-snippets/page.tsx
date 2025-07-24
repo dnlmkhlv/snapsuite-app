@@ -10,6 +10,7 @@ import {
   Monitor,
   ChevronDown,
   ChevronUp,
+  RotateCcw,
 } from "lucide-react";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -203,15 +204,15 @@ export default function CodeSnippets() {
   const [codeData, setCodeData] = useState<CodeData>({
     content: 'function hello() {\n  console.log("Hello, World!");\n}',
     language: "javascript",
-    theme: "github-dark",
+    theme: "nord",
     showLineNumbers: true,
     windowStyle: "mac",
-    backgroundColor: "#0d1117",
+    backgroundColor: "#F97316",
     textColor: "#ffffff",
     aspectRatio: "4/5",
-    backgroundType: "solid",
-    gradientStart: "#ffffff",
-    gradientEnd: "#ffffff",
+    backgroundType: "gradient",
+    gradientStart: "#F97316",
+    gradientEnd: "#DB2777",
   });
 
   const previewRef = useRef<HTMLDivElement>(null);
@@ -240,6 +241,31 @@ export default function CodeSnippets() {
 
   const toolsPanel = (
     <>
+      {/* Reset Button */}
+      <div className="absolute right-4 h-[57px] flex items-center">
+        <button
+          onClick={() =>
+            setCodeData({
+              content: 'function hello() {\n  console.log("Hello, World!");\n}',
+              language: "javascript",
+              theme: "nord",
+              showLineNumbers: true,
+              windowStyle: "mac",
+              backgroundColor: "#F97316",
+              textColor: "#ffffff",
+              aspectRatio: "4/5",
+              backgroundType: "gradient",
+              gradientStart: "#F97316",
+              gradientEnd: "#DB2777",
+            })
+          }
+          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset
+        </button>
+      </div>
+
       {/* Tab Navigation */}
       <div className="flex border-b">
         <button
