@@ -186,6 +186,7 @@ interface CodeData {
   theme: string;
   showLineNumbers: boolean;
   windowStyle: "mac" | "windows" | "none";
+  windowTitle: string;
   backgroundColor: string;
   textColor: string;
   aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
@@ -207,6 +208,7 @@ export default function CodeSnippets() {
     theme: "nord",
     showLineNumbers: true,
     windowStyle: "mac",
+    windowTitle: "script.js",
     backgroundColor: "#F97316",
     textColor: "#ffffff",
     aspectRatio: "4/5",
@@ -223,6 +225,16 @@ export default function CodeSnippets() {
     if (!previewRef.current) return;
 
     try {
+      // Add style rule for proper image rendering
+      const style = document.createElement("style");
+      document.head.appendChild(style);
+      style.sheet?.insertRule(
+        "body > div:last-child { transform-origin: 0 0; }"
+      );
+      style.sheet?.insertRule(
+        "body > div:last-child img { display: inline-block; }"
+      );
+
       const canvas = await html2canvas(previewRef.current, {
         backgroundColor: null,
         useCORS: true,
@@ -234,6 +246,9 @@ export default function CodeSnippets() {
       link.download = `code-${Date.now()}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
+
+      // Clean up the added style
+      document.head.removeChild(style);
     } catch (error) {
       console.error("Error generating image:", error);
     }
@@ -251,6 +266,7 @@ export default function CodeSnippets() {
               theme: "nord",
               showLineNumbers: true,
               windowStyle: "mac",
+              windowTitle: "script.js",
               backgroundColor: "#F97316",
               textColor: "#ffffff",
               aspectRatio: "4/5",
@@ -712,6 +728,25 @@ export default function CodeSnippets() {
                 </button>
               </div>
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Window Title
+              </label>
+              <input
+                type="text"
+                value={codeData.windowTitle}
+                onChange={(e) =>
+                  setCodeData((prev) => ({
+                    ...prev,
+                    windowTitle: e.target.value,
+                  }))
+                }
+                placeholder="Enter file name"
+                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              />
+            </div>
+
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -797,7 +832,7 @@ export default function CodeSnippets() {
             >
               {codeData.windowStyle !== "none" && (
                 <div
-                  className="flex items-center gap-2 px-4 py-3 border-b"
+                  className="flex items-center h-9 px-4 border-b relative"
                   style={{
                     backgroundColor:
                       editorThemes[codeData.theme as keyof EditorThemes]
@@ -808,18 +843,24 @@ export default function CodeSnippets() {
                   }}
                 >
                   {codeData.windowStyle === "mac" ? (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center h-full">
                       <div className="w-3 h-3 rounded-full bg-[#FF5F57] ring-1 ring-[#EC4C44]/20" />
                       <div className="w-3 h-3 rounded-full bg-[#FEBC2E] ring-1 ring-[#D69E24]/20" />
                       <div className="w-3 h-3 rounded-full bg-[#28C840] ring-1 ring-[#1DAD2B]/20" />
                     </div>
                   ) : (
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center h-full">
                       <div className="w-3 h-3 rounded-full bg-[#666666] ring-1 ring-white/20 hover:bg-[#888888] transition-colors" />
                       <div className="w-3 h-3 rounded-full bg-[#666666] ring-1 ring-white/20 hover:bg-[#888888] transition-colors" />
                       <div className="w-3 h-3 rounded-full bg-[#666666] ring-1 ring-white/20 hover:bg-[#888888] transition-colors" />
                     </div>
                   )}
+                  <div className="absolute left-0 right-0 flex items-center justify-center h-full">
+                    <span className="text-sm text-gray-400">
+                      {codeData.windowTitle ||
+                        `${codeData.language}.${languageOptions.find((l) => l.value === codeData.language)?.value === "javascript" ? "js" : languageOptions.find((l) => l.value === codeData.language)?.value}`}
+                    </span>
+                  </div>
                 </div>
               )}
               <div
