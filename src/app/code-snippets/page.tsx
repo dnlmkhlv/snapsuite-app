@@ -857,8 +857,7 @@ export default function CodeSnippets() {
                   )}
                   <div className="absolute left-0 right-0 flex items-center justify-center h-full">
                     <span className="text-sm text-gray-400">
-                      {codeData.windowTitle ||
-                        `${codeData.language}.${languageOptions.find((l) => l.value === codeData.language)?.value === "javascript" ? "js" : languageOptions.find((l) => l.value === codeData.language)?.value}`}
+                      {codeData.windowTitle}
                     </span>
                   </div>
                 </div>
