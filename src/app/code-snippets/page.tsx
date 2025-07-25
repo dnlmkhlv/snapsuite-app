@@ -215,7 +215,6 @@ interface CodeData {
   windowStyle: "mac" | "windows" | "none";
   windowTitle: string;
   backgroundColor: string;
-  textColor: string;
   backgroundType: "solid" | "gradient";
   gradientStart: string;
   gradientEnd: string;
@@ -237,7 +236,6 @@ export default function CodeSnippets() {
     windowStyle: "mac",
     windowTitle: "script.js",
     backgroundColor: "#F97316",
-    textColor: "#ffffff",
     backgroundType: "gradient",
     gradientStart: "#F97316",
     gradientEnd: "#DB2777",
@@ -294,7 +292,6 @@ export default function CodeSnippets() {
               windowStyle: "mac",
               windowTitle: "script.js",
               backgroundColor: "#F97316",
-              textColor: "#ffffff",
               backgroundType: "gradient",
               gradientStart: "#F97316",
               gradientEnd: "#DB2777",
@@ -602,41 +599,6 @@ export default function CodeSnippets() {
                   <div
                     className="w-full h-full rounded-lg border border-gray-200"
                     style={{ backgroundColor: codeData.backgroundColor }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Text Color
-              </label>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={codeData.textColor}
-                  onChange={(e) =>
-                    setCodeData((prev) => ({
-                      ...prev,
-                      textColor: e.target.value,
-                    }))
-                  }
-                  className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
-                />
-                <div className="w-12 h-12 relative">
-                  <input
-                    type="color"
-                    value={codeData.textColor}
-                    onChange={(e) =>
-                      setCodeData((prev) => ({
-                        ...prev,
-                        textColor: e.target.value,
-                      }))
-                    }
-                    className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                  />
-                  <div
-                    className="w-full h-full rounded-lg border border-gray-200"
-                    style={{ backgroundColor: codeData.textColor }}
                   />
                 </div>
               </div>
