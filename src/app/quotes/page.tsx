@@ -674,7 +674,7 @@ export default function Quotes() {
                     author: e.target.value,
                   }))
                 }
-                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                 placeholder="Enter author's name..."
               />
             </div>
@@ -691,7 +691,7 @@ export default function Quotes() {
                     role: e.target.value,
                   }))
                 }
-                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                 placeholder="Enter author's role or title..."
               />
             </div>
