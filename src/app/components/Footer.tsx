@@ -15,7 +15,7 @@ export default function Footer() {
               quality={100}
               className="-rotate-12"
             />
-            <span className="text-lg sm:text-xl font-semibold text-gray-800">
+            <span className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent font-handwriting">
               SnapSuite
             </span>
           </div>
