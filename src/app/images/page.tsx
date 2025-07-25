@@ -259,7 +259,7 @@ export default function Images() {
                   }
                 }}
                 maxLength={MAX_TEXT_LENGTH}
-                className="w-full h-32 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50"
+                className="w-full h-32 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50 text-gray-900"
                 placeholder="Add text to your image..."
               />
               <div className="mt-2 flex justify-end">
@@ -284,7 +284,7 @@ export default function Images() {
                       textColor: e.target.value,
                     }))
                   }
-                  className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                  className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                 />
                 <div className="w-12 h-12 relative">
                   <input
