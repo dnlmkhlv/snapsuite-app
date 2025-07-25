@@ -23,6 +23,15 @@ import go from "highlight.js/lib/languages/go";
 import rust from "highlight.js/lib/languages/rust";
 import ruby from "highlight.js/lib/languages/ruby";
 import php from "highlight.js/lib/languages/php";
+import sql from "highlight.js/lib/languages/sql";
+import shell from "highlight.js/lib/languages/shell";
+import xml from "highlight.js/lib/languages/xml";
+import css from "highlight.js/lib/languages/css";
+import json from "highlight.js/lib/languages/json";
+import yaml from "highlight.js/lib/languages/yaml";
+import kotlin from "highlight.js/lib/languages/kotlin";
+import swift from "highlight.js/lib/languages/swift";
+import markdown from "highlight.js/lib/languages/markdown";
 import EditorLayout from "../components/EditorLayout";
 
 // Register languages
@@ -36,6 +45,15 @@ hljs.registerLanguage("go", go);
 hljs.registerLanguage("rust", rust);
 hljs.registerLanguage("ruby", ruby);
 hljs.registerLanguage("php", php);
+hljs.registerLanguage("sql", sql);
+hljs.registerLanguage("shell", shell);
+hljs.registerLanguage("html", xml);
+hljs.registerLanguage("css", css);
+hljs.registerLanguage("json", json);
+hljs.registerLanguage("yaml", yaml);
+hljs.registerLanguage("kotlin", kotlin);
+hljs.registerLanguage("swift", swift);
+hljs.registerLanguage("markdown", markdown);
 
 type ThemeColors = {
   name: string;
@@ -145,6 +163,15 @@ const languageOptions = [
   { value: "rust", label: "Rust" },
   { value: "ruby", label: "Ruby" },
   { value: "php", label: "PHP" },
+  { value: "sql", label: "SQL" },
+  { value: "shell", label: "Shell/Bash" },
+  { value: "html", label: "HTML" },
+  { value: "css", label: "CSS" },
+  { value: "json", label: "JSON" },
+  { value: "yaml", label: "YAML" },
+  { value: "kotlin", label: "Kotlin" },
+  { value: "swift", label: "Swift" },
+  { value: "markdown", label: "Markdown" },
 ];
 
 const themes = [
