@@ -50,6 +50,7 @@ export default function Images() {
   const [imageData, setImageData] = useState<ImageData>(DEFAULT_IMAGE_DATA);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const MAX_TEXT_LENGTH = 280;
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -248,15 +249,26 @@ export default function Images() {
               </label>
               <textarea
                 value={imageData.text}
-                onChange={(e) =>
-                  setImageData((prev) => ({
-                    ...prev,
-                    text: e.target.value,
-                  }))
-                }
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  if (newValue.length <= MAX_TEXT_LENGTH) {
+                    setImageData((prev) => ({
+                      ...prev,
+                      text: newValue,
+                    }));
+                  }
+                }}
+                maxLength={MAX_TEXT_LENGTH}
                 className="w-full h-32 p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent resize-none bg-gray-50"
                 placeholder="Add text to your image..."
               />
+              <div className="mt-2 flex justify-end">
+                <span
+                  className={`text-sm ${imageData.text.length === MAX_TEXT_LENGTH ? "text-red-500" : "text-gray-500"}`}
+                >
+                  {imageData.text.length} / {MAX_TEXT_LENGTH}
+                </span>
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
