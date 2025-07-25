@@ -11,6 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   RotateCcw,
+  Upload,
 } from "lucide-react";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -215,9 +216,11 @@ interface CodeData {
   windowStyle: "mac" | "windows" | "none";
   windowTitle: string;
   backgroundColor: string;
-  backgroundType: "solid" | "gradient";
+  backgroundType: "solid" | "gradient" | "image";
   gradientStart: string;
   gradientEnd: string;
+  backgroundImage: string | null;
+  backgroundOpacity: number;
 }
 
 export default function CodeSnippets() {
@@ -239,7 +242,29 @@ export default function CodeSnippets() {
     backgroundType: "gradient",
     gradientStart: "#F97316",
     gradientEnd: "#DB2777",
+    backgroundImage: null,
+    backgroundOpacity: 1,
   });
+
+  const getBackgroundStyle = () => {
+    switch (codeData.backgroundType) {
+      case "gradient":
+        return {
+          backgroundImage: `linear-gradient(to bottom right, ${codeData.gradientStart}, ${codeData.gradientEnd})`,
+        };
+      case "image":
+        return codeData.backgroundImage
+          ? {
+              backgroundImage: `url(${codeData.backgroundImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: codeData.backgroundOpacity,
+            }
+          : { backgroundColor: codeData.backgroundColor };
+      default:
+        return { backgroundColor: codeData.backgroundColor };
+    }
+  };
 
   const previewRef = useRef<HTMLDivElement>(null);
   const [codeHeight, setCodeHeight] = useState<number | undefined>(undefined);
@@ -295,6 +320,8 @@ export default function CodeSnippets() {
               backgroundType: "gradient",
               gradientStart: "#F97316",
               gradientEnd: "#DB2777",
+              backgroundImage: null,
+              backgroundOpacity: 1,
             })
           }
           className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
@@ -528,6 +555,240 @@ export default function CodeSnippets() {
               )}
             </div>
 
+            {/* Custom Background Colors */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Custom Background Colors
+              </label>
+              <div className="space-y-6">
+                {/* Background Type Selection */}
+                <div className="grid grid-cols-3 gap-4">
+                  <button
+                    onClick={() =>
+                      setCodeData((prev) => ({
+                        ...prev,
+                        backgroundType: "solid",
+                      }))
+                    }
+                    className={`p-3 rounded-xl border transition-all ${
+                      codeData.backgroundType === "solid"
+                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                        : "border-gray-200 hover:border-gray-300 text-gray-600"
+                    }`}
+                  >
+                    Solid Color
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCodeData((prev) => ({
+                        ...prev,
+                        backgroundType: "gradient",
+                      }))
+                    }
+                    className={`p-3 rounded-xl border transition-all ${
+                      codeData.backgroundType === "gradient"
+                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                        : "border-gray-200 hover:border-gray-300 text-gray-600"
+                    }`}
+                  >
+                    Gradient
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCodeData((prev) => ({
+                        ...prev,
+                        backgroundType: "image",
+                      }))
+                    }
+                    className={`p-3 rounded-xl border transition-all ${
+                      codeData.backgroundType === "image"
+                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                        : "border-gray-200 hover:border-gray-300 text-gray-600"
+                    }`}
+                  >
+                    Image
+                  </button>
+                </div>
+
+                {/* Solid Color Picker */}
+                {codeData.backgroundType === "solid" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Background Color
+                    </label>
+                    <div className="flex gap-3">
+                      <input
+                        type="text"
+                        value={codeData.backgroundColor}
+                        onChange={(e) =>
+                          setCodeData((prev) => ({
+                            ...prev,
+                            backgroundColor: e.target.value,
+                            gradientStart: e.target.value,
+                            gradientEnd: e.target.value,
+                          }))
+                        }
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                      />
+                      <div className="w-12 h-12 relative">
+                        <input
+                          type="color"
+                          value={codeData.backgroundColor}
+                          onChange={(e) =>
+                            setCodeData((prev) => ({
+                              ...prev,
+                              backgroundColor: e.target.value,
+                              gradientStart: e.target.value,
+                              gradientEnd: e.target.value,
+                            }))
+                          }
+                          className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                        />
+                        <div
+                          className="w-full h-full rounded-lg border border-gray-200"
+                          style={{ backgroundColor: codeData.backgroundColor }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Gradient Color Pickers */}
+                {codeData.backgroundType === "gradient" && (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Start Color
+                      </label>
+                      <div className="flex gap-3">
+                        <input
+                          type="text"
+                          value={codeData.gradientStart}
+                          onChange={(e) =>
+                            setCodeData((prev) => ({
+                              ...prev,
+                              gradientStart: e.target.value,
+                            }))
+                          }
+                          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                        />
+                        <div className="w-12 h-12 relative">
+                          <input
+                            type="color"
+                            value={codeData.gradientStart}
+                            onChange={(e) =>
+                              setCodeData((prev) => ({
+                                ...prev,
+                                gradientStart: e.target.value,
+                              }))
+                            }
+                            className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                          />
+                          <div
+                            className="w-full h-full rounded-lg border border-gray-200"
+                            style={{ backgroundColor: codeData.gradientStart }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        End Color
+                      </label>
+                      <div className="flex gap-3">
+                        <input
+                          type="text"
+                          value={codeData.gradientEnd}
+                          onChange={(e) =>
+                            setCodeData((prev) => ({
+                              ...prev,
+                              gradientEnd: e.target.value,
+                            }))
+                          }
+                          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                        />
+                        <div className="w-12 h-12 relative">
+                          <input
+                            type="color"
+                            value={codeData.gradientEnd}
+                            onChange={(e) =>
+                              setCodeData((prev) => ({
+                                ...prev,
+                                gradientEnd: e.target.value,
+                              }))
+                            }
+                            className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
+                          />
+                          <div
+                            className="w-full h-full rounded-lg border border-gray-200"
+                            style={{ backgroundColor: codeData.gradientEnd }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Image Upload and Opacity */}
+                {codeData.backgroundType === "image" && (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Background Image
+                      </label>
+                      <div className="flex items-center gap-3">
+                        <label className="flex-1 cursor-pointer">
+                          <div className="w-full p-3 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors bg-gray-50 text-gray-600">
+                            <div className="flex items-center justify-center gap-2">
+                              <Upload className="w-4 h-4" />
+                              <span>Upload Image</span>
+                            </div>
+                          </div>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                  setCodeData((prev) => ({
+                                    ...prev,
+                                    backgroundImage: e.target?.result as string,
+                                  }));
+                                };
+                                reader.readAsDataURL(file);
+                              }
+                            }}
+                          />
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Image Opacity
+                      </label>
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.1"
+                        value={codeData.backgroundOpacity}
+                        onChange={(e) =>
+                          setCodeData((prev) => ({
+                            ...prev,
+                            backgroundOpacity: parseFloat(e.target.value),
+                          }))
+                        }
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Code Theme */}
             <div className="space-y-2">
               <button
@@ -566,42 +827,6 @@ export default function CodeSnippets() {
                   </div>
                 </div>
               )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Background Color
-              </label>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={codeData.backgroundColor}
-                  onChange={(e) =>
-                    setCodeData((prev) => ({
-                      ...prev,
-                      backgroundColor: e.target.value,
-                    }))
-                  }
-                  className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
-                />
-                <div className="w-12 h-12 relative">
-                  <input
-                    type="color"
-                    value={codeData.backgroundColor}
-                    onChange={(e) =>
-                      setCodeData((prev) => ({
-                        ...prev,
-                        backgroundColor: e.target.value,
-                      }))
-                    }
-                    className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                  />
-                  <div
-                    className="w-full h-full rounded-lg border border-gray-200"
-                    style={{ backgroundColor: codeData.backgroundColor }}
-                  />
-                </div>
-              </div>
             </div>
           </div>
         )}
@@ -738,22 +963,11 @@ export default function CodeSnippets() {
           codeHeight && codeHeight > 0 ? { height: codeHeight + 64 } : undefined
         }
       >
-        <div
-          className="w-full h-full"
-          style={{
-            ...(codeData.backgroundType === "gradient"
-              ? {
-                  backgroundImage: `linear-gradient(to bottom right, ${codeData.gradientStart}, ${codeData.gradientEnd})`,
-                }
-              : {
-                  backgroundColor: codeData.backgroundColor,
-                }),
-          }}
-        >
+        <div className="w-full h-full" style={getBackgroundStyle()}>
           <div className="flex items-center justify-center w-full h-full p-8">
             <div
               ref={codeBlockRef}
-              className={`w-full rounded-2xl shadow-lg overflow-auto`}
+              className="w-full rounded-2xl shadow-lg overflow-auto"
               style={{
                 backgroundColor:
                   editorThemes[codeData.theme as keyof EditorThemes]
