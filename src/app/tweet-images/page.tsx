@@ -1020,6 +1020,26 @@ export default function TweetImages() {
                         className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5170FF] file:text-white hover:file:bg-[#4060EE] text-gray-900"
                       />
                     </div>
+                    {tweetData.backgroundImage && (
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={tweetData.backgroundImage}
+                          alt="Background Preview"
+                          className="w-full max-h-48 object-cover rounded-xl border border-gray-200 mt-4"
+                        />
+                        <button
+                          onClick={() =>
+                            setTweetData((prev) => ({
+                              ...prev,
+                              backgroundImage: null,
+                            }))
+                          }
+                          className="px-3 py-2 text-xs font-medium text-red-600 bg-transparent border border-red-200 rounded-lg hover:bg-red-50 transition-all"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Image Opacity
