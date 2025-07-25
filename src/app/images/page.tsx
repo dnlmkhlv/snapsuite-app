@@ -46,6 +46,7 @@ export default function Images() {
     "image"
   );
   const [imageData, setImageData] = useState<ImageData>(DEFAULT_IMAGE_DATA);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -164,6 +165,7 @@ export default function Images() {
                 type="file"
                 accept="image/*"
                 onChange={handleFileUpload}
+                ref={fileInputRef}
                 className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5170FF] file:text-white hover:file:bg-[#4060EE] text-gray-900"
               />
               {imageData.image && (
@@ -178,13 +180,15 @@ export default function Images() {
                       {imageData.imageFileName}
                     </span>
                     <button
-                      onClick={() =>
+                      onClick={() => {
                         setImageData((prev) => ({
                           ...prev,
                           image: null,
                           imageFileName: undefined,
-                        }))
-                      }
+                        }));
+                        if (fileInputRef.current)
+                          fileInputRef.current.value = "";
+                      }}
                       className="px-3 py-2 text-xs font-medium text-red-600 bg-transparent border border-red-200 rounded-lg hover:bg-red-50 transition-all w-fit"
                     >
                       Remove
