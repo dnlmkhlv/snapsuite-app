@@ -287,22 +287,11 @@ export default function TweetImages() {
 
   const toolsPanel = (
     <>
-      {/* Reset Button */}
-      <div className="absolute right-4 h-[57px] flex items-center">
-        <button
-          onClick={() => setTweetData(DEFAULT_TWEET_DATA)}
-          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
-        >
-          <RotateCcw className="w-4 h-4" />
-          Reset
-        </button>
-      </div>
-
       {/* Tab Navigation */}
-      <div className="flex border-b">
+      <div className="flex flex-wrap items-center border-b relative z-0 gap-x-1 gap-y-2">
         <button
           onClick={() => setActiveTab("text")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
             activeTab === "text"
               ? "text-[#5170FF]"
               : "text-gray-600 hover:text-gray-900"
@@ -316,7 +305,7 @@ export default function TweetImages() {
         </button>
         <button
           onClick={() => setActiveTab("style")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
             activeTab === "style"
               ? "text-[#5170FF]"
               : "text-gray-600 hover:text-gray-900"
@@ -330,7 +319,7 @@ export default function TweetImages() {
         </button>
         <button
           onClick={() => setActiveTab("profile")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
             activeTab === "profile"
               ? "text-[#5170FF]"
               : "text-gray-600 hover:text-gray-900"
@@ -341,6 +330,13 @@ export default function TweetImages() {
           {activeTab === "profile" && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
           )}
+        </button>
+        <button
+          onClick={() => setTweetData(DEFAULT_TWEET_DATA)}
+          className="flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium text-xs sm:text-base text-gray-600 hover:text-gray-900 bg-transparent transition-all active:scale-90 active:opacity-70 ml-auto"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset
         </button>
       </div>
 
