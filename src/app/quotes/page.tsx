@@ -27,6 +27,7 @@ interface QuoteData {
   backgroundColor: string;
   showWatermark: boolean;
   aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
+  fontSize: number;
 }
 
 const fontOptions = [
@@ -56,6 +57,7 @@ export default function Quotes() {
     backgroundColor: "#111827",
     showWatermark: false,
     aspectRatio: "4/5",
+    fontSize: 24,
   });
 
   const previewRef = useRef<HTMLDivElement>(null);
@@ -172,6 +174,30 @@ export default function Quotes() {
                   </div>
                 </div>
               )}
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Font Size
+                </label>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min="16"
+                    max="48"
+                    value={quoteData.fontSize}
+                    onChange={(e) =>
+                      setQuoteData((prev) => ({
+                        ...prev,
+                        fontSize: parseInt(e.target.value),
+                      }))
+                    }
+                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
+                  />
+                  <span className="text-sm text-gray-600 min-w-[2.5rem]">
+                    {quoteData.fontSize}px
+                  </span>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -599,11 +625,14 @@ export default function Quotes() {
             "
           </div>
           <div
-            className={`text-2xl mb-8 ${
+            className={`mb-8 ${
               fontOptions.find((f) => f.value === quoteData.fontFamily)
                 ?.className || "font-inter"
             }`}
-            style={{ color: quoteData.textColor }}
+            style={{
+              color: quoteData.textColor,
+              fontSize: `${quoteData.fontSize}px`,
+            }}
           >
             {quoteData.content}
           </div>
