@@ -715,8 +715,8 @@ export default function Quotes() {
       }`}
     >
       <div className="w-full h-full flex items-center justify-center p-12 relative">
-        {/* Background overlay for image opacity */}
-        {quoteData.backgroundType === "image" && quoteData.backgroundImage && (
+        {/* Background overlay for image opacity, only if image is set */}
+        {quoteData.backgroundType === "image" && quoteData.backgroundImage ? (
           <div
             className="absolute inset-0 z-0 rounded-2xl"
             style={{
@@ -726,9 +726,7 @@ export default function Quotes() {
               opacity: quoteData.backgroundOpacity / 100,
             }}
           />
-        )}
-        {/* Background for gradient or solid */}
-        {quoteData.backgroundType !== "image" && (
+        ) : (
           <div
             className="absolute inset-0 z-0 rounded-2xl"
             style={
