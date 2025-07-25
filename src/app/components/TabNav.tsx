@@ -49,8 +49,7 @@ export default function TabNav() {
                 }`}
               >
                 <Icon className="w-4 h-4" />
-                <span className="hidden sm:inline">{tab.name}</span>
-                <span className="sm:hidden">{tab.name.slice(0, 1)}</span>
+                <span>{tab.name}</span>
                 {isActive && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
                 )}
