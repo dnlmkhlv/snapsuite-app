@@ -736,34 +736,24 @@ export default function CodeSnippets() {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Background Image
                       </label>
-                      <div className="flex items-center gap-3">
-                        <label className="flex-1 cursor-pointer">
-                          <div className="w-full p-3 border border-gray-200 rounded-xl hover:border-gray-300 transition-colors bg-gray-50 text-gray-600">
-                            <div className="flex items-center justify-center gap-2">
-                              <Upload className="w-4 h-4" />
-                              <span>Upload Image</span>
-                            </div>
-                          </div>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const reader = new FileReader();
-                                reader.onload = (e) => {
-                                  setCodeData((prev) => ({
-                                    ...prev,
-                                    backgroundImage: e.target?.result as string,
-                                  }));
-                                };
-                                reader.readAsDataURL(file);
-                              }
-                            }}
-                          />
-                        </label>
-                      </div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                              setCodeData((prev) => ({
+                                ...prev,
+                                backgroundImage: e.target?.result as string,
+                              }));
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5170FF] file:text-white hover:file:bg-[#4060EE]"
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
