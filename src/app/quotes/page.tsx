@@ -11,6 +11,7 @@ import {
   Quote,
   ChevronUp,
   ChevronDown,
+  RotateCcw,
 } from "lucide-react";
 import EditorLayout from "../components/EditorLayout";
 
@@ -39,26 +40,28 @@ const fontOptions = [
   { value: "Montserrat", label: "Montserrat", className: "font-montserrat" },
 ];
 
+const DEFAULT_QUOTE_DATA: QuoteData = {
+  content: "The only way to do great work is to love what you do.",
+  author: "Steve Jobs",
+  role: "Co-founder of Apple Inc.",
+  alignment: "center",
+  gradientStart: "#4F46E5",
+  gradientEnd: "#9333EA",
+  textColor: "#ffffff",
+  fontFamily: "Inter",
+  backgroundType: "gradient",
+  backgroundColor: "#111827",
+  showWatermark: false,
+  aspectRatio: "4/5",
+  fontSize: 24,
+};
+
 export default function Quotes() {
   const [activeTab, setActiveTab] = useState<"content" | "style" | "author">(
     "content"
   );
   const [isFontFamilyOpen, setIsFontFamilyOpen] = useState(false);
-  const [quoteData, setQuoteData] = useState<QuoteData>({
-    content: "The only way to do great work is to love what you do.",
-    author: "Steve Jobs",
-    role: "Co-founder of Apple Inc.",
-    alignment: "center",
-    gradientStart: "#4F46E5",
-    gradientEnd: "#9333EA",
-    textColor: "#ffffff",
-    fontFamily: "Inter",
-    backgroundType: "gradient",
-    backgroundColor: "#111827",
-    showWatermark: false,
-    aspectRatio: "4/5",
-    fontSize: 24,
-  });
+  const [quoteData, setQuoteData] = useState<QuoteData>(DEFAULT_QUOTE_DATA);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -84,6 +87,16 @@ export default function Quotes() {
 
   const toolsPanel = (
     <>
+      {/* Reset Button */}
+      <div className="absolute right-4 h-[57px] flex items-center">
+        <button
+          onClick={() => setQuoteData(DEFAULT_QUOTE_DATA)}
+          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset
+        </button>
+      </div>
       {/* Tab Navigation */}
       <div className="flex border-b">
         <button
