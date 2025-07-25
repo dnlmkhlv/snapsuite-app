@@ -141,20 +141,6 @@ export default function Images() {
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
           )}
         </button>
-        <button
-          onClick={() => setActiveTab("effects")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
-            activeTab === "effects"
-              ? "text-[#5170FF]"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-        >
-          <Sliders className="w-4 h-4" />
-          Effects
-          {activeTab === "effects" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
-          )}
-        </button>
       </div>
 
       {/* Tab Content */}
@@ -197,43 +183,6 @@ export default function Images() {
                     >
                       Remove
                     </button>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="space-y-2">
-              <button
-                onClick={() => setIsFiltersOpen((v) => !v)}
-                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-              >
-                <span className="text-sm font-medium">Filter</span>
-                {isFiltersOpen ? (
-                  <ChevronUp className="w-5 h-5" />
-                ) : (
-                  <ChevronDown className="w-5 h-5" />
-                )}
-              </button>
-              {isFiltersOpen && (
-                <div className="p-4 border border-gray-200 rounded-xl bg-white">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {filters.map((filter) => (
-                      <button
-                        key={filter.name}
-                        onClick={() =>
-                          setImageData((prev) => ({
-                            ...prev,
-                            filter: filter.value,
-                          }))
-                        }
-                        className={`p-3 rounded-lg border transition-all ${
-                          imageData.filter === filter.value
-                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                            : "border-gray-200 hover:border-gray-300 text-gray-600"
-                        }`}
-                      >
-                        {filter.name}
-                      </button>
-                    ))}
                   </div>
                 </div>
               )}
@@ -353,96 +302,6 @@ export default function Images() {
             </div>
           </div>
         )}
-
-        {activeTab === "effects" && (
-          <div className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Brightness
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="200"
-                value={imageData.brightness}
-                onChange={(e) =>
-                  setImageData((prev) => ({
-                    ...prev,
-                    brightness: parseInt(e.target.value),
-                  }))
-                }
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
-              />
-              <div className="text-sm text-gray-600 mt-1">
-                {imageData.brightness}%
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Contrast
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="200"
-                value={imageData.contrast}
-                onChange={(e) =>
-                  setImageData((prev) => ({
-                    ...prev,
-                    contrast: parseInt(e.target.value),
-                  }))
-                }
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
-              />
-              <div className="text-sm text-gray-600 mt-1">
-                {imageData.contrast}%
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Saturation
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="200"
-                value={imageData.saturation}
-                onChange={(e) =>
-                  setImageData((prev) => ({
-                    ...prev,
-                    saturation: parseInt(e.target.value),
-                  }))
-                }
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
-              />
-              <div className="text-sm text-gray-600 mt-1">
-                {imageData.saturation}%
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Blur
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="10"
-                step="0.1"
-                value={imageData.blur}
-                onChange={(e) =>
-                  setImageData((prev) => ({
-                    ...prev,
-                    blur: parseFloat(e.target.value),
-                  }))
-                }
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
-              />
-              <div className="text-sm text-gray-600 mt-1">
-                {imageData.blur}px
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );
@@ -461,20 +320,32 @@ export default function Images() {
               className="w-full h-full object-cover"
               style={{
                 filter: `${imageData.filter} brightness(${imageData.brightness}%) contrast(${imageData.contrast}%) saturate(${imageData.saturation}%) blur(${imageData.blur}px)`,
+                display: "block",
               }}
             />
             {imageData.text && (
               <div
-                className={`absolute left-0 right-0 p-6 ${
-                  imageData.textPosition === "top"
-                    ? "top-0"
-                    : imageData.textPosition === "center"
-                      ? "top-1/2 -translate-y-1/2"
-                      : "bottom-0"
-                }`}
+                className="absolute left-0 right-0 p-6"
+                style={{
+                  top:
+                    imageData.textPosition === "top"
+                      ? 0
+                      : imageData.textPosition === "center"
+                        ? "50%"
+                        : "auto",
+                  bottom: imageData.textPosition === "bottom" ? 0 : "auto",
+                  left: 0,
+                  right: 0,
+                  transform:
+                    imageData.textPosition === "center"
+                      ? "translateY(-50%)"
+                      : "none",
+                  position: "absolute",
+                  textAlign: "center",
+                  pointerEvents: "none",
+                }}
               >
                 <div
-                  className="text-center"
                   style={{
                     color: imageData.textColor,
                     fontSize: imageData.fontSize,
