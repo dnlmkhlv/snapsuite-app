@@ -221,6 +221,7 @@ interface CodeData {
   gradientEnd: string;
   backgroundImage: string | null;
   backgroundOpacity: number;
+  showWatermark: boolean;
 }
 
 export default function CodeSnippets() {
@@ -244,6 +245,7 @@ export default function CodeSnippets() {
     gradientEnd: "#DB2777",
     backgroundImage: null,
     backgroundOpacity: 1,
+    showWatermark: false,
   });
 
   const getBackgroundStyle = () => {
@@ -322,6 +324,7 @@ export default function CodeSnippets() {
               gradientEnd: "#DB2777",
               backgroundImage: null,
               backgroundOpacity: 1,
+              showWatermark: false,
             })
           }
           className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
@@ -818,6 +821,27 @@ export default function CodeSnippets() {
                 </div>
               )}
             </div>
+            {/* Watermark Option (bottom) */}
+            <div className="flex items-center justify-between">
+              <label
+                className="text-sm font-medium text-gray-700"
+                htmlFor="watermark"
+              >
+                Show Watermark
+              </label>
+              <input
+                type="checkbox"
+                id="watermark"
+                checked={codeData.showWatermark}
+                onChange={(e) =>
+                  setCodeData((prev) => ({
+                    ...prev,
+                    showWatermark: e.target.checked,
+                  }))
+                }
+                className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
+              />
+            </div>
           </div>
         )}
 
@@ -1047,6 +1071,11 @@ export default function CodeSnippets() {
               </div>
             </div>
           </div>
+          {codeData.showWatermark && (
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center pointer-events-none">
+              <span className="text-gray-400/70 text-sm">snapsuite.app</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
