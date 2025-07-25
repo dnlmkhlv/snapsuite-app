@@ -30,6 +30,7 @@ interface QuoteData {
   aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
   fontSize: number;
   backgroundImage: string | null;
+  backgroundOpacity: number;
 }
 
 const fontOptions = [
@@ -56,6 +57,7 @@ const DEFAULT_QUOTE_DATA: QuoteData = {
   aspectRatio: "4/5",
   fontSize: 24,
   backgroundImage: null,
+  backgroundOpacity: 100,
 };
 
 export default function Quotes() {
@@ -604,6 +606,32 @@ export default function Quotes() {
                     </button>
                   </div>
                 )}
+                {/* Opacity Slider */}
+                {quoteData.backgroundImage && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Image Opacity
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={quoteData.backgroundOpacity}
+                        onChange={(e) =>
+                          setQuoteData((prev) => ({
+                            ...prev,
+                            backgroundOpacity: parseInt(e.target.value),
+                          }))
+                        }
+                        className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#5170FF]"
+                      />
+                      <span className="text-sm text-gray-600 min-w-[2.5rem]">
+                        {quoteData.backgroundOpacity}%
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : null}
 
@@ -686,30 +714,40 @@ export default function Quotes() {
               : "aspect-[3/2]"
       }`}
     >
-      <div
-        className="w-full h-full flex items-center justify-center p-12"
-        style={
-          quoteData.backgroundType === "gradient"
-            ? {
-                background: `linear-gradient(to bottom right, ${quoteData.gradientStart}, ${quoteData.gradientEnd})`,
-              }
-            : quoteData.backgroundType === "image" && quoteData.backgroundImage
-              ? {
-                  backgroundImage: `url(${quoteData.backgroundImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }
-              : {
-                  background: quoteData.backgroundColor,
-                }
-        }
-      >
+      <div className="w-full h-full flex items-center justify-center p-12 relative">
+        {/* Background overlay for image opacity */}
+        {quoteData.backgroundType === "image" && quoteData.backgroundImage && (
+          <div
+            className="absolute inset-0 z-0 rounded-2xl"
+            style={{
+              backgroundImage: `url(${quoteData.backgroundImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: quoteData.backgroundOpacity / 100,
+            }}
+          />
+        )}
+        {/* Background for gradient or solid */}
+        {quoteData.backgroundType !== "image" && (
+          <div
+            className="absolute inset-0 z-0 rounded-2xl"
+            style={
+              quoteData.backgroundType === "gradient"
+                ? {
+                    background: `linear-gradient(to bottom right, ${quoteData.gradientStart}, ${quoteData.gradientEnd})`,
+                  }
+                : { background: quoteData.backgroundColor }
+            }
+          />
+        )}
+        {/* Foreground content */}
         <div
-          className={`w-full flex flex-col ${
-            quoteData.alignment === "center"
-              ? "items-center text-center"
-              : "items-start text-left"
-          }`}
+          className="relative z-10 w-full flex flex-col "
+          style={{
+            alignItems:
+              quoteData.alignment === "center" ? "center" : "flex-start",
+            textAlign: quoteData.alignment === "center" ? "center" : "left",
+          }}
         >
           <div
             className="text-6xl mb-8 opacity-20"
