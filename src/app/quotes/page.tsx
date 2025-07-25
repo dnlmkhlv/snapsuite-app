@@ -106,21 +106,11 @@ export default function Quotes() {
 
   const toolsPanel = (
     <>
-      {/* Reset Button */}
-      <div className="absolute right-4 h-[57px] flex items-center">
-        <button
-          onClick={() => setQuoteData(DEFAULT_QUOTE_DATA)}
-          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
-        >
-          <RotateCcw className="w-4 h-4" />
-          Reset
-        </button>
-      </div>
       {/* Tab Navigation */}
-      <div className="flex border-b">
+      <div className="flex items-center border-b relative z-0 gap-x-1 gap-y-2 overflow-x-auto">
         <button
           onClick={() => setActiveTab("content")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
             activeTab === "content"
               ? "text-[#5170FF]"
               : "text-gray-600 hover:text-gray-900"
@@ -134,7 +124,7 @@ export default function Quotes() {
         </button>
         <button
           onClick={() => setActiveTab("style")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
             activeTab === "style"
               ? "text-[#5170FF]"
               : "text-gray-600 hover:text-gray-900"
@@ -148,7 +138,7 @@ export default function Quotes() {
         </button>
         <button
           onClick={() => setActiveTab("author")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
             activeTab === "author"
               ? "text-[#5170FF]"
               : "text-gray-600 hover:text-gray-900"
@@ -159,6 +149,13 @@ export default function Quotes() {
           {activeTab === "author" && (
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
           )}
+        </button>
+        <button
+          onClick={() => setQuoteData(DEFAULT_QUOTE_DATA)}
+          className="flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium text-xs sm:text-base text-gray-600 hover:text-gray-900 bg-transparent transition-all active:scale-90 active:opacity-70 ml-auto"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset
         </button>
       </div>
 
