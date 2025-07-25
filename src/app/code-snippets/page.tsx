@@ -216,7 +216,6 @@ interface CodeData {
   windowTitle: string;
   backgroundColor: string;
   textColor: string;
-  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
   backgroundType: "solid" | "gradient";
   gradientStart: string;
   gradientEnd: string;
@@ -238,7 +237,6 @@ export default function CodeSnippets() {
     windowTitle: "script.js",
     backgroundColor: "#F97316",
     textColor: "#ffffff",
-    aspectRatio: "4/5",
     backgroundType: "gradient",
     gradientStart: "#F97316",
     gradientEnd: "#DB2777",
@@ -296,7 +294,6 @@ export default function CodeSnippets() {
               windowTitle: "script.js",
               backgroundColor: "#F97316",
               textColor: "#ffffff",
-              aspectRatio: "4/5",
               backgroundType: "gradient",
               gradientStart: "#F97316",
               gradientEnd: "#DB2777",
@@ -477,75 +474,6 @@ export default function CodeSnippets() {
 
         {activeTab === "style" && (
           <div className="space-y-6">
-            {/* Image Ratio */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">
-                Image Ratio
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <button
-                  onClick={() =>
-                    setCodeData((prev) => ({
-                      ...prev,
-                      aspectRatio: "4/5",
-                    }))
-                  }
-                  className={`flex items-center justify-center p-3 border rounded-xl ${
-                    codeData.aspectRatio === "4/5"
-                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
-                      : "border-gray-200 text-gray-700"
-                  }`}
-                >
-                  4:5
-                </button>
-                <button
-                  onClick={() =>
-                    setCodeData((prev) => ({
-                      ...prev,
-                      aspectRatio: "1/1",
-                    }))
-                  }
-                  className={`flex items-center justify-center p-3 border rounded-xl ${
-                    codeData.aspectRatio === "1/1"
-                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
-                      : "border-gray-200 text-gray-700"
-                  }`}
-                >
-                  1:1
-                </button>
-                <button
-                  onClick={() =>
-                    setCodeData((prev) => ({
-                      ...prev,
-                      aspectRatio: "16/9",
-                    }))
-                  }
-                  className={`flex items-center justify-center p-3 border rounded-xl ${
-                    codeData.aspectRatio === "16/9"
-                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
-                      : "border-gray-200 text-gray-700"
-                  }`}
-                >
-                  16:9
-                </button>
-                <button
-                  onClick={() =>
-                    setCodeData((prev) => ({
-                      ...prev,
-                      aspectRatio: "3/2",
-                    }))
-                  }
-                  className={`flex items-center justify-center p-3 border rounded-xl ${
-                    codeData.aspectRatio === "3/2"
-                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
-                      : "border-gray-200 text-gray-700"
-                  }`}
-                >
-                  3:2
-                </button>
-              </div>
-            </div>
-
             {/* Background Theme */}
             <div className="space-y-2">
               <button
@@ -828,11 +756,9 @@ export default function CodeSnippets() {
     <div className="p-4">
       <div
         ref={previewRef}
-        className={`mx-auto overflow-visible relative max-w-4xl`}
+        className="mx-auto overflow-visible relative max-w-4xl"
         style={
-          codeHeight && codeHeight > 0
-            ? { height: codeHeight + 64 }
-            : { aspectRatio: codeData.aspectRatio }
+          codeHeight && codeHeight > 0 ? { height: codeHeight + 64 } : undefined
         }
       >
         <div
