@@ -307,8 +307,50 @@ export default function CodeSnippets() {
 
   const toolsPanel = (
     <>
-      {/* Reset Button */}
-      <div className="absolute right-4 h-[57px] flex items-center">
+      {/* Tab Navigation */}
+      <div className="flex flex-wrap items-center border-b relative z-0 gap-x-1 gap-y-2">
+        <button
+          onClick={() => setActiveTab("code")}
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
+            activeTab === "code"
+              ? "text-[#5170FF]"
+              : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          <Code className="w-4 h-4" />
+          Code
+          {activeTab === "code" && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab("style")}
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
+            activeTab === "style"
+              ? "text-[#5170FF]"
+              : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          <Palette className="w-4 h-4" />
+          Style
+          {activeTab === "style" && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+          )}
+        </button>
+        <button
+          onClick={() => setActiveTab("window")}
+          className={`flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium transition-colors relative text-xs sm:text-base ${
+            activeTab === "window"
+              ? "text-[#5170FF]"
+              : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          <Monitor className="w-4 h-4" />
+          Window
+          {activeTab === "window" && (
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
+          )}
+        </button>
         <button
           onClick={() =>
             setCodeData({
@@ -327,56 +369,10 @@ export default function CodeSnippets() {
               showWatermark: false,
             })
           }
-          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
+          className="flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium text-xs sm:text-base text-gray-600 hover:text-gray-900 bg-transparent transition-all active:scale-90 active:opacity-70 ml-auto"
         >
           <RotateCcw className="w-4 h-4" />
           Reset
-        </button>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="flex border-b">
-        <button
-          onClick={() => setActiveTab("code")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
-            activeTab === "code"
-              ? "text-[#5170FF]"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-        >
-          <Code className="w-4 h-4" />
-          Code
-          {activeTab === "code" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
-          )}
-        </button>
-        <button
-          onClick={() => setActiveTab("style")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
-            activeTab === "style"
-              ? "text-[#5170FF]"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-        >
-          <Palette className="w-4 h-4" />
-          Style
-          {activeTab === "style" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
-          )}
-        </button>
-        <button
-          onClick={() => setActiveTab("window")}
-          className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors relative ${
-            activeTab === "window"
-              ? "text-[#5170FF]"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-        >
-          <Monitor className="w-4 h-4" />
-          Window
-          {activeTab === "window" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#5170FF]" />
-          )}
         </button>
       </div>
 
