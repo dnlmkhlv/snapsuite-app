@@ -628,7 +628,7 @@ export default function CodeSnippets() {
                             gradientEnd: e.target.value,
                           }))
                         }
-                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                        className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                       />
                       <div className="w-12 h-12 relative">
                         <input
@@ -670,7 +670,7 @@ export default function CodeSnippets() {
                               gradientStart: e.target.value,
                             }))
                           }
-                          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                         />
                         <div className="w-12 h-12 relative">
                           <input
@@ -705,7 +705,7 @@ export default function CodeSnippets() {
                               gradientEnd: e.target.value,
                             }))
                           }
-                          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
+                          className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
                         />
                         <div className="w-12 h-12 relative">
                           <input
