@@ -21,6 +21,10 @@ interface QuoteData {
   gradientEnd: string;
   textColor: string;
   fontFamily: string;
+  backgroundType: "solid" | "gradient";
+  backgroundColor: string;
+  showWatermark: boolean;
+  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
 }
 
 const fontOptions = [
@@ -45,6 +49,10 @@ export default function Quotes() {
     gradientEnd: "#9333EA",
     textColor: "#ffffff",
     fontFamily: "Inter",
+    backgroundType: "gradient",
+    backgroundColor: "#111827",
+    showWatermark: false,
+    aspectRatio: "4/5",
   });
 
   const previewRef = useRef<HTMLDivElement>(null);
@@ -175,96 +183,100 @@ export default function Quotes() {
         )}
 
         {activeTab === "style" && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Start Color
-                </label>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    value={quoteData.gradientStart}
-                    onChange={(e) =>
-                      setQuoteData((prev) => ({
-                        ...prev,
-                        gradientStart: e.target.value,
-                      }))
-                    }
-                    className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
-                  />
-                  <div className="w-12 h-12 relative">
-                    <input
-                      type="color"
-                      value={quoteData.gradientStart}
-                      onChange={(e) =>
-                        setQuoteData((prev) => ({
-                          ...prev,
-                          gradientStart: e.target.value,
-                        }))
-                      }
-                      className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                    />
-                    <div
-                      className="w-full h-full rounded-lg border border-gray-200"
-                      style={{ backgroundColor: quoteData.gradientStart }}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  End Color
-                </label>
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    value={quoteData.gradientEnd}
-                    onChange={(e) =>
-                      setQuoteData((prev) => ({
-                        ...prev,
-                        gradientEnd: e.target.value,
-                      }))
-                    }
-                    className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
-                  />
-                  <div className="w-12 h-12 relative">
-                    <input
-                      type="color"
-                      value={quoteData.gradientEnd}
-                      onChange={(e) =>
-                        setQuoteData((prev) => ({
-                          ...prev,
-                          gradientEnd: e.target.value,
-                        }))
-                      }
-                      className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                    />
-                    <div
-                      className="w-full h-full rounded-lg border border-gray-200"
-                      style={{ backgroundColor: quoteData.gradientEnd }}
-                    />
-                  </div>
-                </div>
+          <div className="space-y-8">
+            {/* Image Ratio */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Image Ratio
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <button
+                  onClick={() =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      aspectRatio: "4/5",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    quoteData.aspectRatio === "4/5"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  4:5
+                </button>
+                <button
+                  onClick={() =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      aspectRatio: "1/1",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    quoteData.aspectRatio === "1/1"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  1:1
+                </button>
+                <button
+                  onClick={() =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      aspectRatio: "16/9",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    quoteData.aspectRatio === "16/9"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  16:9
+                </button>
+                <button
+                  onClick={() =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      aspectRatio: "3/2",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    quoteData.aspectRatio === "3/2"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  3:2
+                </button>
               </div>
             </div>
+
+            {/* Text Color */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Text Color
               </label>
               <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={quoteData.textColor}
-                  onChange={(e) =>
-                    setQuoteData((prev) => ({
-                      ...prev,
-                      textColor: e.target.value,
-                    }))
-                  }
-                  className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50"
-                />
-                <div className="w-12 h-12 relative">
+                <div className="relative flex-1">
+                  <input
+                    type="text"
+                    value={quoteData.textColor}
+                    onChange={(e) =>
+                      setQuoteData((prev) => ({
+                        ...prev,
+                        textColor: e.target.value,
+                      }))
+                    }
+                    className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                  />
+                </div>
+                <div className="relative w-12 h-12">
+                  <div
+                    className="absolute inset-0 rounded-lg border border-gray-200"
+                    style={{ backgroundColor: quoteData.textColor }}
+                  />
                   <input
                     type="color"
                     value={quoteData.textColor}
@@ -274,15 +286,173 @@ export default function Quotes() {
                         textColor: e.target.value,
                       }))
                     }
-                    className="absolute inset-0 rounded-lg cursor-pointer opacity-0"
-                  />
-                  <div
-                    className="w-full h-full rounded-lg border border-gray-200"
-                    style={{ backgroundColor: quoteData.textColor }}
+                    className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
                   />
                 </div>
               </div>
             </div>
+
+            {/* Background Type */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Background Type
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      backgroundType: "solid",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    quoteData.backgroundType === "solid"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  Solid
+                </button>
+                <button
+                  onClick={() =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      backgroundType: "gradient",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    quoteData.backgroundType === "gradient"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  Gradient
+                </button>
+              </div>
+            </div>
+
+            {quoteData.backgroundType === "solid" ? (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Background Color
+                </label>
+                <div className="flex gap-3">
+                  <div className="relative flex-1">
+                    <input
+                      type="text"
+                      value={quoteData.backgroundColor}
+                      onChange={(e) =>
+                        setQuoteData((prev) => ({
+                          ...prev,
+                          backgroundColor: e.target.value,
+                          gradientStart: e.target.value,
+                          gradientEnd: e.target.value,
+                        }))
+                      }
+                      className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                    />
+                  </div>
+                  <div className="relative w-12 h-12">
+                    <div
+                      className="absolute inset-0 rounded-lg border border-gray-200"
+                      style={{ backgroundColor: quoteData.backgroundColor }}
+                    />
+                    <input
+                      type="color"
+                      value={quoteData.backgroundColor}
+                      onChange={(e) =>
+                        setQuoteData((prev) => ({
+                          ...prev,
+                          backgroundColor: e.target.value,
+                          gradientStart: e.target.value,
+                          gradientEnd: e.target.value,
+                        }))
+                      }
+                      className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Start Color
+                  </label>
+                  <div className="flex gap-3">
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        value={quoteData.gradientStart}
+                        onChange={(e) =>
+                          setQuoteData((prev) => ({
+                            ...prev,
+                            gradientStart: e.target.value,
+                          }))
+                        }
+                        className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                      />
+                    </div>
+                    <div className="relative w-12 h-12">
+                      <div
+                        className="absolute inset-0 rounded-lg border border-gray-200"
+                        style={{ backgroundColor: quoteData.gradientStart }}
+                      />
+                      <input
+                        type="color"
+                        value={quoteData.gradientStart}
+                        onChange={(e) =>
+                          setQuoteData((prev) => ({
+                            ...prev,
+                            gradientStart: e.target.value,
+                          }))
+                        }
+                        className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    End Color
+                  </label>
+                  <div className="flex gap-3">
+                    <div className="relative flex-1">
+                      <input
+                        type="text"
+                        value={quoteData.gradientEnd}
+                        onChange={(e) =>
+                          setQuoteData((prev) => ({
+                            ...prev,
+                            gradientEnd: e.target.value,
+                          }))
+                        }
+                        className="w-full h-12 px-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+                      />
+                    </div>
+                    <div className="relative w-12 h-12">
+                      <div
+                        className="absolute inset-0 rounded-lg border border-gray-200"
+                        style={{ backgroundColor: quoteData.gradientEnd }}
+                      />
+                      <input
+                        type="color"
+                        value={quoteData.gradientEnd}
+                        onChange={(e) =>
+                          setQuoteData((prev) => ({
+                            ...prev,
+                            gradientEnd: e.target.value,
+                          }))
+                        }
+                        className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Font Style */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Font Style
@@ -307,6 +477,28 @@ export default function Quotes() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Watermark Option */}
+            <div className="flex items-center justify-between">
+              <label
+                className="text-sm font-medium text-gray-700"
+                htmlFor="watermark"
+              >
+                Show Watermark
+              </label>
+              <input
+                type="checkbox"
+                id="watermark"
+                checked={quoteData.showWatermark}
+                onChange={(e) =>
+                  setQuoteData((prev) => ({
+                    ...prev,
+                    showWatermark: e.target.checked,
+                  }))
+                }
+                className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
+              />
             </div>
           </div>
         )}
@@ -356,12 +548,23 @@ export default function Quotes() {
   const preview = (
     <div
       ref={previewRef}
-      className="max-w-2xl mx-auto aspect-[4/3] bg-white rounded-2xl shadow-lg overflow-hidden"
+      className={`max-w-2xl mx-auto rounded-2xl shadow-lg overflow-hidden ${
+        quoteData.aspectRatio === "4/5"
+          ? "aspect-[4/5]"
+          : quoteData.aspectRatio === "1/1"
+            ? "aspect-[1/1]"
+            : quoteData.aspectRatio === "16/9"
+              ? "aspect-[16/9]"
+              : "aspect-[3/2]"
+      }`}
     >
       <div
         className="w-full h-full flex items-center justify-center p-12"
         style={{
-          background: `linear-gradient(to bottom right, ${quoteData.gradientStart}, ${quoteData.gradientEnd})`,
+          background:
+            quoteData.backgroundType === "gradient"
+              ? `linear-gradient(to bottom right, ${quoteData.gradientStart}, ${quoteData.gradientEnd})`
+              : quoteData.backgroundColor,
         }}
       >
         <div
@@ -408,6 +611,14 @@ export default function Quotes() {
               </div>
             )}
           </div>
+          {quoteData.showWatermark && (
+            <div
+              className="mt-8 text-xs"
+              style={{ color: quoteData.textColor, opacity: 0.5 }}
+            >
+              Created with SnapSuite
+            </div>
+          )}
         </div>
       </div>
     </div>
