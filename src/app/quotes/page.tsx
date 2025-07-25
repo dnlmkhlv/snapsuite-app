@@ -24,11 +24,12 @@ interface QuoteData {
   gradientEnd: string;
   textColor: string;
   fontFamily: string;
-  backgroundType: "solid" | "gradient";
+  backgroundType: "solid" | "gradient" | "image";
   backgroundColor: string;
   showWatermark: boolean;
   aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
   fontSize: number;
+  backgroundImage: string | null;
 }
 
 const fontOptions = [
@@ -54,6 +55,7 @@ const DEFAULT_QUOTE_DATA: QuoteData = {
   showWatermark: false,
   aspectRatio: "4/5",
   fontSize: 24,
+  backgroundImage: null,
 };
 
 export default function Quotes() {
@@ -83,6 +85,20 @@ export default function Quotes() {
       link.click();
     } catch (error) {
       console.error("Error generating image:", error);
+    }
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setQuoteData((prev) => ({
+          ...prev,
+          backgroundImage: e.target?.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -387,7 +403,7 @@ export default function Quotes() {
               <label className="block text-sm font-medium text-gray-700 mb-3">
                 Background Type
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 <button
                   onClick={() =>
                     setQuoteData((prev) => ({
@@ -417,6 +433,21 @@ export default function Quotes() {
                   }`}
                 >
                   Gradient
+                </button>
+                <button
+                  onClick={() =>
+                    setQuoteData((prev) => ({
+                      ...prev,
+                      backgroundType: "image",
+                    }))
+                  }
+                  className={`flex items-center justify-center p-3 border rounded-xl ${
+                    quoteData.backgroundType === "image"
+                      ? "border-[#5170FF] bg-[#5170FF] bg-opacity-10 text-[#5170FF]"
+                      : "border-gray-200 text-gray-700"
+                  }`}
+                >
+                  Image
                 </button>
               </div>
             </div>
@@ -463,7 +494,7 @@ export default function Quotes() {
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : quoteData.backgroundType === "gradient" ? (
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -540,7 +571,41 @@ export default function Quotes() {
                   </div>
                 </div>
               </div>
-            )}
+            ) : quoteData.backgroundType === "image" ? (
+              <div className="space-y-4 mt-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Background Image
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#5170FF] file:text-white hover:file:bg-[#4060EE] text-gray-900"
+                  />
+                </div>
+                {quoteData.backgroundImage && (
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={quoteData.backgroundImage}
+                      alt="Background Preview"
+                      className="w-full max-h-48 object-cover rounded-xl border border-gray-200 mt-4"
+                    />
+                    <button
+                      onClick={() =>
+                        setQuoteData((prev) => ({
+                          ...prev,
+                          backgroundImage: null,
+                        }))
+                      }
+                      className="px-3 py-2 text-xs font-medium text-red-600 bg-transparent border border-red-200 rounded-lg hover:bg-red-50 transition-all"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : null}
 
             {/* Watermark Option */}
             <div className="flex items-center justify-between">
@@ -623,12 +688,21 @@ export default function Quotes() {
     >
       <div
         className="w-full h-full flex items-center justify-center p-12"
-        style={{
-          background:
-            quoteData.backgroundType === "gradient"
-              ? `linear-gradient(to bottom right, ${quoteData.gradientStart}, ${quoteData.gradientEnd})`
-              : quoteData.backgroundColor,
-        }}
+        style={
+          quoteData.backgroundType === "gradient"
+            ? {
+                background: `linear-gradient(to bottom right, ${quoteData.gradientStart}, ${quoteData.gradientEnd})`,
+              }
+            : quoteData.backgroundType === "image" && quoteData.backgroundImage
+              ? {
+                  backgroundImage: `url(${quoteData.backgroundImage})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : {
+                  background: quoteData.backgroundColor,
+                }
+        }
       >
         <div
           className={`w-full flex flex-col ${
