@@ -227,6 +227,7 @@ export default function CodeSnippets() {
   );
   const [isLanguagesOpen, setIsLanguagesOpen] = useState(false);
   const [isBackgroundThemesOpen, setIsBackgroundThemesOpen] = useState(false);
+  const [isThemesOpen, setIsThemesOpen] = useState(false);
   const lineNumbersRef = useRef<HTMLDivElement>(null);
   const [codeData, setCodeData] = useState<CodeData>({
     content: 'function hello() {\n  console.log("Hello, World!");\n}',
@@ -530,32 +531,46 @@ export default function CodeSnippets() {
               )}
             </div>
 
-            {/* Existing theme and color options */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Theme
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                {themeOptions.map((theme) => (
-                  <button
-                    key={theme.value}
-                    onClick={() =>
-                      setCodeData((prev) => ({
-                        ...prev,
-                        theme: theme.value,
-                      }))
-                    }
-                    className={`p-3 rounded-lg border transition-all ${
-                      codeData.theme === theme.value
-                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                        : "border-gray-200 hover:border-gray-300 text-gray-600"
-                    }`}
-                  >
-                    {theme.label}
-                  </button>
-                ))}
-              </div>
+            {/* Code Theme */}
+            <div className="space-y-2">
+              <button
+                onClick={() => setIsThemesOpen(!isThemesOpen)}
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Code Theme</span>
+                {isThemesOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+
+              {isThemesOpen && (
+                <div className="mt-3 p-4 border border-gray-200 rounded-xl bg-white">
+                  <div className="grid grid-cols-2 gap-3">
+                    {themeOptions.map((theme) => (
+                      <button
+                        key={theme.value}
+                        onClick={() =>
+                          setCodeData((prev) => ({
+                            ...prev,
+                            theme: theme.value,
+                          }))
+                        }
+                        className={`p-3 rounded-lg border transition-all ${
+                          codeData.theme === theme.value
+                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        {theme.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Background Color
