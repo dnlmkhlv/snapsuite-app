@@ -9,6 +9,7 @@ import {
   Image as ImageIcon,
   Layout,
   Sliders,
+  RotateCcw,
 } from "lucide-react";
 import EditorLayout from "../components/EditorLayout";
 
@@ -25,22 +26,24 @@ interface ImageData {
   blur: number;
 }
 
+const DEFAULT_IMAGE_DATA: ImageData = {
+  image: null,
+  text: "",
+  textColor: "#ffffff",
+  fontSize: "24px",
+  textPosition: "bottom",
+  filter: "none",
+  brightness: 100,
+  contrast: 100,
+  saturation: 100,
+  blur: 0,
+};
+
 export default function Images() {
   const [activeTab, setActiveTab] = useState<"image" | "text" | "effects">(
     "image"
   );
-  const [imageData, setImageData] = useState<ImageData>({
-    image: null,
-    text: "",
-    textColor: "#ffffff",
-    fontSize: "24px",
-    textPosition: "bottom",
-    filter: "none",
-    brightness: 100,
-    contrast: 100,
-    saturation: 100,
-    blur: 0,
-  });
+  const [imageData, setImageData] = useState<ImageData>(DEFAULT_IMAGE_DATA);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -90,6 +93,16 @@ export default function Images() {
 
   const toolsPanel = (
     <>
+      {/* Reset Button */}
+      <div className="absolute right-4 h-[57px] flex items-center">
+        <button
+          onClick={() => setImageData(DEFAULT_IMAGE_DATA)}
+          className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 bg-transparent flex items-center gap-2 transition-all active:scale-90 active:opacity-70"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Reset
+        </button>
+      </div>
       {/* Tab Navigation */}
       <div className="flex border-b">
         <button
