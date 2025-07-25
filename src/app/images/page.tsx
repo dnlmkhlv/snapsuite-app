@@ -10,6 +10,8 @@ import {
   Layout,
   Sliders,
   RotateCcw,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import EditorLayout from "../components/EditorLayout";
 
@@ -47,6 +49,7 @@ export default function Images() {
   );
   const [imageData, setImageData] = useState<ImageData>(DEFAULT_IMAGE_DATA);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -197,30 +200,42 @@ export default function Images() {
                 </div>
               )}
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Filter
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {filters.map((filter) => (
-                  <button
-                    key={filter.name}
-                    onClick={() =>
-                      setImageData((prev) => ({
-                        ...prev,
-                        filter: filter.value,
-                      }))
-                    }
-                    className={`p-3 rounded-lg border transition-all ${
-                      imageData.filter === filter.value
-                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                        : "border-gray-200 hover:border-gray-300 text-gray-600"
-                    }`}
-                  >
-                    {filter.name}
-                  </button>
-                ))}
-              </div>
+            <div className="space-y-2">
+              <button
+                onClick={() => setIsFiltersOpen((v) => !v)}
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Filter</span>
+                {isFiltersOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+              {isFiltersOpen && (
+                <div className="p-4 border border-gray-200 rounded-xl bg-white">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {filters.map((filter) => (
+                      <button
+                        key={filter.name}
+                        onClick={() =>
+                          setImageData((prev) => ({
+                            ...prev,
+                            filter: filter.value,
+                          }))
+                        }
+                        className={`p-3 rounded-lg border transition-all ${
+                          imageData.filter === filter.value
+                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        {filter.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
