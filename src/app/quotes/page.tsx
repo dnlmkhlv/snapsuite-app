@@ -9,6 +9,8 @@ import {
   AlignLeft,
   AlignCenter,
   Quote,
+  ChevronUp,
+  ChevronDown,
 } from "lucide-react";
 import EditorLayout from "../components/EditorLayout";
 
@@ -40,6 +42,7 @@ export default function Quotes() {
   const [activeTab, setActiveTab] = useState<"content" | "style" | "author">(
     "content"
   );
+  const [isFontFamilyOpen, setIsFontFamilyOpen] = useState(false);
   const [quoteData, setQuoteData] = useState<QuoteData>({
     content: "The only way to do great work is to love what you do.",
     author: "Steve Jobs",
@@ -129,6 +132,48 @@ export default function Quotes() {
       <div className="p-5">
         {activeTab === "content" && (
           <div className="space-y-4">
+            {/* Font Controls */}
+            <div className="space-y-4">
+              <button
+                onClick={() => setIsFontFamilyOpen(!isFontFamilyOpen)}
+                className="flex items-center justify-between w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
+              >
+                <span className="text-sm font-medium">Font Family</span>
+                {isFontFamilyOpen ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+
+              {isFontFamilyOpen && (
+                <div className="p-4 border border-gray-200 rounded-xl bg-white space-y-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {fontOptions.map((font) => (
+                      <button
+                        key={font.value}
+                        onClick={() =>
+                          setQuoteData((prev) => ({
+                            ...prev,
+                            fontFamily: font.value,
+                          }))
+                        }
+                        className={`p-2 rounded-xl border transition-all ${
+                          font.className
+                        } ${
+                          quoteData.fontFamily === font.value
+                            ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
+                            : "border-gray-200 hover:border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        {font.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Quote
@@ -451,33 +496,6 @@ export default function Quotes() {
                 </div>
               </div>
             )}
-
-            {/* Font Style */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Font Style
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {fontOptions.map((font) => (
-                  <button
-                    key={font.value}
-                    onClick={() =>
-                      setQuoteData((prev) => ({
-                        ...prev,
-                        fontFamily: font.value,
-                      }))
-                    }
-                    className={`p-3 rounded-lg border transition-all ${
-                      quoteData.fontFamily === font.value
-                        ? "border-[#5170FF] bg-[#5170FF]/5 text-[#5170FF]"
-                        : "border-gray-200 hover:border-gray-300 text-gray-600"
-                    } ${font.className}`}
-                  >
-                    {font.label}
-                  </button>
-                ))}
-              </div>
-            </div>
 
             {/* Watermark Option */}
             <div className="flex items-center justify-between">
