@@ -529,28 +529,6 @@ export default function TweetImages() {
               </div>
             </div>
 
-            {/* Watermark Option */}
-            <div className="flex items-center justify-between">
-              <label
-                className="text-sm font-medium text-gray-700"
-                htmlFor="watermark"
-              >
-                Show Watermark
-              </label>
-              <input
-                type="checkbox"
-                id="watermark"
-                checked={tweetData.showWatermark || false}
-                onChange={(e) =>
-                  setTweetData((prev) => ({
-                    ...prev,
-                    showWatermark: e.target.checked,
-                  }))
-                }
-                className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
-              />
-            </div>
-
             {/* Image Ratio */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -1191,6 +1169,28 @@ export default function TweetImages() {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Watermark Option (moved to bottom) */}
+            <div className="flex items-center justify-between">
+              <label
+                className="text-sm font-medium text-gray-700"
+                htmlFor="watermark"
+              >
+                Show Watermark
+              </label>
+              <input
+                type="checkbox"
+                id="watermark"
+                checked={tweetData.showWatermark || false}
+                onChange={(e) =>
+                  setTweetData((prev) => ({
+                    ...prev,
+                    showWatermark: e.target.checked,
+                  }))
+                }
+                className="w-4 h-4 text-[#5170FF] border-gray-300 rounded focus:ring-[#5170FF]"
+              />
             </div>
           </div>
         )}
