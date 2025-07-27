@@ -3,22 +3,16 @@
 import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import {
-  Upload,
   Palette,
   Type,
   User,
   AlignLeft,
   AlignCenter,
-  Layers,
-  Settings,
   Image as ImageIcon,
   ChevronDown,
   ChevronUp,
   RotateCcw,
 } from "lucide-react";
-import Themes from "../components/Themes";
-import Templates from "../components/Templates";
-import { TweetTemplate } from "../utils/storage";
 import EditorLayout from "../components/EditorLayout";
 
 interface TweetData {

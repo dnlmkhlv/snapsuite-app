@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import {
   Palette,
-  Type,
   User,
   AlignLeft,
   AlignCenter,

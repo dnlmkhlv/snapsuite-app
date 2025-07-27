@@ -2,17 +2,7 @@
 
 import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
-import {
-  Palette,
-  Type,
-  Upload,
-  Image as ImageIcon,
-  Layout,
-  Sliders,
-  RotateCcw,
-  ChevronUp,
-  ChevronDown,
-} from "lucide-react";
+import { Type, Upload, Image as ImageIcon, RotateCcw } from "lucide-react";
 import EditorLayout from "../components/EditorLayout";
 
 interface ImageData {
