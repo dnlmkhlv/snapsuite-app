@@ -242,7 +242,7 @@ export default function CodeSnippets() {
     gradientEnd: "#DB2777",
     backgroundImage: null,
     backgroundOpacity: 1,
-    showWatermark: false,
+    showWatermark: true,
   });
 
   const getBackgroundStyle = () => {
@@ -363,7 +363,7 @@ export default function CodeSnippets() {
               gradientEnd: "#DB2777",
               backgroundImage: null,
               backgroundOpacity: 1,
-              showWatermark: false,
+              showWatermark: true,
             })
           }
           className="flex items-center gap-2 px-3 sm:px-6 py-3 sm:py-4 font-medium text-xs sm:text-base text-gray-600 hover:text-gray-900 bg-transparent transition-all active:scale-90 active:opacity-70 ml-auto"

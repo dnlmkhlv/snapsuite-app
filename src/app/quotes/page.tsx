@@ -52,7 +52,7 @@ const DEFAULT_QUOTE_DATA: QuoteData = {
   fontFamily: "Inter",
   backgroundType: "gradient",
   backgroundColor: "#111827",
-  showWatermark: false,
+  showWatermark: true,
   aspectRatio: "4/5",
   fontSize: 24,
   backgroundImage: null,
