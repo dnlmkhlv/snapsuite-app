@@ -8,7 +8,6 @@ import {
   User,
   AlignLeft,
   AlignCenter,
-  Image as ImageIcon,
   ChevronDown,
   ChevronUp,
   RotateCcw,
