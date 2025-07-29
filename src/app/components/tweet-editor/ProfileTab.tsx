@@ -1,5 +1,7 @@
 "use client";
 
+import ColorPicker from "../ui/ColorPicker";
+
 interface TweetData {
   content: string;
   fontFamily: string;
@@ -108,39 +110,16 @@ export default function ProfileTab({
       </div>
       {tweetData.verified && (
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Badge Color
-          </label>
-          <div className="flex gap-3">
-            <input
-              type="text"
-              value={tweetData.verifiedColor}
-              onChange={(e) =>
-                setTweetData((prev) => ({
-                  ...prev,
-                  verifiedColor: e.target.value,
-                }))
-              }
-              className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#5170FF] focus:border-transparent bg-gray-50 text-gray-900"
-            />
-            <div className="w-12 h-12 relative">
-              <input
-                type="color"
-                value={tweetData.verifiedColor}
-                onChange={(e) =>
-                  setTweetData((prev) => ({
-                    ...prev,
-                    verifiedColor: e.target.value,
-                  }))
-                }
-                className="absolute inset-0 opacity-0 cursor-pointer z-10"
-              />
-              <div
-                className="w-full h-full rounded-xl border border-gray-200"
-                style={{ backgroundColor: tweetData.verifiedColor }}
-              />
-            </div>
-          </div>
+          <ColorPicker
+            label="Badge Color"
+            value={tweetData.verifiedColor}
+            onChange={(color) =>
+              setTweetData((prev) => ({
+                ...prev,
+                verifiedColor: color,
+              }))
+            }
+          />
         </div>
       )}
       <div>
