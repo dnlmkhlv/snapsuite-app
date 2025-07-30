@@ -35,7 +35,7 @@ export default function QuotePreview({
   return (
     <div
       ref={previewRef}
-      className={`max-w-2xl mx-auto rounded-2xl shadow-lg overflow-hidden ${
+      className={`w-full overflow-hidden ${
         quoteData.aspectRatio === "4/5"
           ? "aspect-[4/5]"
           : quoteData.aspectRatio === "1/1"
@@ -44,12 +44,13 @@ export default function QuotePreview({
               ? "aspect-[16/9]"
               : "aspect-[3/2]"
       }`}
+      style={{ margin: 0, padding: 0 }}
     >
       <div className="w-full h-full flex items-center justify-center p-12 relative">
         {/* Background overlay for image opacity, only if image is set */}
         {quoteData.backgroundType === "image" && quoteData.backgroundImage ? (
           <div
-            className="absolute inset-0 z-0 rounded-2xl"
+            className="absolute inset-0 z-0"
             style={{
               backgroundImage: `url(${quoteData.backgroundImage})`,
               backgroundSize: "cover",
@@ -58,10 +59,7 @@ export default function QuotePreview({
             }}
           />
         ) : (
-          <div
-            className="absolute inset-0 z-0 rounded-2xl"
-            style={getBackgroundStyle()}
-          />
+          <div className="absolute inset-0 z-0" style={getBackgroundStyle()} />
         )}
         {/* Foreground content */}
         <div
