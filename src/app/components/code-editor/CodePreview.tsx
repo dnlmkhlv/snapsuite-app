@@ -143,7 +143,9 @@ export default function CodePreview({
           </div>
           {codeData.showWatermark && (
             <div className="absolute bottom-2 left-0 right-0 flex justify-center pointer-events-none">
-              <span className="text-gray-400/70 text-sm">snapsuite.app</span>
+              <span className="text-gray-400/70 text-sm">
+                Created with SnapSuite
+              </span>
             </div>
           )}
         </div>
