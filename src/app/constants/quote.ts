@@ -12,7 +12,7 @@ export const DEFAULT_QUOTE_DATA: QuoteData = {
   backgroundType: "gradient",
   backgroundColor: "#111827",
   showWatermark: true,
-  aspectRatio: "4/5",
+  aspectRatio: "16/9",
   fontSize: 24,
   backgroundImage: null,
   backgroundOpacity: 100,
