@@ -7,5 +7,10 @@ export const getFontClassName = (fontFamily: string): string => {
     Poppins: "font-poppins",
     Montserrat: "font-montserrat",
   };
+
   return fontMap[fontFamily] || "font-inter";
+};
+
+export const getQuoteFontClassName = (fontFamily: string): string => {
+  return getFontClassName(fontFamily);
 };
