@@ -1,7 +1,6 @@
 "use client";
 
 import { QuoteData } from "../../types/quote";
-import { FONT_OPTIONS } from "../../constants/quote";
 import { getQuoteFontClassName } from "../../utils/fonts";
 
 interface QuotePreviewProps {

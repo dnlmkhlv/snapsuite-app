@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, ChevronUp, AlignLeft, AlignCenter } from "lucide-react";
+import { AlignLeft, AlignCenter } from "lucide-react";
 import { QuoteData } from "../../types/quote";
-import { FONT_OPTIONS, MAX_QUOTE_LENGTH } from "../../constants/quote";
+import { MAX_QUOTE_LENGTH } from "../../constants/quote";
 import FontSelector from "../ui/FontSelector";
 
 interface ContentTabProps {

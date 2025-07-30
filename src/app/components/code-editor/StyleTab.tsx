@@ -3,12 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { CodeData, Theme } from "../../types/code";
-import {
-  BACKGROUND_THEMES,
-  THEME_OPTIONS,
-  EDITOR_THEMES,
-} from "../../constants/code";
-import ColorPicker from "../ui/ColorPicker";
+import { BACKGROUND_THEMES, THEME_OPTIONS } from "../../constants/code";
 import ThemeSelector from "../ui/ThemeSelector";
 import BackgroundSelector from "../ui/BackgroundSelector";
 
