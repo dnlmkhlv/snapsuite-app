@@ -65,21 +65,21 @@ export const metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://snapsuite.app"),
+  metadataBase: new URL("https://snapsuite-app.vercel.app/"),
   alternates: {
-    canonical: "/",
+    canonical: "https://snapsuite-app.vercel.app/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://snapsuite.app",
+    url: "https://snapsuite-app.vercel.app/",
     title: "SnapSuite - Turn Content into Beautiful Visuals Instantly",
     description:
       "Create beautiful visuals from your tweets, code snippets, and quotes instantly. Transform your content into shareable graphics with our easy-to-use online editor.",
     siteName: "SnapSuite",
     images: [
       {
-        url: "/snapsuite-og.png",
+        url: "https://snapsuite-app.vercel.app/snapsuite-og.png",
         width: 1200,
         height: 630,
         alt: "SnapSuite - Visual Content Creator",
@@ -91,7 +91,7 @@ export const metadata = {
     title: "SnapSuite - Turn Content into Beautiful Visuals Instantly",
     description:
       "Create beautiful visuals from your tweets, code snippets, and quotes instantly. Transform your content into shareable graphics.",
-    images: ["/snapsuite-og.png"],
+    images: ["https://snapsuite-app.vercel.app/snapsuite-og.png"],
     creator: "@snapsuite",
   },
   robots: {
@@ -146,7 +146,7 @@ export default function RootLayout({
               name: "SnapSuite",
               description:
                 "Create beautiful visuals from your tweets, code snippets, and quotes instantly. Transform your content into shareable graphics with our easy-to-use online editor.",
-              url: "https://snapsuite.app",
+              url: "https://snapsuite-app.vercel.app/",
               applicationCategory: "DesignApplication",
               operatingSystem: "Web Browser",
               offers: {
