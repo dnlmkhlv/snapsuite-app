@@ -191,7 +191,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/dnlmkhlv/snapsuite-app/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/dnlmkhlv/snapsuite-app/discussions)
-- **Email**: [daniil@daniilmikhailov.com](mailto:mikhailoff.daniil@gmail.com)
+- **Email**: [mikhailoff.daniil@gmail.com](mailto:mikhailoff.daniil@gmail.com)
 
 ## 🌟 Star History
 
