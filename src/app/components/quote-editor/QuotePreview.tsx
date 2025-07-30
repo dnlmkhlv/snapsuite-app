@@ -74,7 +74,7 @@ export default function QuotePreview({
             className="text-6xl mb-8 opacity-20"
             style={{ color: quoteData.textColor }}
           >
-            "
+            &ldquo;
           </div>
           <div
             className={`mb-8 ${getQuoteFontClassName(quoteData.fontFamily)}`}

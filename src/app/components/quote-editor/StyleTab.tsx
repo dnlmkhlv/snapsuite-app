@@ -10,20 +10,6 @@ interface StyleTabProps {
 }
 
 export default function StyleTab({ quoteData, setQuoteData }: StyleTabProps) {
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setQuoteData((prev) => ({
-          ...prev,
-          backgroundImage: e.target?.result as string,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     <div className="space-y-8">
       {/* Image Ratio */}

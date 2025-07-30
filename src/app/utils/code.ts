@@ -55,12 +55,12 @@ export function highlightCode(
     const themed = highlighted.replace(
       /<span class="hljs-([^"]+)">/g,
       (match, type: string) => {
-        const color = (currentTheme as any)[type] || currentTheme.text;
+        const color = currentTheme[type] || currentTheme.text;
         return `<span style="color: ${color}">`;
       }
     );
     return themed;
-  } catch (error) {
+  } catch {
     return code;
   }
 }
@@ -72,7 +72,7 @@ export function getHighlightedCode(content: string, language: string) {
       language,
     }).value;
     return highlighted;
-  } catch (error) {
+  } catch {
     return content;
   }
 }

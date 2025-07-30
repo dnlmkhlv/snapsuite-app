@@ -25,6 +25,7 @@ export interface ThemeColors {
   function: string;
   operator: string;
   variable: string;
+  [key: string]: string;
 }
 
 export interface EditorThemes {

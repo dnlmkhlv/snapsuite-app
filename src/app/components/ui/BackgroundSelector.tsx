@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface BackgroundSelectorProps {
   backgroundType: "solid" | "gradient" | "image";
   onBackgroundTypeChange: (type: "solid" | "gradient" | "image") => void;
@@ -98,11 +100,15 @@ export default function BackgroundSelector({
             </div>
             {backgroundImage && (
               <div className="flex items-center gap-4">
-                <img
-                  src={backgroundImage}
-                  alt="Background Preview"
-                  className="w-full max-h-48 object-cover rounded-xl border border-gray-200 mt-4"
-                />
+                <div className="relative w-full h-48 mt-4">
+                  <Image
+                    src={backgroundImage}
+                    alt="Background Preview"
+                    fill
+                    className="object-cover rounded-xl border border-gray-200"
+                    unoptimized
+                  />
+                </div>
                 <button
                   onClick={() => onBackgroundImageChange(null)}
                   className="px-3 py-2 text-xs font-medium text-red-600 bg-transparent border border-red-200 rounded-lg hover:bg-red-50 transition-all"
