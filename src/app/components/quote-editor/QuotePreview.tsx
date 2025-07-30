@@ -24,7 +24,7 @@ export default function QuotePreview({
               backgroundImage: `url(${quoteData.backgroundImage})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              opacity: quoteData.backgroundOpacity / 100,
+              opacity: quoteData.backgroundOpacity,
             }
           : { background: quoteData.backgroundColor };
       default:
@@ -55,7 +55,7 @@ export default function QuotePreview({
               backgroundImage: `url(${quoteData.backgroundImage})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              opacity: quoteData.backgroundOpacity / 100,
+              opacity: quoteData.backgroundOpacity,
             }}
           />
         ) : (

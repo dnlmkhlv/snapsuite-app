@@ -126,7 +126,7 @@ export default function BackgroundSelector({
                   type="range"
                   min="0"
                   max="100"
-                  value={backgroundOpacity * 100}
+                  value={Math.round(backgroundOpacity * 100)}
                   onChange={(e) =>
                     onBackgroundOpacityChange(parseInt(e.target.value) / 100)
                   }
