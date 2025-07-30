@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
           <p className="text-sm text-gray-600 mb-4 sm:mb-6 max-w-md px-4">
             Create beautiful visuals from your content instantly. Transform
-            tweets, code snippets, quotes, and images into shareable graphics.
+            tweets, code snippets, and quotes into shareable graphics.
           </p>
           <div className="space-y-1">
             <p className="text-xs sm:text-sm text-gray-600">
