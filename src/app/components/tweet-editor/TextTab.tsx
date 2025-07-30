@@ -2,35 +2,7 @@
 
 import { AlignLeft, AlignCenter } from "lucide-react";
 import FontSelector from "../ui/FontSelector";
-
-interface TweetData {
-  content: string;
-  fontFamily: string;
-  fontSize: number;
-  alignment: "left" | "center";
-  username: string;
-  fullName: string;
-  verified: boolean;
-  profilePhoto: string | null;
-  nameColor: string;
-  usernameColor: string;
-  contentColor: string;
-  verifiedColor: string;
-  cardTheme: "light" | "dark";
-  backgroundColor: string;
-  gradientStart: string;
-  gradientEnd: string;
-  showBorder: boolean;
-  borderStyle: "solid" | "dashed" | "dotted" | "double";
-  borderWidth: number;
-  borderColor: string;
-  backgroundType: "solid" | "gradient" | "image";
-  backgroundImage: string | null;
-  backgroundOpacity: number;
-  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
-  borderRadius: number;
-  showWatermark: boolean;
-}
+import { TweetData } from "../../types/tweet";
 
 interface TextTabProps {
   tweetData: TweetData;

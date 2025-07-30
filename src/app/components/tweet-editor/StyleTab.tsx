@@ -3,40 +3,12 @@
 import ColorPicker from "../ui/ColorPicker";
 import ThemeSelector from "../ui/ThemeSelector";
 import BackgroundSelector from "../ui/BackgroundSelector";
-
-interface TweetData {
-  content: string;
-  fontFamily: string;
-  fontSize: number;
-  alignment: "left" | "center";
-  username: string;
-  fullName: string;
-  verified: boolean;
-  profilePhoto: string | null;
-  nameColor: string;
-  usernameColor: string;
-  contentColor: string;
-  verifiedColor: string;
-  cardTheme: "light" | "dark";
-  backgroundColor: string;
-  gradientStart: string;
-  gradientEnd: string;
-  showBorder: boolean;
-  borderStyle: "solid" | "dashed" | "dotted" | "double";
-  borderWidth: number;
-  borderColor: string;
-  backgroundType: "solid" | "gradient" | "image";
-  backgroundImage: string | null;
-  backgroundOpacity: number;
-  aspectRatio: "4/5" | "1/1" | "16/9" | "3/2";
-  borderRadius: number;
-  showWatermark: boolean;
-}
+import { TweetData, Theme } from "../../types/tweet";
 
 interface StyleTabProps {
   tweetData: TweetData;
   setTweetData: (data: TweetData | ((prev: TweetData) => TweetData)) => void;
-  handleThemeSelect: (theme: any) => void;
+  handleThemeSelect: (theme: Theme) => void;
 }
 
 const borderStyles = [
