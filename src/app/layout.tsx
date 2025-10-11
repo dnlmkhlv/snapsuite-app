@@ -8,9 +8,9 @@ import {
   Montserrat,
 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import Header from "./components/Header";
-import TabNav from "./components/TabNav";
-import Footer from "./components/Footer";
+import Header from "../components/Header";
+import TabNav from "../components/TabNav";
+import Footer from "../components/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const roboto = Roboto({

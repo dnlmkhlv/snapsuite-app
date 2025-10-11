@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import EditorLayout from "../components/EditorLayout";
-import TextTab from "../components/tweet-editor/TextTab";
-import StyleTab from "../components/tweet-editor/StyleTab";
-import ProfileTab from "../components/tweet-editor/ProfileTab";
-import TabNavigation from "../components/ui/TabNavigation";
-import TweetPreview from "../components/tweet-editor/TweetPreview";
-import { useTweetData } from "../hooks/useTweetData";
-import { useImageDownload } from "../hooks/useImageDownload";
-import { TabType, Theme } from "../types/tweet";
+import EditorLayout from "../../components/EditorLayout";
+import TextTab from "../../components/tweet-editor/TextTab";
+import StyleTab from "../../components/tweet-editor/StyleTab";
+import ProfileTab from "../../components/tweet-editor/ProfileTab";
+import TabNavigation from "../../components/ui/TabNavigation";
+import TweetPreview from "../../components/tweet-editor/TweetPreview";
+import { useTweetData } from "../../hooks/useTweetData";
+import { useImageDownload } from "../../hooks/useImageDownload";
+import { TabType, Theme } from "../../types/tweet";
 
 export default function TweetImages() {
   const { tweetData, setTweetData, resetTweetData } = useTweetData();

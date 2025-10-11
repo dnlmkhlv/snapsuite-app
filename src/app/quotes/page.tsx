@@ -1,15 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import EditorLayout from "../components/EditorLayout";
-import ContentTab from "../components/quote-editor/ContentTab";
-import StyleTab from "../components/quote-editor/StyleTab";
-import AuthorTab from "../components/quote-editor/AuthorTab";
-import QuoteTabNavigation from "../components/ui/QuoteTabNavigation";
-import QuotePreview from "../components/quote-editor/QuotePreview";
-import { useQuoteData } from "../hooks/useQuoteData";
-import { useImageDownload } from "../hooks/useImageDownload";
-import { QuoteTabType } from "../types/quote";
+import EditorLayout from "../../components/EditorLayout";
+import ContentTab from "../../components/quote-editor/ContentTab";
+import StyleTab from "../../components/quote-editor/StyleTab";
+import AuthorTab from "../../components/quote-editor/AuthorTab";
+import QuoteTabNavigation from "../../components/ui/QuoteTabNavigation";
+import QuotePreview from "../../components/quote-editor/QuotePreview";
+import { useQuoteData } from "../../hooks/useQuoteData";
+import { useImageDownload } from "../../hooks/useImageDownload";
+import { QuoteTabType } from "../../types/quote";
 
 export default function Quotes() {
   const { quoteData, setQuoteData, resetQuoteData } = useQuoteData();

@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import EditorLayout from "../components/EditorLayout";
-import CodeEditor from "../components/code-editor/CodeEditor";
-import StyleTab from "../components/code-editor/StyleTab";
-import WindowTab from "../components/code-editor/WindowTab";
-import CodeTabNavigation from "../components/ui/CodeTabNavigation";
-import CodePreview from "../components/code-editor/CodePreview";
-import { useCodeData } from "../hooks/useCodeData";
-import { useImageDownload } from "../hooks/useImageDownload";
-import { useCodeHighlighting } from "../hooks/useCodeHighlighting";
-import { CodeTabType } from "../types/code";
+import EditorLayout from "../../components/EditorLayout";
+import CodeEditor from "../../components/code-editor/CodeEditor";
+import StyleTab from "../../components/code-editor/StyleTab";
+import WindowTab from "../../components/code-editor/WindowTab";
+import CodeTabNavigation from "../../components/ui/CodeTabNavigation";
+import CodePreview from "../../components/code-editor/CodePreview";
+import { useCodeData } from "../../hooks/useCodeData";
+import { useImageDownload } from "../../hooks/useImageDownload";
+import { useCodeHighlighting } from "../../hooks/useCodeHighlighting";
+import { CodeTabType } from "../../types/code";
 
 export default function CodeSnippets() {
   const { codeData, setCodeData, resetCodeData } = useCodeData();
