@@ -7,6 +7,7 @@ import {
   Poppins,
   Montserrat,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import Header from "./components/Header";
 import TabNav from "./components/TabNav";
 import Footer from "./components/Footer";
@@ -176,6 +177,7 @@ export default function RootLayout({
         <TabNav />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
