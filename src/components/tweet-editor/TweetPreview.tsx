@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { User } from "lucide-react";
 import { TweetData } from "../../types/tweet";
 import { getFontClassName } from "../../utils/fonts";
@@ -85,16 +86,13 @@ export default function TweetPreview({
                   >
                     <div className="flex gap-3 mb-4">
                       {tweetData.profilePhoto ? (
-                        <div
-                          className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0"
-                          style={{
-                            backgroundImage: `url(${tweetData.profilePhoto})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            backgroundRepeat: "no-repeat",
-                            width: "48px",
-                            height: "48px",
-                          }}
+                        <Image
+                          src={tweetData.profilePhoto}
+                          alt="Profile"
+                          width={48}
+                          height={48}
+                          className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                          unoptimized
                         />
                       ) : (
                         <div
