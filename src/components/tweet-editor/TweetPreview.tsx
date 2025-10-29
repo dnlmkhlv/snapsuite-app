@@ -86,14 +86,21 @@ export default function TweetPreview({
                   >
                     <div className="flex gap-3 mb-4">
                       {tweetData.profilePhoto ? (
-                        <Image
-                          src={tweetData.profilePhoto}
-                          alt="Profile"
-                          width={48}
-                          height={48}
-                          className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                          unoptimized
-                        />
+                        <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                          <Image
+                            src={tweetData.profilePhoto}
+                            alt="Profile"
+                            width={48}
+                            height={48}
+                            className="w-full h-full object-cover"
+                            style={{
+                              minWidth: "48px",
+                              minHeight: "48px",
+                              aspectRatio: "1 / 1",
+                            }}
+                            unoptimized
+                          />
+                        </div>
                       ) : (
                         <div
                           className={`w-12 h-12 rounded-full ${
